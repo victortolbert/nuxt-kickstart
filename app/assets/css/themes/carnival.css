@@ -1,0 +1,86 @@
+/* Carnival theme - Warm coral/orange/yellow OKLCH palette */
+/* Character: Warm, playful, energetic, festive */
+
+:root[data-theme="carnival"] {
+  /* Typography - Clean geometric sans with festive display headings */
+  --theme-font-sans: 'Barlow', system-ui, sans-serif;
+  --theme-font-display: 'Lobster Two', cursive;
+
+  /* Core UI settings */
+  --ui-radius: 0.75rem;
+
+  /* Background & Foreground */
+  --ui-bg: oklch(0.97 0.02 95);
+  --ui-bg-inverted: oklch(0.22 0.03 40);
+  --ui-bg-elevated: oklch(0.99 0.01 95);
+  --ui-bg-muted: oklch(0.94 0.03 90);
+  --ui-bg-accented: oklch(0.95 0.04 85);
+
+  /* Text colors */
+  --ui-text: oklch(0.22 0.03 40);
+  --ui-text-muted: oklch(0.45 0.06 45);
+  --ui-text-dimmed: oklch(0.60 0.08 50);
+  --ui-text-highlighted: oklch(0.15 0.04 35);
+  --ui-text-inverted: oklch(0.97 0.02 95);
+
+  /* Border colors */
+  --ui-border: oklch(0.88 0.04 80);
+  --ui-border-muted: oklch(0.90 0.03 85);
+  --ui-border-accented: oklch(0.85 0.06 75);
+  --ui-border-inverted: oklch(0.22 0.03 40);
+
+  /* Primary color scale (coral-orange gradient) */
+  --color-primary-50: oklch(0.98 0.03 45);
+  --color-primary-100: oklch(0.95 0.06 45);
+  --color-primary-200: oklch(0.90 0.10 40);
+  --color-primary-300: oklch(0.82 0.14 38);
+  --color-primary-400: oklch(0.72 0.17 35);
+  --color-primary-500: oklch(0.68 0.19 35);
+  --color-primary-600: oklch(0.60 0.17 32);
+  --color-primary-700: oklch(0.50 0.14 30);
+  --color-primary-800: oklch(0.40 0.11 28);
+  --color-primary-900: oklch(0.32 0.08 26);
+  --color-primary-950: oklch(0.24 0.05 24);
+
+  /* Chart colors */
+  --color-chart-1: oklch(0.68 0.19 35);
+  --color-chart-2: oklch(0.72 0.17 60);
+  --color-chart-3: oklch(0.88 0.16 90);
+  --color-chart-4: oklch(0.65 0.15 120);
+  --color-chart-5: oklch(0.55 0.12 280);
+
+  /* Carnival-specific accent colors */
+  --carnival-coral: oklch(0.68 0.19 35);
+  --carnival-orange: oklch(0.72 0.17 60);
+  --carnival-yellow: oklch(0.88 0.16 90);
+  --carnival-gold: oklch(0.75 0.13 85);
+  --carnival-silver: oklch(0.80 0.02 220);
+  --carnival-bronze: oklch(0.58 0.08 50);
+}
+
+.dark[data-theme="carnival"] {
+  /* Background & Foreground */
+  --ui-bg: oklch(0.22 0.03 40);
+  --ui-bg-inverted: oklch(0.97 0.02 95);
+  --ui-bg-elevated: oklch(0.28 0.04 42);
+  --ui-bg-muted: oklch(0.32 0.05 44);
+  --ui-bg-accented: oklch(0.35 0.06 46);
+
+  /* Text colors */
+  --ui-text: oklch(0.97 0.02 95);
+  --ui-text-muted: oklch(0.75 0.05 80);
+  --ui-text-dimmed: oklch(0.60 0.08 70);
+  --ui-text-highlighted: oklch(0.99 0.01 95);
+  --ui-text-inverted: oklch(0.22 0.03 40);
+
+  /* Border colors */
+  --ui-border: oklch(1 0 0 / 10%);
+  --ui-border-muted: oklch(1 0 0 / 8%);
+  --ui-border-accented: oklch(1 0 0 / 15%);
+  --ui-border-inverted: oklch(0.97 0.02 95);
+
+  /* Primary adjustments for dark mode */
+  --color-primary-400: oklch(0.75 0.18 38);
+  --color-primary-500: oklch(0.70 0.19 36);
+  --color-primary-600: oklch(0.55 0.15 32);
+}

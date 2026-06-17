@@ -1,0 +1,78 @@
+/* Nord theme - Arctic, north-bluish palette */
+/* https://www.nordtheme.com/ */
+/* Character: Clean, calm, spacious Scandinavian design */
+
+:root[data-theme="nord"] {
+  /* Typography - Clean sans-serif for Scandinavian minimalism */
+  --theme-font-sans: 'Roboto', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --theme-font-display: 'Roboto', system-ui, sans-serif;
+
+  /* Core UI settings - soft rounded corners */
+  --ui-radius: 0.5rem;
+
+  /* Background & Foreground - Snow Storm */
+  --ui-bg: oklch(0.96 0.006 240);
+  --ui-bg-inverted: oklch(0.23 0.02 240);
+  --ui-bg-elevated: oklch(0.92 0.008 240);
+  --ui-bg-muted: oklch(0.88 0.01 240);
+  --ui-bg-accented: oklch(0.85 0.012 240);
+
+  /* Text colors - Polar Night */
+  --ui-text: oklch(0.28 0.02 240);
+  --ui-text-muted: oklch(0.42 0.025 240);
+  --ui-text-dimmed: oklch(0.55 0.02 240);
+  --ui-text-highlighted: oklch(0.23 0.02 240);
+  --ui-text-inverted: oklch(0.96 0.006 240);
+
+  /* Border colors */
+  --ui-border: oklch(0.82 0.012 240);
+  --ui-border-muted: oklch(0.85 0.01 240);
+  --ui-border-accented: oklch(0.78 0.015 240);
+  --ui-border-inverted: oklch(0.28 0.02 240);
+
+  /* Primary color - Frost (cyan-blue) */
+  --color-primary-50: oklch(0.96 0.02 205);
+  --color-primary-100: oklch(0.92 0.04 205);
+  --color-primary-200: oklch(0.86 0.06 205);
+  --color-primary-300: oklch(0.78 0.08 205);
+  --color-primary-400: oklch(0.70 0.10 205);
+  --color-primary-500: oklch(0.65 0.11 205);
+  --color-primary-600: oklch(0.58 0.12 210);
+  --color-primary-700: oklch(0.50 0.12 215);
+  --color-primary-800: oklch(0.42 0.10 220);
+  --color-primary-900: oklch(0.35 0.08 225);
+  --color-primary-950: oklch(0.28 0.06 230);
+
+  /* Chart colors - Aurora */
+  --color-chart-1: oklch(0.68 0.15 145);  /* Green */
+  --color-chart-2: oklch(0.72 0.12 85);   /* Yellow */
+  --color-chart-3: oklch(0.68 0.14 35);   /* Orange */
+  --color-chart-4: oklch(0.65 0.16 15);   /* Red */
+  --color-chart-5: oklch(0.68 0.14 310);  /* Purple */
+}
+
+.dark[data-theme="nord"] {
+  /* Background & Foreground - Polar Night */
+  --ui-bg: oklch(0.23 0.02 240);
+  --ui-bg-inverted: oklch(0.96 0.006 240);
+  --ui-bg-elevated: oklch(0.28 0.022 240);
+  --ui-bg-muted: oklch(0.32 0.024 240);
+  --ui-bg-accented: oklch(0.36 0.026 240);
+
+  /* Text colors - Snow Storm */
+  --ui-text: oklch(0.92 0.008 240);
+  --ui-text-muted: oklch(0.75 0.015 240);
+  --ui-text-dimmed: oklch(0.60 0.02 240);
+  --ui-text-highlighted: oklch(0.96 0.006 240);
+  --ui-text-inverted: oklch(0.23 0.02 240);
+
+  /* Border colors */
+  --ui-border: oklch(1 0 0 / 12%);
+  --ui-border-muted: oklch(1 0 0 / 10%);
+  --ui-border-accented: oklch(1 0 0 / 18%);
+  --ui-border-inverted: oklch(0.92 0.008 240);
+
+  /* Primary adjustments for dark mode */
+  --color-primary-500: oklch(0.70 0.10 205);
+  --color-primary-600: oklch(0.58 0.10 210);
+}

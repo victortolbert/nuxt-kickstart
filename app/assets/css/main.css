@@ -1,0 +1,180 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+/* Font import handled by @nuxt/fonts module for optimized loading */
+@import "./themes/index.css";
+@import "./print.css";
+
+/* Base settings - colors come from Nuxt UI (app.config) or theme CSS */
+
+:root {
+  /* Color scheme for native elements */
+  color-scheme: light dark;
+
+  /* Core UI settings (non-color) */
+  --ui-radius: 0rem;
+
+  /* Default theme fonts (overridden by individual themes) */
+  --theme-font-sans: 'JetBrains Mono', ui-monospace, monospace;
+  --theme-font-display: 'JetBrains Mono', ui-monospace, monospace;
+  --theme-font-brand: 'Roboto', system-ui, sans-serif;
+}
+
+.dark {
+  /* Force dark color scheme */
+  color-scheme: dark;
+}
+
+@theme inline {
+  /* Reference theme font variables so they can be switched at runtime */
+  --font-sans: var(--theme-font-sans);
+  --font-display: var(--theme-font-display);
+  --font-brand: var(--theme-font-brand);
+
+  /* Map chart colors to theme */
+  --color-chart-1: var(--color-chart-1);
+  --color-chart-2: var(--color-chart-2);
+  --color-chart-3: var(--color-chart-3);
+  --color-chart-4: var(--color-chart-4);
+  --color-chart-5: var(--color-chart-5);
+}
+
+@layer base {
+  * {
+    @apply border-default outline-(--ui-border)/50;
+  }
+
+  /* Fix Google Maps container height (@fawmi/vue-google-maps) */
+  .vue-map-container {
+    width: 100%;
+    height: 100%;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans antialiased;
+  }
+
+  /* Ensure smooth scroll in dashboard panel body for anchor navigation */
+  [data-slot="panel-body"] {
+    scroll-behavior: smooth;
+  }
+
+  /* Small breathing room above jump targets. The dashboard navbar is a flex
+     sibling above the scroll body (it doesn't overlap content), so this only
+     needs a little gap — not the navbar's height. */
+  :target {
+    scroll-margin-top: 1.5rem;
+  }
+
+  h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
+    scroll-margin-top: 1.5rem;
+  }
+
+  /* Prose content overflow control */
+  .prose pre {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  .prose {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* Tables: wrap only at word boundaries, never mid-word. Cells inherit the
+     aggressive `.prose` break above otherwise, which mangles short headers
+     ("Project" -> "Projec t") when a column gets squeezed. The ProseTable
+     wrapper is overflow-x-auto, so a genuinely-too-wide table scrolls instead. */
+  .prose table {
+    word-break: normal;
+    overflow-wrap: normal;
+  }
+
+  /* Typography for hand-authored .prose content (about/privacy/terms, …).
+     Tailwind Typography is NOT installed — these minimal rules provide the
+     reading rhythm using theme variables only. Markdown content rendered by
+     ContentRenderer is styled by Nuxt UI's prose components instead. */
+  .prose {
+    line-height: 1.7;
+    color: var(--ui-text);
+  }
+
+  .prose :where(p, ul, ol, blockquote, pre, table):not(:where(.not-prose, .not-prose *)) {
+    margin-block: 1.25em;
+  }
+
+  .prose :where(h2, h3, h4) {
+    margin-block: 1.5em 0.75em;
+    font-weight: 700;
+    color: var(--ui-text-highlighted);
+  }
+
+  .prose :where(h2) {
+    margin-block-start: 2.25em;
+  }
+
+  .prose :where(h2) { font-size: 1.375rem; }
+  .prose :where(h3) { font-size: 1.125rem; }
+
+  .prose :where(ul):not(:where(.not-prose, .not-prose *)) { list-style: disc; padding-inline-start: 1.5em; }
+  .prose :where(ol):not(:where(.not-prose, .not-prose *)) { list-style: decimal; padding-inline-start: 1.5em; }
+  .prose :where(li):not(:where(.not-prose, .not-prose *)) { margin-block: 0.35em; }
+
+  .prose :where(a) {
+    color: var(--ui-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .prose :where(a:hover) {
+    color: var(--ui-text-highlighted);
+  }
+
+  .prose :where(blockquote) {
+    border-inline-start: 2px solid var(--ui-border-accented);
+    padding-inline-start: 1em;
+    color: var(--ui-text-muted);
+  }
+
+  .prose :where(code):not(pre code) {
+    background: var(--ui-bg-elevated);
+    padding: 0.125em 0.375em;
+    font-size: 0.9em;
+  }
+
+  .prose :where(strong) {
+    color: var(--ui-text-highlighted);
+  }
+}
+
+/* Anchored headings: small breathing room above jump targets. Unlayered so it
+   beats the Tailwind utilities layer; works for window scrolling and nested
+   scroll containers (e.g. the dashboard panel body) alike. */
+:where(h1, h2, h3, h4, h5, h6)[id] {
+  scroll-margin-top: 1.5rem;
+}
+
+/* GFM task lists: the checkbox IS the marker — drop the redundant disc and
+   hang-indent wrapped lines under the text. Unlayered so it overrides the
+   Tailwind `list-disc` / `ps-*` utilities (which sit in the utilities layer). */
+.prose .contains-task-list {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+.prose .task-list-item {
+  position: relative;
+  list-style: none;
+  padding-inline-start: 1.75em;
+}
+
+.prose .task-list-item > input[type="checkbox"] {
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.45em;
+  margin: 0;
+  accent-color: var(--ui-primary);
+}

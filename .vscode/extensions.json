@@ -1,0 +1,22 @@
+{
+  // See http://go.microsoft.com/fwlink/?LinkId=827846
+  // for the documentation about the extensions.json format
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "csstools.postcss",
+    "connor4312.esbuild-problem-matchers",
+    "yoavbls.pretty-ts-errors",
+
+    // Linters
+    "biomejs.biome", // Biome (linter + formatter) - modern alternative to Prettier + ESLint
+    "deque-systems.vscode-axe-linter", // axe Accessibility Linter
+
+    // IntelliSense / AutoComplete
+    "bradlc.vscode-tailwindcss", // Tailwind CSS IntelliSense
+    "vunguyentuan.vscode-css-variables", // CSS Variable Autocomplete
+
+    // Testing
+    "vitest.explorer", // Vitest
+  ]
+}

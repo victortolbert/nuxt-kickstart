@@ -1,0 +1,16 @@
+# Dashboard — the authenticated user's home, top-level (no nested "App" group).
+# Only visible when logged in (requiresAuth). User profile lives in the footer
+# user menu, not here.
+
+id: dashboard
+label: Dashboard
+icon: layoutDashboard
+hidden: false
+order: 0
+requiresAuth: true
+
+items:
+  - slug: dashboard
+    label: Dashboard
+    icon: layoutDashboard
+    path: /app

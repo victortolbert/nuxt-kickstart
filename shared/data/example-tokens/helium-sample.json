@@ -1,0 +1,520 @@
+{
+  "metadata": {
+    "brand": "Image",
+    "franchise": "Compare"
+  },
+  "tokens": {
+    "primitives": {},
+    "rte": {},
+    "components": {
+      "image-compare": {
+        "Default": {
+          "background": {
+            "$type": "color",
+            "$value": "#00000000"
+          },
+          "border top": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "border right": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "border bottom": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "border left": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "border radius top left": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "border radius top right": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "border radius bottom right": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "border radius bottom left": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "padding top": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "padding right": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "padding bottom": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "padding left": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "handle bar size": {
+            "$type": "width",
+            "$value": "3px"
+          },
+          "handle bar color": {
+            "$type": "color",
+            "$value": "#ff0000"
+          },
+          "text a background": {
+            "$type": "color",
+            "$value": "#ff0000"
+          },
+          "text a border top": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text a border right": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text a border bottom": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text a border left": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text a border radius top left": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text a border radius top right": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text a border radius bottom right": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text a border radius bottom left": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text a padding top": {
+            "$type": "dimension",
+            "$value": "4px"
+          },
+          "text a padding right": {
+            "$type": "dimension",
+            "$value": "12px"
+          },
+          "text a padding bottom": {
+            "$type": "dimension",
+            "$value": "4px"
+          },
+          "text a padding left": {
+            "$type": "dimension",
+            "$value": "12px"
+          },
+          "text a text": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "Roboto",
+              "fontSize": "14px",
+              "fontWeight": 700,
+              "lineHeight": "16px"
+            }
+          },
+          "text a letter spacing": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text a text color": {
+            "$type": "color",
+            "$value": "#ffffff"
+          },
+          "text b background": {
+            "$type": "color",
+            "$value": "#222222"
+          },
+          "text b border top": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text b border right": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text b border bottom": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text b border left": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text b border radius top left": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text b border radius top right": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text b border radius bottom right": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text b border radius bottom left": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text b padding top": {
+            "$type": "dimension",
+            "$value": "4px"
+          },
+          "text b padding right": {
+            "$type": "dimension",
+            "$value": "12px"
+          },
+          "text b padding bottom": {
+            "$type": "dimension",
+            "$value": "4px"
+          },
+          "text b padding left": {
+            "$type": "dimension",
+            "$value": "12px"
+          },
+          "text b text": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "Roboto",
+              "fontSize": "14px",
+              "fontWeight": 700,
+              "lineHeight": "16px"
+            }
+          },
+          "text b letter spacing": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text b text color": {
+            "$type": "color",
+            "$value": "#ffffff"
+          }
+        },
+        "Variant2": {
+          "background": {
+            "$type": "color",
+            "$value": "#00000000"
+          },
+          "border top": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "border right": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "border bottom": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "border left": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "border radius top left": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "border radius top right": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "border radius bottom right": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "border radius bottom left": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "padding top": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "padding right": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "padding bottom": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "padding left": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "shadow": {
+            "$type": "shadow",
+            "$value": {
+              "color": "#00000040",
+              "offsetX": "0px",
+              "offsetY": "4px",
+              "blur": "4px",
+              "spread": "0px"
+            }
+          },
+          "handle bar size": {
+            "$type": "height",
+            "$value": "3px"
+          },
+          "handle bar color": {
+            "$type": "color",
+            "$value": "#ffffff"
+          },
+          "text a background": {
+            "$type": "color",
+            "$value": "#222222"
+          },
+          "text a border top": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text a border right": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text a border bottom": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text a border left": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text a border radius top left": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text a border radius top right": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text a border radius bottom right": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text a border radius bottom left": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text a padding top": {
+            "$type": "dimension",
+            "$value": "4px"
+          },
+          "text a padding right": {
+            "$type": "dimension",
+            "$value": "12px"
+          },
+          "text a padding bottom": {
+            "$type": "dimension",
+            "$value": "4px"
+          },
+          "text a padding left": {
+            "$type": "dimension",
+            "$value": "12px"
+          },
+          "text a text": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "Roboto",
+              "fontSize": "14px",
+              "fontWeight": 700,
+              "lineHeight": "16px"
+            }
+          },
+          "text a letter spacing": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text a text color": {
+            "$type": "color",
+            "$value": "#ffffff"
+          },
+          "text b background": {
+            "$type": "color",
+            "$value": "#222222"
+          },
+          "text b border top": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text b border right": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text b border bottom": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text b border left": {
+            "$type": "border",
+            "$value": {
+              "color": "#00000000",
+              "style": "solid",
+              "width": "1px"
+            }
+          },
+          "text b border radius top left": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text b border radius top right": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text b border radius bottom right": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text b border radius bottom left": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text b padding top": {
+            "$type": "dimension",
+            "$value": "4px"
+          },
+          "text b padding right": {
+            "$type": "dimension",
+            "$value": "12px"
+          },
+          "text b padding bottom": {
+            "$type": "dimension",
+            "$value": "4px"
+          },
+          "text b padding left": {
+            "$type": "dimension",
+            "$value": "12px"
+          },
+          "text b text": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "Roboto",
+              "fontSize": "14px",
+              "fontWeight": 700,
+              "lineHeight": "16px"
+            }
+          },
+          "text b letter spacing": {
+            "$type": "dimension",
+            "$value": "0px"
+          },
+          "text b text color": {
+            "$type": "color",
+            "$value": "#ffffff"
+          }
+        }
+      }
+    }
+  }
+}

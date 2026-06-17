@@ -1,0 +1,41 @@
+skills:
+  vue-skilld:
+    packageName: vue
+    version: 3.5.38
+    packages: "vue@3.5.38"
+    repo: vuejs/core
+    source: "https://github.com/vuejs/core/tree/main/docs"
+    syncedAt: 2026-06-12
+    generator: skilld
+  nuxt-og-image-skilld:
+    packageName: nuxt-og-image
+    version: 6.6.0
+    packages: "nuxt-og-image@6.6.0"
+    repo: nuxt-modules/og-image
+    source: "https://github.com/nuxt-modules/og-image/tree/v6.6.0/docs"
+    syncedAt: 2026-06-12
+    generator: skilld
+  zod-skilld:
+    packageName: zod
+    version: 4.4.3
+    packages: "zod@4.4.3"
+    repo: colinhacks/zod
+    source: "https://github.com/colinhacks/zod/tree/v4.4.3/docs"
+    syncedAt: 2026-06-11
+    generator: skilld
+  drizzle-orm-skilld:
+    packageName: drizzle-orm
+    version: 0.45.2
+    packages: "drizzle-orm@0.45.2"
+    repo: drizzle-team/drizzle-orm
+    source: "https://orm.drizzle.team/**"
+    syncedAt: 2026-04-08
+    generator: skilld
+  nuxt-skilld:
+    packageName: nuxt
+    version: 4.4.8
+    packages: "nuxt@4.4.8"
+    repo: nuxt/nuxt
+    source: "https://github.com/nuxt/nuxt/tree/v4.4.8/docs"
+    syncedAt: 2026-06-11
+    generator: skilld

@@ -1,0 +1,17 @@
+diff --git a/dist/module.mjs b/dist/module.mjs
+index 4d91c205d5e44e60b5576b710f40eb1cba30fcd7..6d0f70382ce70d53028cb69b8feba41d1877d242 100644
+--- a/dist/module.mjs
++++ b/dist/module.mjs
+@@ -13,7 +13,11 @@ const module$1 = defineNuxtModule({
+     options.content ??= [emailsGlob];
+     options.output = { path: "server/assets/emails", ...options.output };
+     options.server = { port: 4321, ...options.server };
+-    addVitePlugin(maizzle(options));
++    // Patched: scope to the client Vite only. Nuxt runs two Vite servers
++    // (client + SSR); the unpatched module attaches to both, so the Maizzle
++    // preview double-spawns, and the SSR instance (no httpServer) never gets a
++    // close handler and orphans on the port. Client-only = one server + clean shutdown.
++    addVitePlugin(maizzle(options), { server: false });
+   }
+ });
+ 

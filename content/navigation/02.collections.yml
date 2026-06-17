@@ -1,0 +1,25 @@
+# Collections navigation group — content-pattern sections (blog + registry)
+
+id: collections
+label: Collections
+icon: stack
+hidden: false
+order: 2
+defaultOpen: true
+public: true
+
+items:
+  - slug: blocks
+    label: Blocks
+    icon: components
+    path: /blocks
+
+  - slug: posts
+    label: Posts
+    icon: fileText
+    path: /posts
+
+  - slug: tech
+    label: Tech
+    icon: cpu
+    path: /tech

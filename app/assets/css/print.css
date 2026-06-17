@@ -1,0 +1,464 @@
+/* Print Styles for Kickstart Content Pages */
+@media print {
+  /* ========================================
+   * HIDE NON-CONTENT ELEMENTS
+   * ======================================== */
+
+  /* Dashboard structure - hide sidebar, navbar, panel headers, logo */
+  [data-dashboard-sidebar],
+  [data-dashboard-navbar],
+  aside,
+  header:has(nav),
+  header,
+  [class*="DashboardNavbar"],
+  [class*="DashboardSidebar"],
+  [class*="DashboardPanel"] > header,
+  [class*="DashboardPanel"] > div:first-child:has(h1),
+  .app-logo,
+  img[alt="Kickstart"] {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    position: absolute !important;
+    left: -9999px !important;
+  }
+
+  /* Navigation and interactive elements */
+  nav,
+  .print\:hidden,
+  button:not([type="submit"]),
+  [role="button"] {
+    display: none !important;
+  }
+
+  /* Slideovers, modals, and overlays */
+  [data-state="open"],
+  [role="dialog"],
+  [role="tooltip"] {
+    display: none !important;
+  }
+
+  /* DevTools, debug elements, and utility components */
+  [class*="DevTools"],
+  [class*="devtools"],
+  [class*="WorldClock"] {
+    display: none !important;
+  }
+
+  /* Breadcrumbs - hide the "Prompts > Title" navigation */
+  article > div:first-child > div:first-child {
+    display: none !important;
+  }
+
+  /* ========================================
+   * HIDE SCROLLBARS
+   * ======================================== */
+
+  * {
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+  }
+
+  *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: none !important;
+  }
+
+  /* ========================================
+   * PAGE LAYOUT
+   * ======================================== */
+
+  /*
+   * Browser header/footer (date, URL, page numbers) is controlled by browser settings.
+   * Users should disable "Headers and footers" in print dialog:
+   * - Chrome: More settings > uncheck "Headers and footers"
+   * - Safari: uncheck "Print headers and footers"
+   * - Firefox: Page Setup > Margins & Header/Footer > set all to blank
+   */
+  /* No fixed `size` — let the user's paper choice (Letter, A4, …) apply,
+   * so these margins work for both 8.5x11in and 210x297mm. */
+  @page {
+    margin: 0.65in 0.7in;
+  }
+
+  @page :first {
+    margin-top: 0.85in;
+  }
+
+  /* ========================================
+   * FORCE LIGHT (ink-friendly) REGARDLESS OF THEME
+   * Dark mode and themed surfaces must never print as ink.
+   * Custom-property !important beats the .dark/[data-theme] overrides.
+   * ======================================== */
+  html {
+    color-scheme: light !important;
+  }
+
+  :root,
+  .dark,
+  [data-theme],
+  .dark [data-theme] {
+    --ui-bg: #ffffff !important;
+    --ui-bg-muted: #f4f4f4 !important;
+    --ui-bg-elevated: #f4f4f4 !important;
+    --ui-bg-accented: #ececec !important;
+    --ui-bg-inverted: #ffffff !important;
+    --ui-text: #000000 !important;
+    --ui-text-muted: #404040 !important;
+    --ui-text-dimmed: #5a5a5a !important;
+    --ui-text-highlighted: #000000 !important;
+    --ui-text-inverted: #000000 !important;
+    --ui-border: #d4d4d4 !important;
+    --ui-border-muted: #e4e4e4 !important;
+    --ui-border-accented: #c8c8c8 !important;
+  }
+
+  body,
+  #__nuxt,
+  main,
+  article {
+    background: #ffffff !important;
+  }
+
+  html,
+  body {
+    font-size: 12pt;
+    line-height: 1.6;
+    color: #000 !important;
+    background: #fff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  /* Remove ALL layout constraints - critical for multi-page printing */
+  *,
+  *::before,
+  *::after {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    position: static !important;
+    float: none !important;
+    transform: none !important;
+    margin-left: 0 !important;
+    left: auto !important;
+    right: auto !important;
+  }
+
+  /* Exception: preserve table layout */
+  table,
+  thead,
+  tbody,
+  tr,
+  th,
+  td {
+    position: relative !important;
+  }
+
+  /* Remove dashboard panel constraints */
+  main,
+  article,
+  div,
+  section,
+  [class*="Panel"],
+  [class*="Container"],
+  [class*="Dashboard"],
+  [class*="Group"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: static !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    display: block !important;
+  }
+
+  /* Preserve inline elements */
+  span,
+  code,
+  a,
+  strong,
+  em,
+  b,
+  i {
+    display: inline !important;
+  }
+
+  /* Preserve list structure */
+  ul,
+  ol {
+    display: block !important;
+    padding-left: 2em !important;
+    margin-left: 0 !important;
+  }
+
+  li {
+    display: list-item !important;
+    margin-left: 0 !important;
+  }
+
+  /* Ensure article has proper margins */
+  article {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Ensure article content flows normally */
+  article,
+  article * {
+    overflow: visible !important;
+  }
+
+  /* Force print:hidden to work */
+  .print\:hidden,
+  [class*="print:hidden"] {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* ========================================
+   * TYPOGRAPHY
+   * ======================================== */
+
+  /* Serif font for print readability */
+  body {
+    font-family: Georgia, "Times New Roman", serif;
+  }
+
+  /* Sans-serif headings for contrast */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #000 !important;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  h1 {
+    font-size: 24pt;
+    margin-bottom: 0.5cm;
+  }
+
+  h2 {
+    font-size: 18pt;
+    margin-top: 1cm;
+    margin-bottom: 0.3cm;
+  }
+
+  h3 {
+    font-size: 14pt;
+    margin-top: 0.8cm;
+    margin-bottom: 0.2cm;
+  }
+
+  p,
+  li {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* ========================================
+   * LINKS
+   * ======================================== */
+
+  a {
+    color: #000 !important;
+    text-decoration: underline;
+  }
+
+  /* Show URLs after external links in content */
+  article a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #666;
+    word-break: break-all;
+  }
+
+  /* Don't show URLs for internal or anchor links */
+  article a[href^="/"]::after,
+  article a[href^="#"]::after,
+  article a[href^="mailto"]::after {
+    content: none;
+  }
+
+  /* ========================================
+   * CODE BLOCKS
+   * ======================================== */
+
+  pre,
+  code {
+    font-family: "JetBrains Mono", "Courier New", monospace !important;
+    font-size: 10pt;
+    background: #f5f5f5 !important;
+    color: #000 !important;
+    border: 1px solid #ddd;
+  }
+
+  pre {
+    padding: 0.5cm;
+    overflow-x: visible;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  code {
+    padding: 0.1em 0.3em;
+  }
+
+  /* Remove syntax highlighting dark backgrounds */
+  pre[class*="shiki"],
+  pre code,
+  .prose pre {
+    background: #f5f5f5 !important;
+  }
+
+  /* Ensure all code text is readable */
+  pre span,
+  code span {
+    color: #000 !important;
+  }
+
+  /* ========================================
+   * TABLES
+   * ======================================== */
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  th,
+  td {
+    border: 1px solid #000;
+    padding: 0.3cm;
+    text-align: left;
+  }
+
+  th {
+    background: #f0f0f0 !important;
+    font-weight: bold;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  /* ========================================
+   * IMAGES
+   * ======================================== */
+
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  figure {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  figcaption {
+    font-size: 10pt;
+    color: #666;
+    font-style: italic;
+  }
+
+  /* ========================================
+   * BADGES AND UI ELEMENTS
+   * ======================================== */
+
+  /* Hide all badges, tags, and tech badges in print */
+  [class*="Badge"],
+  [class*="badge"],
+  [class*="TechBadge"],
+  .not-prose > div:has([class*="Badge"]),
+  .not-prose > div:has([class*="badge"]),
+  .not-prose > div:has([class*="TechBadge"]) {
+    display: none !important;
+  }
+
+  /* ========================================
+   * PROSE (TAILWIND TYPOGRAPHY) OVERRIDES
+   * ======================================== */
+
+  .prose {
+    max-width: 100% !important;
+    color: #000 !important;
+  }
+
+  .prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    border-left: 3px solid #999;
+    color: #333;
+    font-style: italic;
+    padding-left: 1em;
+  }
+
+  .prose :where(hr):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    border-color: #ccc;
+  }
+
+  /* ========================================
+   * PAGE URL FOOTER
+   * ======================================== */
+
+  /* Add page URL to bottom of printed content */
+  article[data-page-url]::after {
+    content: "Source: " attr(data-page-url);
+    display: block;
+    margin-top: 2cm;
+    padding-top: 0.5cm;
+    border-top: 1px solid #ccc;
+    font-size: 9pt;
+    color: #666;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  /* ========================================
+   * LISTS
+   * ======================================== */
+
+  ul,
+  ol {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  li {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* ========================================
+   * READING MEASURE
+   * ======================================== */
+
+  /* Cap the line length for comfortable reading on Letter/A4
+   * (overrides the earlier width resets — declared last on purpose) */
+  article {
+    max-width: 44em !important;
+  }
+}

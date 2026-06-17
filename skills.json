@@ -1,0 +1,19 @@
+{
+  "$schema": "https://unpkg.com/skillman/skills_schema.json",
+  "skills": [
+    {
+      "source": "vercel-labs/skills",
+      "skills": []
+    },
+    {
+      "source": "anthropics/skills",
+      "skills": [
+        "skill-creator"
+      ]
+    },
+    {
+      "source": "nuxt/ui",
+      "skills": []
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+.content-cache
+dist
+
+# Node dependencies
+node_modules
+
+# Logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Large design files
+*.fig
+*.fig.zip
+
+# Test coverage
+coverage/
+
+# Local env files
+.env
+.env.*
+!.env.example
+!.env.1password
+ENV.md
+.playwright-mcp/
+
+# AI/Agent tool folders (editor-specific, not project config)
+# Note: .claude/skills/ IS tracked (curated agent skills ship with the template — see docs/adr/0002)
+.claude/settings.local.json
+.agent/
+.agents/
+.codex/
+.cursor/skills/
+.gemini/
+.github/skills/
+.opencode/
+.trae/
+.windsurf/
+
+skills/npm-*
+.vercel
+.env*.local
+
+# Snyk Security Extension - AI Rules (auto-generated)
+.github/instructions/snyk_rules.instructions.md
+.agents
+
+# Local Netlify folder
+.netlify
+
+# Skilld references (recreated by `skilld install`)
+.skilld
+
+# Python / uv
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+*.whl
+.venv/
+.python-version
+uv.lock
+
+# Playwright
+test-results/
+playwright-report/
+
+# Local-only tooling
+.venv/
+.agents/
+.cursor/
+*.pem

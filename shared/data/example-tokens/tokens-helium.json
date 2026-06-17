@@ -1,0 +1,85 @@
+{
+  "metadata": {
+    "brand": "example-brand",
+    "franchise": "example-franchise",
+    "version": "1.0.0"
+  },
+  "tokens": {
+    "components": {
+      "button": {
+        "primary": {
+          "background": {
+            "type": "color",
+            "value": "#007bff"
+          },
+          "text": {
+            "type": "color",
+            "value": "#ffffff"
+          },
+          "border-radius": {
+            "type": "dimension",
+            "value": "4px"
+          }
+        },
+        "secondary": {
+          "background": {
+            "type": "color",
+            "value": "#6c757d"
+          },
+          "text": {
+            "type": "color",
+            "value": "#ffffff"
+          }
+        }
+      },
+      "input": {
+        "border": {
+          "type": "color",
+          "value": "#ced4da"
+        },
+        "background": {
+          "type": "color",
+          "value": "#ffffff"
+        },
+        "text": {
+          "type": "color",
+          "value": "#495057"
+        }
+      }
+    },
+    "global": {
+      "spacing": {
+        "xs": {
+          "type": "dimension",
+          "value": "4px"
+        },
+        "sm": {
+          "type": "dimension",
+          "value": "8px"
+        },
+        "md": {
+          "type": "dimension",
+          "value": "16px"
+        },
+        "lg": {
+          "type": "dimension",
+          "value": "24px"
+        }
+      },
+      "font-size": {
+        "sm": {
+          "type": "dimension",
+          "value": "12px"
+        },
+        "md": {
+          "type": "dimension",
+          "value": "14px"
+        },
+        "lg": {
+          "type": "dimension",
+          "value": "18px"
+        }
+      }
+    }
+  }
+}

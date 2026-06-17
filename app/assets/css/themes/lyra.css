@@ -1,0 +1,77 @@
+/* Lyra theme (default) - Blue/slate OKLCH palette */
+/* Character: Technical, developer-focused, sharp */
+
+:root[data-theme="lyra"] {
+  /* Typography - Monospace for technical focus */
+  --theme-font-sans: 'JetBrains Mono', ui-monospace, monospace;
+  --theme-font-display: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Core UI settings */
+  --ui-radius: 0.25rem;
+
+  /* Background & Foreground */
+  --ui-bg: oklch(1 0 0);
+  --ui-bg-inverted: oklch(0.13 0.028 261.692);
+  --ui-bg-elevated: oklch(0.985 0.002 247.839);
+  --ui-bg-muted: oklch(0.967 0.003 264.542);
+  --ui-bg-accented: oklch(0.967 0.003 264.542);
+
+  /* Text colors */
+  --ui-text: oklch(0.13 0.028 261.692);
+  --ui-text-muted: oklch(0.551 0.027 264.364);
+  --ui-text-dimmed: oklch(0.707 0.022 261.325);
+  --ui-text-highlighted: oklch(0.21 0.034 264.665);
+  --ui-text-inverted: oklch(0.97 0.014 254.604);
+
+  /* Border colors */
+  --ui-border: oklch(0.928 0.006 264.531);
+  --ui-border-muted: oklch(0.928 0.006 264.531);
+  --ui-border-accented: oklch(0.928 0.006 264.531);
+  --ui-border-inverted: oklch(0.13 0.028 261.692);
+
+  /* Primary color (blue) */
+  --color-primary-50: oklch(0.97 0.014 254.604);
+  --color-primary-100: oklch(0.932 0.032 255.585);
+  --color-primary-200: oklch(0.882 0.059 254.128);
+  --color-primary-300: oklch(0.809 0.105 251.813);
+  --color-primary-400: oklch(0.707 0.165 254.624);
+  --color-primary-500: oklch(0.623 0.214 259.815);
+  --color-primary-600: oklch(0.546 0.245 262.881);
+  --color-primary-700: oklch(0.488 0.243 264.376);
+  --color-primary-800: oklch(0.424 0.199 265.638);
+  --color-primary-900: oklch(0.379 0.146 265.522);
+  --color-primary-950: oklch(0.282 0.091 267.935);
+
+  /* Chart colors */
+  --color-chart-1: oklch(0.809 0.105 251.813);
+  --color-chart-2: oklch(0.623 0.214 259.815);
+  --color-chart-3: oklch(0.546 0.245 262.881);
+  --color-chart-4: oklch(0.488 0.243 264.376);
+  --color-chart-5: oklch(0.424 0.199 265.638);
+}
+
+.dark[data-theme="lyra"] {
+  /* Background & Foreground */
+  --ui-bg: oklch(0.13 0.028 261.692);
+  --ui-bg-inverted: oklch(0.985 0.002 247.839);
+  --ui-bg-elevated: oklch(0.21 0.034 264.665);
+  --ui-bg-muted: oklch(0.278 0.033 256.848);
+  --ui-bg-accented: oklch(0.278 0.033 256.848);
+
+  /* Text colors */
+  --ui-text: oklch(0.985 0.002 247.839);
+  --ui-text-muted: oklch(0.707 0.022 261.325);
+  --ui-text-dimmed: oklch(0.551 0.027 264.364);
+  --ui-text-highlighted: oklch(0.985 0.002 247.839);
+  --ui-text-inverted: oklch(0.13 0.028 261.692);
+
+  /* Border colors */
+  --ui-border: oklch(1 0 0 / 10%);
+  --ui-border-muted: oklch(1 0 0 / 10%);
+  --ui-border-accented: oklch(1 0 0 / 15%);
+  --ui-border-inverted: oklch(0.985 0.002 247.839);
+
+  /* Primary adjustments for dark mode */
+  --color-primary-500: oklch(0.546 0.245 262.881);
+  --color-primary-600: oklch(0.42 0.18 266);
+}

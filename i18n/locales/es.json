@@ -1,0 +1,996 @@
+{
+  "nav": {
+    "filter": "Filtrar menú…",
+    "noMatches": "No hay elementos coincidentes",
+    "home": "Inicio",
+    "tech": "Tecnología",
+    "adminDashboard": "Panel de Administración",
+    "users": "Usuarios",
+    "emailCompose": "Redactar Correo",
+    "emailDrafts": "Borradores de Correo",
+    "emailLists": "Listas de Correo",
+    "emailAnalytics": "Analíticas de Correo",
+    "trash": "Papelera",
+    "appearance": "Apariencia",
+    "siteMap": "Mapa del Sitio",
+    "componentCatalog": "Catálogo de Componentes",
+    "designTokens": "Tokens de Diseño",
+    "guides": "Guías",
+    "posts": "Publicaciones",
+    "examples": "Ejemplos",
+    "dashboard": "Panel",
+    "scoreboard": "Marcador",
+    "podcastApp": "App de Podcast",
+    "charts": "Gráficas",
+    "tables": "Tablas",
+    "calendar": "Calendario",
+    "maps": "Mapas",
+    "email": "Correo",
+    "features": "Características",
+    "techStack": "Stack Tecnológico",
+    "product": "Producto",
+    "resources": "Recursos",
+    "company": "Compañía",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "groups": {
+      "navigate": "Navegar",
+      "admin": "Administración",
+      "examples": "Ejemplos",
+      "guides": "Guías",
+      "collections": "Colecciones",
+      "dashboard": "Panel",
+      "labs": "Laboratorios"
+    },
+    "settings": "Ajustes",
+    "allGuides": "Todas las Guías",
+    "usingThisTemplate": "Usar Esta Plantilla",
+    "gettingStarted": "Primeros Pasos",
+    "architecture": "Arquitectura",
+    "addingContent": "Añadir Contenido",
+    "customization": "Personalización",
+    "deployment": "Despliegue",
+    "testing": "Pruebas",
+    "toggleNavigation": "Alternar navegación",
+    "closeSidebar": "Cerrar la barra lateral",
+    "openSearch": "Abrir la búsqueda",
+    "userMenu": "Menú de usuario",
+    "blocks": "Bloques",
+    "overview": "Vista general",
+    "profile": "Perfil",
+    "llmOptimizer": "Optimizador de visibilidad LLM"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Se produjo un error",
+    "requestTimeout": "La solicitud expiró — comprueba tu conexión e inténtalo de nuevo.",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "submit": "Enviar",
+    "reset": "Restablecer",
+    "confirm": "Confirmar",
+    "yes": "Sí",
+    "no": "No",
+    "ok": "Aceptar",
+    "done": "Hecho",
+    "create": "Crear",
+    "update": "Actualizar",
+    "add": "Añadir",
+    "remove": "Quitar",
+    "clear": "Limpiar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "search": "Buscar",
+    "view": "Ver",
+    "download": "Descargar",
+    "upload": "Subir",
+    "share": "Compartir",
+    "copy": "Copiar",
+    "paste": "Pegar",
+    "select": "Seleccionar",
+    "selectAll": "Seleccionar todo",
+    "none": "Ninguno",
+    "all": "Todo",
+    "more": "Más",
+    "less": "Menos",
+    "showMore": "Mostrar más",
+    "showLess": "Mostrar menos",
+    "seeAll": "Ver todo",
+    "noResults": "No se encontraron resultados",
+    "empty": "Sin elementos"
+  },
+  "search": {
+    "placeholder": "Buscar...",
+    "noResults": "No se encontraron resultados",
+    "searching": "Buscando...",
+    "resultsFor": "Resultados para",
+    "recentSearches": "Búsquedas recientes",
+    "clearHistory": "Borrar historial",
+    "pages": "Páginas",
+    "actions": "Acciones",
+    "themes": "Temas",
+    "openSiteMap": "Abrir mapa del sitio",
+    "openComponentCatalog": "Abrir catálogo de componentes",
+    "switchToTheme": "Cambiar a tema {theme}",
+    "active": "(Activo)",
+    "openAppearance": "Abrir Ajustes de Apariencia"
+  },
+  "theme": {
+    "label": "Tema",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema",
+    "switchTo": "Cambiar a tema {theme}",
+    "labels": {
+      "system": "Predeterminado",
+      "lyra": "Lyra",
+      "nord": "Nord",
+      "dracula": "Dracula",
+      "catppuccin": "Catppuccin",
+      "carnival": "Carnival"
+    },
+    "descriptions": {
+      "system": "Usa los colores de app.config (primario + neutral)",
+      "lyra": "Tema azul/pizarra inspirado en shadcn",
+      "nord": "Paleta ártica de tonos azulados nórdicos",
+      "dracula": "Paleta oscura de morados y rosas",
+      "catppuccin": "Colores pastel cálidos",
+      "carnival": "Colores de carnaval cálidos y juguetones"
+    }
+  },
+  "auth": {
+    "signIn": "Iniciar sesión",
+    "signOut": "Cerrar sesión",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "account": "Cuenta",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "rememberMe": "Recordarme",
+    "createAccount": "Crear cuenta",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "noAccount": "¿No tienes una cuenta?",
+    "login": {
+      "title": "Inicia sesión en Kickstart",
+      "redirectNotice": "Inicia sesión para acceder a este contenido",
+      "subtitle": "Autenticación sin contraseña — no se requieren contraseñas",
+      "emailRequired": "El correo electrónico es obligatorio",
+      "emailInvalid": "Introduce una dirección de correo electrónico válida",
+      "phoneRequired": "El número de teléfono es obligatorio",
+      "phoneInvalid": "Introduce un número de teléfono válido",
+      "magicLinkFailed": "No se pudo enviar el enlace mágico",
+      "emailCodeFailed": "No se pudo enviar el código por correo",
+      "smsCodeFailed": "No se pudo enviar el código por SMS",
+      "codeInvalid": "Código inválido o caducado",
+      "githubFailed": "Error al iniciar sesión con GitHub",
+      "checkEmail": "Revisa tu correo electrónico",
+      "magicLinkSentTo": "Enviamos un enlace de inicio de sesión a",
+      "codeSentTo": "Enviamos un código de 6 dígitos a",
+      "sendAgain": "Enviar de nuevo",
+      "sendAgainIn": "Enviar de nuevo en {n}s",
+      "backToLogin": "Volver al inicio de sesión",
+      "returnToLoginForm": "Volver al formulario de inicio de sesión",
+      "resendMagicLink": "Reenviar enlace mágico",
+      "resendEmailCode": "Reenviar código por correo",
+      "resendSmsCode": "Reenviar código por SMS",
+      "enterYourCode": "Introduce tu código",
+      "verificationCode": "Código de verificación",
+      "smsVerificationCode": "Código de verificación por SMS",
+      "otpAriaLabel": "Código de verificación de 6 dígitos",
+      "smsOtpAriaLabel": "Código de verificación por SMS de 6 dígitos",
+      "verifying": "Verificando...",
+      "emailAddress": "Dirección de correo electrónico",
+      "emailPlaceholder": "tu{'@'}ejemplo.com",
+      "phoneNumber": "Número de teléfono",
+      "phonePlaceholder": "+1 (555) 123-4567",
+      "chooseMethod": "Elige tu método de inicio de sesión",
+      "sendMagicLink": "Enviar enlace mágico",
+      "sendMagicLinkAria": "Enviar enlace mágico a tu correo",
+      "sendEmailCode": "Enviar código por correo",
+      "sendEmailCodeAria": "Enviar código de verificación a tu correo",
+      "sendSmsCode": "Enviar código por SMS",
+      "sendSmsCodeAria": "Enviar código de verificación por SMS",
+      "orContinueWith": "O continúa con",
+      "continueWithGithub": "Continuar con GitHub",
+      "signInWithGithub": "Iniciar sesión con GitHub",
+      "termsNotice": "Al iniciar sesión, aceptas nuestros términos de servicio y política de privacidad"
+    },
+    "user": "Usuario",
+    "guest": "Invitado",
+    "goToApp": "Ir a la aplicación"
+  },
+  "locale": {
+    "label": "Idioma",
+    "switchTo": "Cambiar a {language}"
+  },
+  "translation": {
+    "fallbackMessage": "Este contenido aún no está disponible en su idioma. Está viendo la versión en inglés.",
+    "machineTranslatedMessage": "Este contenido fue traducido automáticamente y puede contener errores.",
+    "contributeLink": "Ayúdanos a traducir",
+    "dismiss": "Cerrar"
+  },
+  "appearance": {
+    "title": "Apariencia",
+    "description": "Personaliza la apariencia",
+    "tabs": {
+      "themes": "Temas",
+      "icons": "Iconos",
+      "components": "Componentes"
+    },
+    "colorMode": {
+      "label": "Modo de Color",
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema"
+    },
+    "theme": {
+      "label": "Tema"
+    },
+    "iconSet": {
+      "label": "Conjunto de Iconos",
+      "variant": "Variante",
+      "preview": "Vista Previa",
+      "variants": "{count} variante | {count} variantes"
+    },
+    "components": {
+      "defaultColor": "Color Predeterminado",
+      "defaultVariant": "Variante Predeterminada",
+      "defaultSize": "Tamaño Predeterminado",
+      "preview": "Vista Previa",
+      "sampleButton": "Botón de Ejemplo",
+      "sampleBadge": "Insignia de Ejemplo"
+    },
+    "colors": {
+      "primary": "Primario",
+      "secondary": "Secundario",
+      "success": "Éxito",
+      "info": "Información",
+      "warning": "Advertencia",
+      "error": "Error",
+      "neutral": "Neutral"
+    },
+    "variants": {
+      "solid": "Sólido",
+      "outline": "Contorno",
+      "soft": "Suave",
+      "subtle": "Sutil",
+      "ghost": "Fantasma",
+      "link": "Enlace"
+    },
+    "sizes": {
+      "xs": "Extra Pequeño",
+      "sm": "Pequeño",
+      "md": "Mediano",
+      "lg": "Grande",
+      "xl": "Extra Grande"
+    },
+    "iconSets": {
+      "tabler": "Tabler",
+      "lucide": "Lucide",
+      "phosphor": "Phosphor",
+      "heroicons": "Heroicons",
+      "remix": "Remix"
+    },
+    "page": {
+      "title": "Configuración de Apariencia",
+      "description": "Personaliza la apariencia de tu aplicación"
+    }
+  },
+  "landing": {
+    "hero": {
+      "title": "Empieza con los cimientos decididos",
+      "subtitle": "Kickstart es un starter de Nuxt 4 opinado y centrado en el contenido. Autenticación sin contraseña, panel de administración, correo, ejemplos en tiempo real, tokens de diseño, seis temas e i18n — ya configurados.",
+      "getStarted": "Comenzar",
+      "whatsInside": "Qué Incluye",
+      "terminal": "terminal"
+    },
+    "features": {
+      "title": "Qué Incluye",
+      "subtitle": "Infraestructura de nivel de producción, ya integrada y probada",
+      "auth": {
+        "title": "Autenticación y Administración",
+        "description": "Inicio de sesión sin contraseña (enlace mágico, OTP, OAuth) con panel completo: usuarios, roles, editor de contenido, papelera"
+      },
+      "content": {
+        "title": "Motor de Contenido",
+        "description": "Colecciones de Nuxt Content v3 con esquemas Zod — {docs}, {posts} y registros con convenciones de visibilidad y estado",
+        "links": {
+          "docs": "docs",
+          "posts": "posts",
+          "blog": "publicaciones"
+        }
+      },
+      "email": {
+        "title": "Correo y Tiempo Real",
+        "description": "Borradores de campañas, listas y analíticas vía Resend, además de patrones WebSocket/SSE/polling con negociación automática"
+      },
+      "theming": {
+        "title": "Temas e i18n",
+        "description": "{themes} con cambio sin parpadeo, {tokens} y localización en/es lista para ampliar",
+        "links": {
+          "themes": "Seis temas OKLCH",
+          "tokens": "herramientas de tokens de diseño"
+        }
+      }
+    },
+    "examples": {
+      "title": "Ejemplos",
+      "subtitle": "Implementaciones de referencia funcionales para aprender, ampliar o eliminar",
+      "open": "Abrir Ejemplo",
+      "viewAll": "Ver Todos los Ejemplos",
+      "tokens": {
+        "title": "Estudio de Tokens de Diseño",
+        "description": "Transforma tokens JSON a CSS, iOS, Android, JS o Tailwind con el pipeline de Style Dictionary."
+      },
+      "blocks": {
+        "title": "Bloques",
+        "description": "Un catálogo de bloques de app — widgets, atajos y extensiones agrupados por app."
+      },
+      "charts": {
+        "title": "Gráficas y Paneles",
+        "description": "Visualizaciones de línea, barras y dona compatibles con SSR usando Unovis, además de demos de tablas, calendario y mapas."
+      },
+      "email": {
+        "title": "Campañas de Correo",
+        "description": "Redacta, programa y rastrea campañas con borradores, listas y analíticas de aperturas/clics (admin)."
+      },
+      "readGuide": "Leer la guía"
+    },
+    "techStack": {
+      "title": "Stack Tecnológico",
+      "subtitle": "Herramientas y frameworks modernos para construir productos excepcionales",
+      "categories": {
+        "frontend": "Frontend",
+        "backend": "Backend",
+        "tools": "Herramientas",
+        "testing": "Pruebas"
+      },
+      "viewAll": "Ver el stack tecnológico completo"
+    },
+    "newsletter": {
+      "title": "Mantente Informado",
+      "subtitle": "Recibe avisos de nuevas publicaciones y guías. Sin spam, cancela cuando quieras.",
+      "placeholder": "tu{'@'}correo.com",
+      "subscribe": "Suscribirse",
+      "emailAriaLabel": "Dirección de correo",
+      "toasts": {
+        "required": {
+          "title": "Correo requerido",
+          "description": "Ingresa tu dirección de correo electrónico"
+        },
+        "invalid": {
+          "title": "Correo no válido",
+          "description": "Ingresa una dirección de correo válida"
+        },
+        "duplicate": {
+          "title": "Ya estás suscrito",
+          "description": "Este correo ya está en nuestra lista del boletín"
+        },
+        "success": {
+          "title": "¡Listo!",
+          "description": "Gracias por suscribirte a nuestro boletín"
+        },
+        "error": {
+          "title": "Error",
+          "description": "No se pudo completar la suscripción. Inténtalo de nuevo."
+        }
+      }
+    },
+    "cta": {
+      "title": "¿Listo para construir sobre Kickstart?",
+      "subtitle": "Crea un repositorio desde la plantilla, ejecuta el script de inicialización y empieza a desarrollar con autenticación, administración, correo e i18n ya configurados.",
+      "getStarted": "Comenzar",
+      "goToDashboard": "Ir al Panel",
+      "readTheDocs": "Leer la Documentación"
+    },
+    "footer": {
+      "tagline": "Un starter de Nuxt opinado y centrado en el contenido, con los cimientos ya decididos",
+      "copyright": "© {year} Kickstart. Todos los derechos reservados."
+    }
+  },
+  "pages": {
+    "dashboard": {
+      "goodMorning": "Buenos Días",
+      "goodAfternoon": "Buenas Tardes",
+      "goodEvening": "Buenas Noches",
+      "search": "Buscar",
+      "activity": "Actividad de contenido",
+      "activitySubtitle": "Contenido nuevo por mes",
+      "byStatus": "Contenido por estado",
+      "recentContent": "Contenido reciente",
+      "noContent": "Aún no hay contenido.",
+      "colTitle": "Título",
+      "colType": "Tipo",
+      "colStatus": "Estado",
+      "colUpdated": "Actualizado",
+      "typeGuide": "Guía",
+      "typePost": "Publicación",
+      "status": {
+        "seed": "Semilla",
+        "sprout": "Brote",
+        "evergreen": "Perenne",
+        "wilted": "Marchito"
+      }
+    },
+    "posts": {
+      "subtitle": "Publicaciones de la colección `posts`.",
+      "empty": "No se encontraron publicaciones.",
+      "filterPlaceholder": "Filtrar publicaciones..."
+    },
+    "guides": {
+      "subtitle": "Aprende a usar Kickstart con guías y tutoriales paso a paso.",
+      "filterPlaceholder": "Filtrar...",
+      "categories": {
+        "gettingStarted": "Primeros Pasos",
+        "content": "Contenido",
+        "authentication": "Autenticación",
+        "customization": "Personalización",
+        "deployment": "Despliegue",
+        "other": "Otros"
+      },
+      "difficulty": {
+        "beginner": "Principiante",
+        "intermediate": "Intermedio",
+        "advanced": "Avanzado"
+      },
+      "prerequisites": "Requisitos previos:"
+    },
+    "tech": {
+      "empty": "Ninguna entrada coincide con los filtros.",
+      "filterPlaceholder": "Filtrar...",
+      "buckets": {
+        "languages": "Lenguajes",
+        "frameworks": "Frameworks",
+        "libraries": "Bibliotecas",
+        "tooling": "Herramientas",
+        "platforms": "Plataformas",
+        "other": "Otros"
+      },
+      "columns": {
+        "name": "Nombre",
+        "type": "Tipo",
+        "description": "Descripción"
+      },
+      "typeFilterLabel": "Tipo:",
+      "showing": "Mostrando {count} de {total} elemento | Mostrando {count} de {total} elementos",
+      "gridView": "Vista de cuadrícula",
+      "listView": "Vista de lista"
+    },
+    "toc": "En esta página",
+    "examples": {
+      "subtitle": "Panel de ejemplo con tablas y widgets",
+      "totalProjects": "Proyectos Totales",
+      "active": "Activos",
+      "completed": "Completados",
+      "upcomingEvents": "Próximos Eventos",
+      "activityOverview": "Resumen de Actividad",
+      "totalActivity": "Actividad Total",
+      "contentStatus": "Estado del Contenido",
+      "recentProjects": "Proyectos Recientes",
+      "viewAll": "Ver todo",
+      "openCalendar": "Abrir calendario",
+      "allDay": "Todo el Día",
+      "noUpcomingEvents": "No hay eventos próximos esta semana",
+      "componentExamples": "Ejemplos de Componentes",
+      "project": "Proyecto",
+      "status": "Estado",
+      "progress": "Progreso",
+      "tablesTagline": "Filtrar, Ordenar, Paginar",
+      "chartsTagline": "Línea, Barras, Dona",
+      "calendarTagline": "FullCalendar + UCalendar",
+      "mapsTagline": "Integración con Google Maps",
+      "tablesDemo": {
+        "title": "Ejemplos de Tablas",
+        "description": "Patrones de tablas simples y avanzadas con el componente UTable de Nuxt UI.",
+        "simpleTable": {
+          "title": "Tabla Simple",
+          "description": "Tabla básica con configuración mínima"
+        },
+        "advancedTable": {
+          "title": "Tabla Avanzada",
+          "description": "Filtrado, ordenamiento y paginación"
+        },
+        "rowSelection": {
+          "title": "Selección de Filas",
+          "description": "Tabla con filas seleccionables para acciones masivas"
+        },
+        "filters": {
+          "searchPlaceholder": "Filtrar proyectos, propietarios, tecnologías...",
+          "allStatuses": "Todos los estados",
+          "allDomains": "Todos los dominios",
+          "clear": "Limpiar Filtros"
+        },
+        "columns": {
+          "domain": "Dominio",
+          "tech": "Stack Tecnológico",
+          "priority": "Prioridad",
+          "owner": "Propietario",
+          "lastUpdated": "Última Actualización"
+        },
+        "status": {
+          "seed": "Semilla",
+          "sprout": "Brote",
+          "evergreen": "Perenne",
+          "wilted": "Marchito"
+        },
+        "priority": {
+          "low": "Baja",
+          "medium": "Media",
+          "high": "Alta"
+        },
+        "domains": {
+          "all": "Todos los Dominios",
+          "healthcare": "Salud",
+          "biopharma": "Biofarma",
+          "insurtech": "Insurtech",
+          "proptech": "PropTech",
+          "nonprofit": "Sin Fines de Lucro",
+          "other": "Otro"
+        },
+        "selectedCount": "{count} seleccionado | {count} seleccionados",
+        "showingResults": "Mostrando {shown} de {total} resultados",
+        "rowsPerPage": "Filas por página:",
+        "pageOf": "Página {page} de {total}",
+        "sort": {
+          "sortBy": "Ordenar por {column}",
+          "sortedAscending": "{column}, orden ascendente",
+          "sortedDescending": "{column}, orden descendente"
+        },
+        "bulk": {
+          "archive": "Archivar",
+          "export": "Exportar",
+          "clearSelection": "Limpiar selección",
+          "toastTitle": "{action} {count} elemento | {action} {count} elementos",
+          "toastDescription": "Seleccionados: {names}"
+        },
+        "aria": {
+          "selectAllRows": "Seleccionar todas las filas",
+          "selectRow": "Seleccionar {name}",
+          "rowActions": "Acciones de fila"
+        }
+      }
+    },
+    "llmOptimizer": {
+      "eyebrow": "Laboratorio · Optimizador de visibilidad LLM",
+      "heroTitle": "¿Qué tan legible es tu sitio para las máquinas que lo leen?",
+      "heroLead": "Evalúa cualquier página según las siete señales que deciden si los LLM pueden encontrarla, analizarla y confiar en ella — datos estructurados, rastreabilidad, claridad semántica y más — resumidas en una única puntuación de visibilidad de 0 a 100.",
+      "whatGetsMeasured": "Qué se mide",
+      "readout": "Lectura de visibilidad",
+      "scannedOn": "Escaneado el {date}",
+      "categoryBreakdown": "Desglose por categoría",
+      "weightHint": "Ancho de barra = peso compuesto · relleno = puntuación",
+      "findings": "Hallazgos",
+      "filterAll": "Todos",
+      "noFindings": "Sin hallazgos: nada que corregir aquí.",
+      "noFindingsSeverity": "Sin hallazgos de tipo {severity}: nada que corregir aquí.",
+      "recommendations": "Recomendaciones",
+      "pointsGain": "+{points} pts",
+      "codeExample": "Ejemplo de código",
+      "recentScans": "Escaneos recientes",
+      "trendSubtitle": "Tendencia de visibilidad · {count} escaneos",
+      "breadcrumb": "Optimizador LLM",
+      "scanCrumb": "Escaneo",
+      "savedScanCrumb": "Escaneo guardado",
+      "analyzing": "Analizando {url}…",
+      "loadingSaved": "Cargando escaneo guardado…",
+      "scanErrorTitle": "No se pudo escanear esa página",
+      "scanErrorFallback": "Algo salió mal al obtener la página. Verifica la URL e inténtalo de nuevo.",
+      "notFoundTitle": "Escaneo no encontrado",
+      "notFoundDesc": "Este escaneo guardado no existe o ha caducado.",
+      "tryAnother": "Probar otra URL",
+      "runNew": "Ejecutar un nuevo escaneo",
+      "scanAnother": "Escanear otro sitio",
+      "permalink": "Enlace permanente",
+      "form": {
+        "urlLabel": "URL del sitio",
+        "run": "Escanear",
+        "note": "Introduce cualquier URL pública para ejecutar un escaneo en vivo, o explora un ejemplo abajo.",
+        "exploreSample": "Explorar un ejemplo"
+      },
+      "severity": {
+        "critical": "Crítico",
+        "high": "Alto",
+        "medium": "Medio",
+        "low": "Bajo",
+        "info": "Info"
+      },
+      "aiInsight": {
+        "title": "Análisis con IA",
+        "unavailable": "El análisis con IA no está configurado para este entorno.",
+        "prompt": "Genera un análisis narrativo de esta tarjeta de puntuación.",
+        "generate": "Generar análisis con IA",
+        "retry": "Reintentar",
+        "failed": "No se pudo generar el análisis. Inténtalo de nuevo.",
+        "summary": "Resumen",
+        "actionPlan": "Plan de acción",
+        "moreDetail": "Más detalle",
+        "industryContext": "Contexto del sector",
+        "technicalDetails": "Detalles técnicos"
+      },
+      "progress": {
+        "fetching": "Obteniendo página…",
+        "rendering": "Renderizando (headless)…",
+        "analyzing": "Analizando señales…",
+        "scoring": "Puntuando…",
+        "saving": "Guardando…",
+        "done": "Listo"
+      },
+      "sites": {
+        "title": "Sitios",
+        "subtitle": "Agrupa escaneos por dominio para seguir una propiedad a lo largo del tiempo.",
+        "nameLabel": "Nombre",
+        "namePlaceholder": "Mi blog",
+        "urlLabel": "URL base",
+        "add": "Añadir sitio",
+        "empty": "Aún no hay sitios: añade uno arriba.",
+        "scanCount": "{count} escaneos",
+        "notScanned": "Sin escanear",
+        "scanThis": "Escanear este sitio",
+        "deleteTitle": "¿Eliminar sitio?",
+        "deleteDesc": "Esto elimina la propiedad guardada. Los escaneos existentes no se eliminan.",
+        "crumb": "Sitios",
+        "notFound": "Sitio no encontrado",
+        "history": "Historial de escaneos",
+        "noScans": "Aún no hay escaneos para este sitio.",
+        "formError": "Introduce un nombre y una URL http(s) válida."
+      },
+      "dashboard": {
+        "crumb": "Panel",
+        "title": "Panel de visibilidad",
+        "subtitle": "Analíticas del portafolio en todos los escaneos.",
+        "totalScans": "Escaneos totales",
+        "averageScore": "Puntuación media",
+        "latestGrade": "Última nota",
+        "distribution": "Distribución de puntuaciones",
+        "distributionSubtitle": "Escaneos por rango de puntuación",
+        "topIssues": "Problemas principales",
+        "issueCount": "{count} escaneos",
+        "empty": "Aún no hay escaneos — ejecuta uno para llenar el panel.",
+        "viewAll": "Ver todos los escaneos"
+      },
+      "compare": {
+        "crumb": "Comparar",
+        "title": "Comparación de competidores",
+        "subtitle": "Análisis comparativo de {count} escaneos.",
+        "run": "Ejecutar comparación",
+        "running": "Escaneando…",
+        "runningHint": "Escaneando el sitio y cada competidor — esto puede tardar un momento.",
+        "competitors": "Competidores",
+        "empty": "Aún no hay competidores — añade uno abajo para comparar.",
+        "nameLabel": "Nombre",
+        "namePlaceholder": "Competidor",
+        "urlLabel": "URL",
+        "add": "Añadir competidor",
+        "formError": "Introduce un nombre y una URL http(s) válida.",
+        "scoreOverlay": "Superposición de puntuaciones",
+        "detailedScores": "Puntuaciones detalladas",
+        "category": "Categoría",
+        "composite": "Puntuación compuesta",
+        "grade": "Nota",
+        "notScanned": "Sin escanear",
+        "deleteTitle": "¿Quitar competidor?",
+        "deleteDesc": "Esto deja de seguirlo en esta comparación. Los escaneos existentes no se eliminan."
+      },
+      "inspect": {
+        "crumb": "Inspector de URL",
+        "title": "Inspector de URL",
+        "subtitle": "Puntuaciones de visibilidad de páginas individuales descubiertas durante el escaneo.",
+        "run": "Ejecutar inspección",
+        "running": "Rastreando…",
+        "runningHint": "Rastreando enlaces internos y puntuando cada página — esto puede tardar un momento.",
+        "errorTitle": "No se pudo inspeccionar este sitio",
+        "error": "La inspección falló. Inténtalo de nuevo o comprueba que el sitio esté accesible.",
+        "empty": "Ejecuta una inspección para rastrear las páginas internas de este sitio.",
+        "pagesDiscovered": "Páginas descubiertas",
+        "avgScore": "Puntuación media",
+        "highestScore": "Puntuación más alta",
+        "lowestScore": "Puntuación más baja",
+        "sortBy": "Ordenar por:",
+        "sortScore": "Puntuación de visibilidad",
+        "sortIssues": "Número de problemas",
+        "sortUrl": "URL",
+        "pageLevel": "Visibilidad por página",
+        "pageLevelHint": "Cada página descubierta desde enlaces internos se analizó de forma independiente en las 7 dimensiones.",
+        "pageUrl": "URL de la página",
+        "score": "Puntuación",
+        "grade": "Nota",
+        "issues": "Problemas"
+      },
+      "brand": {
+        "crumb": "Mención de marca",
+        "title": "Prueba de mención de marca",
+        "runningTitle": "Ejecutando prueba de mención de marca…",
+        "subtitle": "Pregunta a cada plataforma de IA si reconoce tu marca.",
+        "run": "Ejecutar prueba",
+        "running": "Ejecutando…",
+        "notConfigured": "No hay proveedor de IA configurado. Añade una clave de API (Anthropic, OpenAI, Google o xAI) para ejecutar la prueba.",
+        "statusIdle": "Listo",
+        "statusPending": "Pendiente",
+        "statusRunning": "Consultando…",
+        "statusError": "Error",
+        "recognized": "Reconocida",
+        "notRecognized": "No reconocida",
+        "sentiment": {
+          "positive": "Positivo",
+          "neutral": "Neutral",
+          "negative": "Negativo"
+        }
+      },
+      "traffic": {
+        "crumb": "Inteligencia de tráfico",
+        "title": "Inteligencia de tráfico",
+        "demoData": "Datos de demostración",
+        "subtitle": "Actividad de bots de IA en todas las propiedades configuradas.",
+        "refresh": "Actualizar",
+        "range7": "Últimos 7 días",
+        "range14": "Últimos 14 días",
+        "range30": "Últimos 30 días",
+        "totalInteractions": "Interacciones agénticas totales",
+        "acrossProperties": "En todas las propiedades configuradas",
+        "successRate": "Tasa de éxito",
+        "hitWeighted": "Ponderado por aciertos en todas las filas",
+        "agenticVsHuman": "Tráfico agéntico frente a humano",
+        "agenticVsHumanHint": "A nivel de portafolio — porcentaje del tráfico (IA + humano) en la ventana seleccionada.",
+        "aiBot": "Bot de IA",
+        "human": "Humano",
+        "share": "del total",
+        "otherBots": "Otros bots",
+        "internal": "Interno",
+        "totalEvents": "Eventos totales",
+        "trend": "Tendencia de tráfico",
+        "agentDistribution": "Distribución por tipo de agente",
+        "interactionDistribution": "Distribución de interacciones",
+        "interactionDistributionHint": "Desglose a nivel de portafolio del tráfico agéntico frente al de otros bots.",
+        "records": "Registros de tráfico",
+        "recordsHint": "{count} interacciones agénticas en todas las filas — la suma de la columna Aciertos.",
+        "colDomain": "Dominio",
+        "colUri": "URI",
+        "colAgent": "Agente",
+        "colMarket": "Mercado",
+        "colCategory": "Categoría",
+        "colStatus": "Estado",
+        "colHits": "Aciertos",
+        "colSuccess": "% de éxito"
+      },
+      "admin": {
+        "crumb": "Administración",
+        "title": "Administración del laboratorio",
+        "subtitle": "Estadísticas operativas de todas las propiedades del laboratorio.",
+        "totalScans": "Escaneos totales",
+        "totalSites": "Sitios totales",
+        "totalCompetitors": "Competidores totales",
+        "system": "Sistema",
+        "aiProviders": "Proveedores de IA",
+        "renderEngine": "Motor de renderizado",
+        "enabled": "Activado",
+        "disabled": "Desactivado",
+        "none": "Ninguno configurado",
+        "userManagement": "Gestión de usuarios",
+        "userManagementHint": "Los roles, sesiones y cuentas se gestionan en el panel de administración compartido.",
+        "openUsers": "Abrir gestión de usuarios"
+      }
+    },
+    "labs": {
+      "title": "Laboratorios",
+      "subtitle": "Apps y experimentos asistidos por IA construidos sobre UXLab.",
+      "open": "Abrir",
+      "llmVo": {
+        "desc": "Evalúa la visibilidad de cualquier página ante los LLM que la leen: datos estructurados, rastreabilidad, renderizado y más."
+      },
+      "scoreboard": {
+        "desc": "Una app de puntuación de eventos en vivo con jueces por token y un tablero público."
+      },
+      "podcasts": {
+        "desc": "Una demo de reproductor de podcasts: episodios, progreso de reproducción y suscripciones."
+      }
+    }
+  },
+  "clock": {
+    "title": "Reloj Mundial",
+    "show": "Mostrar reloj mundial",
+    "close": "Cerrar reloj mundial",
+    "ariaLabel": "Reloj mundial",
+    "workingHours": "Horario laboral (9:00-18:00)",
+    "mumbai": "Bombay",
+    "atlanta": "Atlanta",
+    "chicago": "Chicago",
+    "losAngeles": "Los Ángeles"
+  },
+  "settings": {
+    "title": "Configuración",
+    "seoDescription": "Personaliza tu experiencia Kickstart. Elige tus preferencias de tema y modo de color.",
+    "active": "Activo",
+    "developer": {
+      "title": "Desarrollador",
+      "devOnly": "Solo Desarrollo",
+      "visibilityMode": "Modo de Visibilidad del Contenido",
+      "bypassDisabledTitle": "Omisión de visibilidad de desarrollo desactivada",
+      "bypassDisabledDescription": "Añade {code} a la URL para activar la omisión de visibilidad y simular diferentes roles de usuario.",
+      "visibilityHint": "Simula diferentes roles de usuario para probar el filtrado de visibilidad. Los cambios se aplican de inmediato."
+    },
+    "preview": {
+      "badge": "Insignia",
+      "defaultText": "Color de texto predeterminado",
+      "mutedText": "Color de texto atenuado",
+      "dimmedText": "Color de texto tenue"
+    },
+    "profile": {
+      "title": "Configuración de Perfil",
+      "subtitle": "Gestiona los datos de tu cuenta y cómo te ven los demás.",
+      "name": "Nombre",
+      "namePlaceholder": "Tu nombre",
+      "emailHelp": "El correo electrónico no se puede cambiar",
+      "avatarUrl": "URL del Avatar",
+      "avatarPlaceholder": "https://example.com/avatar.png",
+      "avatarPreviewAlt": "Vista previa del avatar",
+      "saveProfile": "Guardar perfil",
+      "updateError": "No se pudo actualizar el perfil",
+      "profileUpdated": "Perfil actualizado",
+      "phoneNumber": "Número de Teléfono",
+      "phoneLabel": "Número de teléfono",
+      "phonePlaceholder": "+34612345678",
+      "phoneRequired": "El número de teléfono es obligatorio",
+      "sendCode": "Enviar código de verificación",
+      "sendCodeError": "No se pudo enviar el código",
+      "otpPrompt": "Introduce el código de 6 dígitos enviado a {phone}",
+      "otpAriaLabel": "Código de verificación telefónica de 6 dígitos",
+      "invalidCode": "Código inválido o caducado",
+      "verifying": "Verificando...",
+      "phoneUpdated": "Número de teléfono actualizado"
+    }
+  },
+  "admin": {
+    "users": {
+      "count": "{count} usuario | {count} usuarios",
+      "searchPlaceholder": "Buscar por correo electrónico...",
+      "clearSearch": "Limpiar búsqueda",
+      "filterByRole": "Filtrar por rol",
+      "empty": "No se encontraron usuarios",
+      "table": {
+        "name": "Nombre",
+        "role": "Rol",
+        "status": "Estado",
+        "lastLogin": "Último acceso"
+      },
+      "roles": {
+        "all": "Todos",
+        "admin": "Administrador",
+        "editor": "Editor",
+        "viewer": "Lector"
+      },
+      "status": {
+        "active": "Activo",
+        "banned": "Suspendido",
+        "never": "Nunca"
+      },
+      "time": {
+        "minutesAgo": "hace {n} min",
+        "hoursAgo": "hace {n} h",
+        "daysAgo": "hace {n} d"
+      },
+      "tooltips": {
+        "cannotChangeOwnRole": "No puedes cambiar tu propio rol",
+        "cannotChangeBannedRole": "No se puede cambiar el rol de un usuario suspendido"
+      },
+      "pagination": {
+        "page": "Página {page}"
+      },
+      "toasts": {
+        "fetchFailed": "Error al cargar los usuarios",
+        "roleUpdateFailed": "Error al actualizar el rol",
+        "roleUpdated": "Rol actualizado",
+        "roleChangedTo": "Rol cambiado a {role}",
+        "revokeFailed": "Error al revocar las sesiones",
+        "sessionsRevoked": "Sesiones revocadas",
+        "sessionsRevokedDescription": "Se han revocado todas las sesiones",
+        "banFailed": "Error al suspender al usuario",
+        "userBanned": "Usuario suspendido",
+        "unbanFailed": "Error al reactivar al usuario",
+        "userUnbanned": "Usuario reactivado",
+        "deleteFailed": "Error al eliminar al usuario",
+        "userDeleted": "Usuario eliminado"
+      },
+      "detail": {
+        "backToUsers": "Volver a Usuarios",
+        "notFoundTitle": "Usuario no encontrado",
+        "notFoundDescription": "No existe ningún usuario con este ID.",
+        "unnamedUser": "Usuario sin nombre",
+        "banReason": "Motivo de la suspensión:",
+        "emailVerified": "Correo verificado",
+        "phoneNumber": "Número de teléfono",
+        "joined": "Fecha de registro",
+        "loginCount": "Número de accesos",
+        "linkedAccounts": "Cuentas vinculadas",
+        "noLinkedAccounts": "Sin cuentas vinculadas",
+        "activeSessions": "Sesiones activas",
+        "noActiveSessions": "Sin sesiones activas",
+        "unknownIp": "IP desconocida",
+        "unknownDevice": "Dispositivo desconocido",
+        "sessionCreated": "Creada {time}",
+        "sessionExpires": "Expira {time}",
+        "revokeAllSessions": "Revocar todas las sesiones",
+        "actions": "Acciones",
+        "cannotModifySelf": "No puedes modificar tu propia cuenta",
+        "editRole": "Editar rol",
+        "dangerZone": "Zona de peligro",
+        "deleteWarning": "Elimina permanentemente este usuario y todos sus datos. Esta acción no se puede deshacer."
+      },
+      "actions": {
+        "banUser": "Suspender usuario",
+        "unbanUser": "Reactivar usuario",
+        "deletePermanently": "Eliminar permanentemente"
+      },
+      "providers": {
+        "emailOtp": "OTP por correo",
+        "magicLink": "Enlace mágico"
+      },
+      "revokeModal": {
+        "title": "¿Revocar las sesiones?",
+        "description": "Se cerrará la sesión del usuario en todos los dispositivos.",
+        "body": "Esto revocará todas las sesiones activas de este usuario. Tendrá que iniciar sesión de nuevo.",
+        "confirm": "Revocar"
+      },
+      "banModal": {
+        "title": "¿Suspender al usuario?",
+        "description": "¿Suspender a {name}?",
+        "body": "El usuario no podrá iniciar sesión mientras esté suspendido.",
+        "reasonLabel": "Motivo de la suspensión",
+        "reasonPlaceholder": "Motivo de la suspensión (opcional)"
+      },
+      "unbanModal": {
+        "title": "¿Reactivar al usuario?",
+        "description": "¿Reactivar a {name}?",
+        "body": "El usuario podrá iniciar sesión de nuevo."
+      },
+      "deleteModal": {
+        "title": "¿Eliminar al usuario permanentemente?",
+        "description": "Esta acción no se puede deshacer.",
+        "confirmPrompt": "Escribe {email} para confirmar la eliminación.",
+        "confirmLabel": "Confirmar correo electrónico",
+        "confirmPlaceholder": "Escribe el correo para confirmar"
+      }
+    }
+  },
+  "content": {
+    "actions": {
+      "copyLink": "Copiar enlace",
+      "emailPage": "Enviar esta página por correo",
+      "shareViaEmail": "Compartir por correo",
+      "printPage": "Imprimir esta página",
+      "editPage": "Editar esta página",
+      "subjectPrefix": "Echa un vistazo a",
+      "toasts": {
+        "copied": {
+          "title": "Enlace copiado",
+          "description": "URL de la página copiada al portapapeles"
+        },
+        "copyFailed": {
+          "title": "Error al copiar",
+          "description": "No se pudo copiar al portapapeles"
+        }
+      }
+    }
+  },
+  "error": {
+    "goHome": "Ir al inicio",
+    "goBack": "Volver",
+    "notFound": {
+      "title": "Página no encontrada",
+      "description": "La página que buscas no existe o se ha movido."
+    },
+    "generic": {
+      "title": "Algo salió mal",
+      "description": "Ocurrió un error inesperado. Inténtalo de nuevo."
+    },
+    "catReward": "Aquí tienes un gato. Perdón por el desvío."
+  }
+}

@@ -1,0 +1,7 @@
+/* Theme aggregator - imports all CSS Zen Garden style themes */
+/* Note: 'system' theme has no CSS - it uses Nuxt UI's app.config colors */
+@import "./lyra.css";
+@import "./nord.css";
+@import "./dracula.css";
+@import "./catppuccin.css";
+@import "./carnival.css";

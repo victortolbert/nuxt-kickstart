@@ -1,0 +1,94 @@
+# pnpm 11 settings (migrated from .npmrc).
+# autoInstallPeers is the default since pnpm 8 — set explicitly so peer deps
+# are resolved automatically and never need to be declared in package.json.
+# shamefully-hoist was removed: previously-phantom deps (h3,
+# vitest-environment-nuxt) are now declared directly in package.json, so the
+# strict (non-flattened) node_modules layout resolves everything correctly.
+autoInstallPeers: true
+strictPeerDependencies: false
+
+overrides:
+  serialize-javascript: ^7.0.5
+
+allowBuilds:
+  '@google/genai': true
+  '@parcel/watcher': true
+  better-sqlite3: true
+  esbuild: true
+  maplibre-gl: true
+  onnxruntime-node: true
+  protobufjs: true
+  sharp: true
+  simple-git-hooks: true
+  unrs-resolver: true
+  vue-demi: true
+
+# pnpm 11 enforces a default minimumReleaseAge of 24h (supply-chain guard).
+# NOTE: entries here must be BARE package names — `name@version` never matches.
+# These exempt the 2026-06-12 dependency update; safe to prune after 2026-06-13.
+minimumReleaseAgeExclude:
+  - '@esbuild/aix-ppc64'
+  - '@esbuild/android-arm'
+  - '@esbuild/android-arm64'
+  - '@esbuild/android-x64'
+  - '@esbuild/darwin-arm64'
+  - '@esbuild/darwin-x64'
+  - '@esbuild/freebsd-arm64'
+  - '@esbuild/freebsd-x64'
+  - '@esbuild/linux-arm'
+  - '@esbuild/linux-arm64'
+  - '@esbuild/linux-ia32'
+  - '@esbuild/linux-loong64'
+  - '@esbuild/linux-mips64el'
+  - '@esbuild/linux-ppc64'
+  - '@esbuild/linux-riscv64'
+  - '@esbuild/linux-s390x'
+  - '@esbuild/linux-x64'
+  - '@esbuild/netbsd-arm64'
+  - '@esbuild/netbsd-x64'
+  - '@esbuild/openbsd-arm64'
+  - '@esbuild/openbsd-x64'
+  - '@esbuild/openharmony-arm64'
+  - '@esbuild/sunos-x64'
+  - '@esbuild/win32-arm64'
+  - '@esbuild/win32-ia32'
+  - '@esbuild/win32-x64'
+  - esbuild
+  - nuxt-link-checker
+  - nuxt-og-image
+  - nuxt-schema-org
+  - nuxt-seo-utils
+  - '@aws-sdk/client-s3'
+  - '@better-auth/core'
+  - '@better-auth/drizzle-adapter'
+  - '@better-auth/kysely-adapter'
+  - '@better-auth/memory-adapter'
+  - '@better-auth/mongo-adapter'
+  - '@better-auth/prisma-adapter'
+  - '@better-auth/telemetry'
+  - '@img/sharp-darwin-arm64'
+  - '@img/sharp-darwin-x64'
+  - '@img/sharp-freebsd-wasm32'
+  - '@img/sharp-linux-arm'
+  - '@img/sharp-linux-arm64'
+  - '@img/sharp-linux-ppc64'
+  - '@img/sharp-linux-riscv64'
+  - '@img/sharp-linux-s390x'
+  - '@img/sharp-linux-x64'
+  - '@img/sharp-linuxmusl-arm64'
+  - '@img/sharp-linuxmusl-x64'
+  - '@img/sharp-wasm32'
+  - '@img/sharp-webcontainers-wasm32'
+  - '@img/sharp-win32-arm64'
+  - '@img/sharp-win32-ia32'
+  - '@img/sharp-win32-x64'
+  - '@nuxtjs/seo'
+  - better-auth
+  - nuxtseo-shared
+  - sharp
+  - '@iconify-json/lucide@1.2.112'
+  - '@vue/language-core@3.3.5'
+  - vue-tsc@3.3.5
+
+patchedDependencies:
+  '@maizzle/nuxt': patches/@maizzle__nuxt.patch

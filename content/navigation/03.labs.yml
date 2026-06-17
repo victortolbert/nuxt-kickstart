@@ -1,0 +1,37 @@
+# Labs navigation group — AI-assisted app demos hosted in this template.
+# Each lab is a self-contained experiment that may eventually graduate into its
+# own focused project. Auth-gated: only visible to logged-in users.
+
+id: labs
+label: Labs
+icon: wand
+hidden: false
+order: 3
+defaultOpen: true
+requiresAuth: true
+
+items:
+  - slug: overview
+    label: Overview
+    icon: layoutDashboard
+    path: /labs
+
+  - slug: design-tokens
+    label: Design Tokens
+    icon: palette
+    path: /examples/design-tokens
+
+  - slug: podcast-app
+    label: Podcast App
+    icon: microphone
+    path: /labs/podcasts
+
+  - slug: scoreboard
+    label: Scoreboard
+    icon: trophy
+    path: /labs/scoreboard
+
+  - slug: llm-optimizer
+    label: LLM Optimizer
+    icon: robot
+    path: /labs/llm-vo

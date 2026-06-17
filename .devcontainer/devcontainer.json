@@ -1,0 +1,97 @@
+{
+  "name": "Kickstart Dev",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "forwardPorts": [3000, 24678],
+  "portsAttributes": {
+    "3000": { "label": "Nuxt Dev Server", "onAutoForward": "notify" },
+    "24678": { "label": "Nuxt HMR WebSocket", "onAutoForward": "silent" }
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Vue.volar",
+        "dbaeumer.vscode-eslint",
+        "bradlc.vscode-tailwindcss",
+        "antfu.iconify",
+        "EditorConfig.EditorConfig",
+        "esbenp.prettier-vscode",
+        "vitest.explorer",
+        "csstools.postcss",
+        "yoavbls.pretty-ts-errors",
+        "connor4312.esbuild-problem-matchers"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+
+        "files.associations": {
+          "*.mdc": "markdown"
+        },
+
+        "prettier.enable": false,
+        "editor.formatOnSave": false,
+
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit",
+          "source.organizeImports": "never"
+        },
+
+        "eslint.rules.customizations": [
+          { "rule": "style/*", "severity": "off", "fixable": true },
+          { "rule": "format/*", "severity": "off", "fixable": true },
+          { "rule": "*-indent", "severity": "off", "fixable": true },
+          { "rule": "*-spacing", "severity": "off", "fixable": true },
+          { "rule": "*-spaces", "severity": "off", "fixable": true },
+          { "rule": "*-order", "severity": "off", "fixable": true },
+          { "rule": "*-dangle", "severity": "off", "fixable": true },
+          { "rule": "*-newline", "severity": "off", "fixable": true },
+          { "rule": "*quotes", "severity": "off", "fixable": true },
+          { "rule": "*semi", "severity": "off", "fixable": true }
+        ],
+
+        "eslint.validate": [
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact",
+          "vue",
+          "html",
+          "markdown",
+          "json",
+          "jsonc",
+          "yaml",
+          "toml",
+          "xml",
+          "gql",
+          "graphql",
+          "astro",
+          "svelte",
+          "css",
+          "less",
+          "scss",
+          "pcss",
+          "postcss"
+        ],
+
+        "tailwindCSS.includeLanguages": {
+          "vue": "html",
+          "vue-html": "html"
+        },
+        "tailwindCSS.experimental.classRegex": [
+          ["ui:\\s*{([^}]*)}", "[\"'`]([^\"'`]*)[\"'`]"]
+        ],
+
+        "i18n-ally.localesPaths": ["i18n/locales"]
+      }
+    }
+  },
+  "remoteEnv": {
+    "NODE_OPTIONS": "--max-old-space-size=8192"
+  }
+}

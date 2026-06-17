@@ -1,0 +1,51 @@
+# Guides navigation group — the template's documentation, top-level
+
+id: guides
+label: Guides
+icon: book2
+hidden: false
+order: 1
+defaultOpen: true
+public: true
+
+items:
+  - slug: all-guides
+    label: All Guides
+    icon: book2
+    path: /guides
+
+  - slug: using-this-template
+    label: Using This Template
+    icon: sparkles
+    path: /guides/using-this-template
+
+  - slug: getting-started
+    label: Getting Started
+    icon: bookOpen
+    path: /guides/getting-started
+
+  - slug: architecture
+    label: Architecture
+    icon: building
+    path: /guides/architecture
+    visibility: internal
+
+  - slug: adding-content
+    label: Adding Content
+    icon: fileText
+    path: /guides/adding-content
+
+  - slug: customization
+    label: Customization
+    icon: palette
+    path: /guides/customization
+
+  - slug: deployment
+    label: Deployment
+    icon: upload
+    path: /guides/deployment
+
+  - slug: testing
+    label: Testing
+    icon: checklist
+    path: /guides/testing

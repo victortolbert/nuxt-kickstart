@@ -1,0 +1,30 @@
+# Dependencies & build output (reinstalled/regenerated inside the image)
+node_modules
+.output
+.nuxt
+dist
+
+# Local data & secrets — never bake these into an image layer
+.data
+.env
+.env.*
+
+# Dev-only tooling not needed for a production build
+.devcontainer
+.claude
+.vscode
+
+# VCS & CI artifacts
+.git
+.gitignore
+.github
+
+# Test / coverage / report artifacts
+coverage
+test-results
+playwright-report
+playwright/.cache
+
+# Misc
+*.log
+.DS_Store

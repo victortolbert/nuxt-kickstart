@@ -1,0 +1,86 @@
+{
+  "color": {
+    "primary": {
+      "$type": "color",
+      "$value": "#3b82f6"
+    },
+    "secondary": {
+      "$type": "color",
+      "$value": "#8b5cf6"
+    },
+    "success": {
+      "$type": "color",
+      "$value": "#10b981"
+    },
+    "error": {
+      "$type": "color",
+      "$value": "#ef4444"
+    },
+    "background": {
+      "$type": "color",
+      "$value": "#ffffff"
+    }
+  },
+  "spacing": {
+    "xs": {
+      "$type": "dimension",
+      "$value": "4px"
+    },
+    "sm": {
+      "$type": "dimension",
+      "$value": "8px"
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": "16px"
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": "24px"
+    },
+    "xl": {
+      "$type": "dimension",
+      "$value": "32px"
+    }
+  },
+  "typography": {
+    "heading": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Inter, sans-serif",
+        "fontWeight": "700",
+        "fontSize": "24px",
+        "lineHeight": "1.2"
+      }
+    },
+    "body": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Inter, sans-serif",
+        "fontWeight": "400",
+        "fontSize": "16px",
+        "lineHeight": "1.5"
+      }
+    }
+  },
+  "border": {
+    "default": {
+      "$type": "border",
+      "$value": {
+        "color": "#e5e7eb",
+        "style": "solid",
+        "width": "1px"
+      }
+    },
+    "radius": {
+      "$type": "dimension",
+      "$value": "8px"
+    }
+  },
+  "shadow": {
+    "default": {
+      "$type": "shadow",
+      "$value": "0 1px 3px 0 rgba(0, 0, 0, 0.1)"
+    }
+  }
+}
