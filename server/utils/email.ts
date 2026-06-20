@@ -17,7 +17,7 @@ function getResendClient() {
 
 function getEmailFrom() {
   // eslint-disable-next-line node/no-process-env
-  return process.env.EMAIL_FROM_ADDRESS || process.env.NUXT_EMAIL_FROM || 'Kickstart <noreply@resend.dev>'
+  return process.env.EMAIL_FROM_ADDRESS || process.env.NUXT_EMAIL_FROM || 'Kickstart <onboarding@resend.dev>'
 }
 
 export interface SendEmailOptions {
