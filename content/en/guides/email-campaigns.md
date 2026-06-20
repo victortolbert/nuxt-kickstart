@@ -28,11 +28,11 @@ Sending needs two environment variables:
 
 ```bash
 # .env
-RESEND_API_KEY="re_..."                          # from resend.com/api-keys
-EMAIL_FROM_ADDRESS="Kickstart <noreply@yourdomain.com>"  # a verified Resend sender
+RESEND_API_KEY="re_..."                              # from resend.com/api-keys
+EMAIL_FROM_ADDRESS="Kickstart <onboarding@resend.dev>"  # zero-setup test sender (see below)
 ```
 
-The from-address domain must be verified in Resend. Without `RESEND_API_KEY`, sends fail (auth emails included) — in development you can still compose and preview, you just can't send.
+The default `onboarding@resend.dev` is Resend's test sender: it works with any valid key but only **delivers to your own Resend-account email**. For real delivery, verify a domain in Resend and set `EMAIL_FROM_ADDRESS` to an address on it. Without `RESEND_API_KEY`, sends fail (auth emails included) — in development you can still compose and preview, you just can't send.
 
 ## The admin pages
 
