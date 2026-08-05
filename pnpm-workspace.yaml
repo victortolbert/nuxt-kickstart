@@ -89,6 +89,7 @@ minimumReleaseAgeExclude:
   - '@iconify-json/lucide@1.2.112'
   - '@vue/language-core@3.3.5'
   - vue-tsc@3.3.5
+  - '@victortolbert/preflight@0.1.1'
 
 patchedDependencies:
   '@maizzle/nuxt': patches/@maizzle__nuxt.patch

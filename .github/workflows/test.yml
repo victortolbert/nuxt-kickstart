@@ -26,6 +26,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      # Fails if a file Preflight manages has diverged without this repo saying
+      # so. To keep a local change, declare the file in `unmanaged` in
+      # preflight.config.ts — that makes the divergence a reviewable decision
+      # rather than drift. Runs before the tests because it is fast and its
+      # failure is unambiguous.
+      - name: Check for config drift
+        run: pnpm exec preflight check
+
       - name: Run unit tests
         run: pnpm run test:unit
 
