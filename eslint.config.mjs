@@ -139,6 +139,11 @@ export default withNuxt(
         '**/*.md',
         // Figma plugins - separate project with different conventions
         'figma-plugins/**',
+        // Maizzle build output. `pnpm run build` compiles app/emails/*.vue to
+        // this directory (see app/emails/README.md), so the inlined HTML here is
+        // generated, not authored — formatting it by hand is undone by the next
+        // build. Edit the .vue sources instead.
+        'server/assets/emails/**',
       ],
     },
     {
