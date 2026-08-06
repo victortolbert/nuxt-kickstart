@@ -24,8 +24,11 @@ allowBuilds:
   vue-demi: true
 
 # pnpm 11 enforces a default minimumReleaseAge of 24h (supply-chain guard).
-# NOTE: entries here must be BARE package names — `name@version` never matches.
-# These exempt the 2026-06-12 dependency update; safe to prune after 2026-06-13.
+# Both forms match, measured against pnpm 11.20.0: a bare name exempts every
+# version of the package, `name@version` exempts only that one. Prefer the
+# versioned form — it stops applying the moment the package moves on.
+# The bare entries below exempt the 2026-06-12 dependency update and are now
+# prunable; the versioned ones are pinned to what the lockfile resolves.
 minimumReleaseAgeExclude:
   - '@esbuild/aix-ppc64'
   - '@esbuild/android-arm'
