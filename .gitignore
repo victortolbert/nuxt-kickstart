@@ -36,6 +36,7 @@ ENV.md
 # AI/Agent tool folders (editor-specific, not project config)
 # Note: .claude/skills/ IS tracked (curated agent skills ship with the template — see docs/adr/0002)
 .claude/settings.local.json
+.claude/scheduled_tasks.lock
 .agent/
 .agents/
 .codex/

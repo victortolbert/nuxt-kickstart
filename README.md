@@ -125,8 +125,10 @@ Auth is handled by [Better Auth](https://www.better-auth.com/) with Drizzle ORM 
 
 ```bash
 RESEND_API_KEY=re_xxxx
-EMAIL_FROM_ADDRESS=Kickstart <noreply@yourdomain.com>
+EMAIL_FROM_ADDRESS=Kickstart <onboarding@resend.dev>
 ```
+
+`onboarding@resend.dev` is Resend's zero-setup test sender (delivers only to your own Resend-account email). For production, verify a domain and use an address on it.
 
 </details>
 

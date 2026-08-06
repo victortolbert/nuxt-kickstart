@@ -142,10 +142,14 @@ Both email-based methods require [Resend](https://resend.com/) for sending email
 
 ```bash
 RESEND_API_KEY=re_xxxx
-EMAIL_FROM_ADDRESS=Kickstart <noreply@yourdomain.com>
+EMAIL_FROM_ADDRESS=Kickstart <onboarding@resend.dev>
 ```
 
-For production, verify your sending domain in Resend.
+`onboarding@resend.dev` is Resend's zero-setup test sender — it works with any valid
+API key without verifying a domain, but it only **delivers to your own Resend-account
+email** (sign-ins for other addresses will send OK yet never arrive). For production,
+verify your sending domain in Resend and set `EMAIL_FROM_ADDRESS` to an address on it
+(e.g. `Kickstart <noreply@yourdomain.com>`).
 
 ## SMS OTP
 
