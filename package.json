@@ -17,7 +17,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare && pnpm run db:init",
-    "prepare": "skilld update -b",
+    "prepare": "skilld update -b && simple-git-hooks",
     "clean": "rm -rf .nuxt .output dist .cache .data/content",
     "clean:content": "rm -rf .data/content",
     "clean:full": "rm -rf .nuxt .output dist .cache .data node_modules pnpm-lock.yaml && pnpm install",
@@ -95,6 +95,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^9.0.0",
+    "@commitlint/cli": "^21.2.1",
     "@eslint/eslintrc": "^3.3.5",
     "@figma-plugin/helpers": "^0.15.2",
     "@figma/eslint-plugin-figma-plugins": "^1.0.0",
@@ -129,7 +130,7 @@
     "@tiptap/vue-3": "^3.26.1",
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^25.9.3",
-    "@victortolbert/preflight": "^0.1.1",
+    "@victortolbert/preflight": "^0.2.0",
     "@vitest/coverage-v8": "^4.1.8",
     "@vue/test-utils": "^2.4.11",
     "changelogithub": "^14.0.0",
@@ -166,7 +167,8 @@
     "vue-tsc": "^3.3.5"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm exec nano-staged"
+    "pre-commit": "pnpm exec nano-staged",
+    "commit-msg": "pnpm exec commitlint --edit $1"
   },
   "nano-staged": {
     "*.{js,ts,mjs,cjs,jsx,tsx,vue}": "eslint --fix"
