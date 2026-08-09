@@ -34,6 +34,19 @@ jobs:
       - name: Check for config drift
         run: pnpm exec preflight check
 
+      # No job ran eslint until now, in this repo or in uxlab — which is how
+      # uxlab accumulated 60 errors on develop while every check stayed green.
+      # A green checks list said nothing about lint.
+      #
+      # Placed here for the same reason the drift check is: fast, and its
+      # failure is unambiguous. It needs nothing beyond the install above,
+      # because `eslint.config.mjs` imports `./.nuxt/eslint.config.mjs` and
+      # `postinstall` runs `nuxt prepare`. That is also why this is a step in
+      # the existing job rather than a job of its own — a separate job would
+      # repeat both the install and the prepare to gain nothing.
+      - name: Run lint
+        run: pnpm run lint
+
       - name: Run unit tests
         run: pnpm run test:unit
 
