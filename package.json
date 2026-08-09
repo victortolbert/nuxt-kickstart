@@ -130,7 +130,7 @@
     "@tiptap/vue-3": "^3.26.1",
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^25.9.3",
-    "@victortolbert/preflight": "^0.2.0",
+    "@victortolbert/preflight": "^0.3.0",
     "@vitest/coverage-v8": "^4.1.8",
     "@vue/test-utils": "^2.4.11",
     "changelogithub": "^14.0.0",

@@ -23,13 +23,25 @@ allowBuilds:
   unrs-resolver: true
   vue-demi: true
 
-# pnpm 11 enforces a default minimumReleaseAge of 24h (supply-chain guard).
+# pnpm 11 defaults minimumReleaseAge to 1440 minutes / 24h (supply-chain guard).
+# It is NOT set anywhere in this repo or on the machine — it is pnpm's own
+# default, which also makes it non-strict: per pnpm's docs, minimumReleaseAgeStrict
+# defaults to false unless minimumReleaseAge is configured explicitly. So writing
+# `minimumReleaseAge: 1440` here to "document current behaviour" would make it
+# stricter than it is today. Don't.
+#
 # Both forms match, measured against pnpm 11.20.0: a bare name exempts every
 # version of the package, `name@version` exempts only that one. Prefer the
 # versioned form — it stops applying the moment the package moves on.
 # The bare entries below exempt the 2026-06-12 dependency update and are now
 # prunable; the versioned ones are pinned to what the lockfile resolves.
 minimumReleaseAgeExclude:
+  # Deliberate exception to the versioned-form preference above. Preflight is
+  # first-party — we publish it — so the cooldown protects against nothing here
+  # and only delays adopting our own releases by a day. Every future version
+  # should be exempt too, which is exactly what the bare form means.
+  - '@victortolbert/preflight'
+
   - '@esbuild/aix-ppc64'
   - '@esbuild/android-arm'
   - '@esbuild/android-arm64'

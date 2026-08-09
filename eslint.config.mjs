@@ -1,5 +1,6 @@
 import antfu from '@antfu/eslint-config'
 import * as figmaPlugin from '@figma/eslint-plugin-figma-plugins'
+import preflightVueA11y from '@victortolbert/preflight/vue-a11y'
 import pluginCasePolice from 'eslint-plugin-case-police'
 
 import withNuxt from './.nuxt/eslint.config.mjs'
@@ -29,6 +30,10 @@ export default withNuxt(
       vue: {
         a11y: true,
         overrides: {
+          // Preflight's shared vue-a11y policy — the three rules both this
+          // template and uxlab agree on. Rationale lives with the preset
+          // (ADR-0009); local divergence, if any, is declared below.
+          ...preflightVueA11y,
           'vue/custom-event-name-casing': 'off',
           'vue/one-component-per-file': 'off',
           'vue/no-irregular-whitespace': 'off',
@@ -90,13 +95,6 @@ export default withNuxt(
             svg: 'always',
             math: 'always',
           }],
-          // Accept either the `for`/`id` pair OR nesting — the stricter
-          // default (both) rejects valid patterns with wrapped form controls.
-          'vue-a11y/label-has-for': ['error', {
-            required: { some: ['nesting', 'id'] },
-          }],
-          'vue-a11y/no-autofocus': 'off',
-          'vue-a11y/media-has-caption': 'off',
         },
       },
       pnpm: false,
