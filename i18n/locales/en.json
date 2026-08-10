@@ -292,7 +292,7 @@
   "landing": {
     "hero": {
       "title": "Start with the foundations decided",
-      "subtitle": "Kickstart is an opinionated, content-first Nuxt 4 starter. Passwordless auth, an admin suite, email, real-time examples, design tokens, six themes, and i18n — already wired up.",
+      "subtitle": "Kickstart is an opinionated, content-first Nuxt 4 starter. Passwordless auth, an admin suite, email, real-time examples, design tokens, seven themes, and i18n — already wired up.",
       "getStarted": "Get Started",
       "whatsInside": "What's Inside",
       "terminal": "terminal"
@@ -321,7 +321,7 @@
         "title": "Theming & i18n",
         "description": "{themes} with FOUC-free switching, {tokens}, and en/es localization ready to extend",
         "links": {
-          "themes": "Six OKLCH themes",
+          "themes": "Seven OKLCH themes",
           "tokens": "design tokens tooling"
         }
       }

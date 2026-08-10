@@ -95,6 +95,6 @@ Sidebar navigation is data-driven: YAML groups in `content/navigation/*.yml` are
 
 - **kebab-case filenames** everywhere (ESLint-enforced); `[param].vue` routes are the exception
 - **`#shared` not `~/shared/`** for imports from `shared/`
-- **No hardcoded colors** — CSS variables only (`--ui-*`, `--color-*`); every change must work across all 6 themes and light/dark
+- **No hardcoded colors** — CSS variables only (`--ui-*`, `--color-*`); every change must work across all themes and light/dark
 - **Zod at the boundaries** — runtime validation for API input and content frontmatter
 - **`useRuntimeConfig()`** — never read `process.env` directly in app/server code

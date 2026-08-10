@@ -49,7 +49,7 @@ docs, and commits; sharpen them here when they drift.
   a collection-prefixed icon directly, with a short documented exempt list
   (brand logos, theme identity icons).
 - **Theme** — a named color scheme (System, Lyra, Nord, Dracula,
-  Catppuccin, Carnival) applied CSS-Zen-Garden-style via
+  Catppuccin, Carnival, Broadsheet) applied CSS-Zen-Garden-style via
   `data-theme`; managed by `useTheme()`.
 - **UiColor / UiVariant / UiSize** — the canonical types for the Nuxt UI
   semantic sets (`color`, `variant`, `size`), in `shared/types/appearance.ts`,

@@ -18,7 +18,7 @@ created: '2026-01-23'
 
 ## Theme System
 
-Kickstart uses a [CSS Zen Garden-style](https://daveshea.com/projects/zen/){target="_blank"} theming system where themes are purely CSS-based with no component changes required. Six built-in themes are available — click a name below to apply it live:
+Kickstart uses a [CSS Zen Garden-style](https://daveshea.com/projects/zen/){target="_blank"} theming system where themes are purely CSS-based with no component changes required. Seven built-in themes are available — click a name below to apply it live:
 
 ::theme-showcase
 ::
@@ -192,7 +192,7 @@ export const themes: ThemeConfig[] = [
 3. Update `shared/types/theme.ts`:
 
 ```ts
-export type ThemeId = 'system' | 'lyra' | 'nord' | 'dracula' | 'catppuccin' | 'carnival' | 'my-theme'
+export type ThemeId = 'system' | 'lyra' | 'nord' | 'dracula' | 'catppuccin' | 'carnival' | 'broadsheet' | 'my-theme'
 ```
 
 ## Component Catalog

@@ -5,7 +5,7 @@ description: Official brand colors and typography for the Kickstart design syste
 
 ## Overview
 
-Kickstart uses a CSS Zen Garden-style theming system with OKLCH color space for perceptually uniform colors across six built-in themes (System default, Lyra, Nord, Dracula, Catppuccin, Carnival).
+Kickstart uses a CSS Zen Garden-style theming system with OKLCH color space for perceptually uniform colors across seven built-in themes (System default, Lyra, Nord, Dracula, Catppuccin, Carnival, Broadsheet).
 
 **Keywords**: branding, visual identity, styling, brand colors, typography, visual formatting, visual design, theming, OKLCH
 

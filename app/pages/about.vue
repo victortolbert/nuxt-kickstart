@@ -10,7 +10,7 @@
           This site is built on <strong>Kickstart</strong> (<code>nuxt-kickstart</code>),
           an opinionated, content-first starter for Nuxt 4 — passwordless
           authentication, an admin suite, an email subsystem, real-time
-          examples, design tokens tooling, six themes, and i18n, already
+          examples, design tokens tooling, seven themes, and i18n, already
           wired up and tested.
         </p>
         <p>

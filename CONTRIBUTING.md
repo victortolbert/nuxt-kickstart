@@ -59,7 +59,7 @@ pnpm run build        # production build
 
 - **pnpm only**; **kebab-case** filenames (ESLint-enforced); `<script setup>` → `<template>` → `<style>`.
 - **Imports**: `#shared` (not `~/shared/`), `#server` for server code.
-- **No hardcoded colors** — CSS variables only (`--ui-*`, `--color-*`); every change must work across all 6 themes and light/dark.
+- **No hardcoded colors** — CSS variables only (`--ui-*`, `--color-*`); every change must work across all themes and light/dark.
 - **No hardcoded icons** — use `resolveIcon('semanticName')` from `useAppearance()` (see `CLAUDE.md` → Icons).
 - **Nuxt UI v4** — consult the `nuxt-ui-remote` MCP before using a `U*` component; v2 patterns break silently.
 - **i18n** — user-visible strings go through `t()`; keep `en`/`es` at parity.
@@ -70,7 +70,7 @@ pnpm run build        # production build
 
 - **Conventional commits**: `type(scope): description` (`feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`). Atomic — one logical change per commit. No AI/tool footnotes in commit messages.
 - Keep the gate green; add tests for new behavior.
-- If you touch UI, check it across the 6 themes + light/dark and keep it accessible.
+- If you touch UI, check it across all themes + light/dark and keep it accessible.
 - Update docs alongside code: `CONTEXT.md` for new domain terms, `docs/adr/` for decisions worth recording, the relevant `**/README.md`, and the in-app guides under `content/en/guides/`.
 
 ## Environment variables

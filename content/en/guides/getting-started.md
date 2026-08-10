@@ -15,7 +15,7 @@ updated: '2026-06-11'
 
 ## What is Kickstart?
 
-Kickstart (`nuxt-kickstart`) is an opinionated, content-first enterprise starter built on [Nuxt](https://nuxt.com/){target="_blank"} v4 and [Nuxt Content](https://content.nuxt.com/){target="_blank"} v3. It ships with passwordless authentication, an admin suite, an email subsystem, real-time examples, design tokens tooling, six themes, and i18n already wired up — so new projects start with the foundations decided.
+Kickstart (`nuxt-kickstart`) is an opinionated, content-first enterprise starter built on [Nuxt](https://nuxt.com/){target="_blank"} v4 and [Nuxt Content](https://content.nuxt.com/){target="_blank"} v3. It ships with passwordless authentication, an admin suite, an email subsystem, real-time examples, design tokens tooling, seven themes, and i18n already wired up — so new projects start with the foundations decided.
 
 ## Prerequisites
 

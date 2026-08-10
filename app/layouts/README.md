@@ -15,7 +15,7 @@ Page wrappers providing consistent UI structure.
 
 - **Sidebar navigation**: Collapsible menu groups
 - **Command palette**: `Cmd+K` search across all collections
-- **Theme switcher**: 6 themes (System/default, Lyra, Nord, Dracula, Catppuccin, Carnival)
+- **Theme switcher**: 7 themes (System/default, Lyra, Nord, Dracula, Catppuccin, Carnival, Broadsheet)
 - **User menu**: Profile dropdown driven by Better Auth (`authClient.useSession()`)
 - **Site map / component catalog**: Page hierarchy + UI component browser
 

@@ -111,12 +111,15 @@ The style ships as a live layout, not just guidance:
 
 - Layout: `app/layouts/broadsheet.vue` — masthead, rail, footer, `#standfirst`/`#status` slots.
 - Styles: `app/assets/css/broadsheet.css` — tokens alias onto `--ui-*`, so the layout
-  inherits all six Kickstart themes and light/dark automatically.
+  inherits all seven Kickstart themes and light/dark automatically.
 - Theme: `app/assets/css/themes/broadsheet.css` — the original OKLCH palette as a
   selectable seventh theme (`data-theme="broadsheet"`) when you want the exact source look.
 - MDC components for markdown: `broadsheet-panel`, `broadsheet-note`,
   `broadsheet-status`, `broadsheet-steps`, `broadsheet-compare`.
 - Live reference of every component: `/labs/broadsheet`.
+
+The event tree **must** be a `<pre>` element in an SFC — Vue's template compiler
+condenses whitespace everywhere else and will collapse the tree onto one line.
 
 Follow the repo's own rules while working here: kebab-case filenames, kebab-case
 component tags in templates, no semicolons, single quotes, and `resolveIcon()` for any

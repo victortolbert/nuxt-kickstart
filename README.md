@@ -1,6 +1,6 @@
 # nuxt-kickstart
 
-An opinionated, kitchen-sink **enterprise Nuxt boilerplate** — Nuxt 4 + Nuxt Content v3 with passwordless auth, an admin suite, an email subsystem, real-time examples, design tokens tooling, 6 themes, and i18n already wired up.
+An opinionated, kitchen-sink **enterprise Nuxt boilerplate** — Nuxt 4 + Nuxt Content v3 with passwordless auth, an admin suite, an email subsystem, real-time examples, design tokens tooling, 7 themes, and i18n already wired up.
 
 Start new projects with the foundations decided: use this repo as a GitHub template, rename the `nuxt-kickstart` / `Kickstart` / `kickstart-*` tokens to your project name, and build.
 
@@ -41,7 +41,7 @@ Visit `http://localhost:3000`. Auth features (magic link, OAuth) require additio
 - 🛡️ **Role-based access** — viewer, editor, and admin roles with content visibility levels
 - 📝 **Markdown-first content** — docs, posts, and registry collections powered by Nuxt Content v3
 - 🏆 **Real-time scoreboard** — WebSocket, SSE, and polling with automatic transport negotiation
-- 🎨 **6 switchable themes** — Lyra, Nord, Dracula, Catppuccin, Carnival, and System defaults
+- 🎨 **7 switchable themes** — Lyra, Nord, Dracula, Catppuccin, Carnival, Broadsheet, and System defaults
 - 🌍 **i18n ready** — English + Spanish wired up with `prefix_except_default` routing; add locales in one config block
 - 🧩 **60+ Vue components** — charts, editors, landing pages, and content renderers
 - ⌘ **Command palette** — fuzzy search across pages, actions, and settings
@@ -59,7 +59,7 @@ Visit `http://localhost:3000`. Auth features (magic link, OAuth) require additio
 | **Auth** | Better Auth with 4 sign-in methods | No passwords to manage, users pick their preferred method |
 | **Content** | Docs, posts, and registry collections | Markdown-first content that scales with your team |
 | **Real-time** | Auto-negotiating transport (WS/SSE/poll) | Works on any hosting — serverless to dedicated |
-| **Theming** | 6 CSS Zen Garden themes, OKLCH colors | Ship a polished product, let users choose their vibe |
+| **Theming** | 7 CSS Zen Garden themes, OKLCH colors | Ship a polished product, let users choose their vibe |
 | **i18n** | en + es with prefix routing | Reach a global audience without rearchitecting |
 | **Admin** | User management with role assignment | Control access without touching the database |
 | **DX** | Dev container with pnpm + Node | Clone and run — zero local setup for contributors |
@@ -223,7 +223,7 @@ Features: judge token generation, team identity modes (emoji/logo), logo upload 
 
 ## Theme System
 
-6 themes via CSS Zen Garden approach with OKLCH color space.
+7 themes via CSS Zen Garden approach with OKLCH color space.
 
 | Theme | ID | Style |
 |-------|----|-------|
@@ -233,6 +233,7 @@ Features: judge token generation, team identity modes (emoji/logo), logo upload 
 | Dracula | `dracula` | Dark purple/pink |
 | Catppuccin | `catppuccin` | Warm pastel |
 | Carnival | `carnival` | Warm, playful |
+| Broadsheet | `broadsheet` | Newsprint greys, teal signal |
 
 Use `useTheme()` composable. Persists to `localStorage['kickstart-theme']`. Blocking script prevents FOUC.
 

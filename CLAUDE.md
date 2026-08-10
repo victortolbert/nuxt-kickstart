@@ -104,7 +104,7 @@ Using v2 patterns causes empty modals, empty selects, accessibility warnings, an
 
 ## Theme System
 
-6 themes (System/default, Lyra, Nord, Dracula, Catppuccin, Carnival) via CSS Zen Garden approach. OKLCH color space, JetBrains Mono font, 0 border-radius.
+7 themes (System/default, Lyra, Nord, Dracula, Catppuccin, Carnival, Broadsheet) via CSS Zen Garden approach. OKLCH color space, JetBrains Mono font, 0 border-radius.
 
 - Themes: `app/assets/css/themes/*.css`. Selectors: `:root[data-theme="id"]` / `.dark[data-theme="id"]`
 - Composable: `useTheme()` → `{ theme, themes, setTheme, cycleTheme }`
@@ -155,7 +155,7 @@ Localized collections: `guides` ships en + es sources in one collection (see `ap
 
 1. **Before building UI** → invoke `frontend-design` skill
 2. **After building UI** → run `web-design-guidelines` skill
-3. **Checklist**: CSS vars (no hardcoded colors), all 6 themes, light/dark mode, responsive, accessible
+3. **Checklist**: CSS vars (no hardcoded colors), all themes, light/dark mode, responsive, accessible
 
 ## Git Conventions
 

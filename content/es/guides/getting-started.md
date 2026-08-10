@@ -16,7 +16,7 @@ machineTranslated: true
 
 ## ¿Qué es Kickstart?
 
-Kickstart (`nuxt-kickstart`) es un starter empresarial opinado y centrado en el contenido, construido sobre Nuxt 4 y Nuxt Content v3. Incluye autenticación sin contraseña, panel de administración, subsistema de correo, ejemplos en tiempo real, herramientas de tokens de diseño, seis temas e i18n ya configurados — para que los proyectos nuevos empiecen con los cimientos decididos.
+Kickstart (`nuxt-kickstart`) es un starter empresarial opinado y centrado en el contenido, construido sobre Nuxt 4 y Nuxt Content v3. Incluye autenticación sin contraseña, panel de administración, subsistema de correo, ejemplos en tiempo real, herramientas de tokens de diseño, siete temas e i18n ya configurados — para que los proyectos nuevos empiecen con los cimientos decididos.
 
 ## Requisitos Previos
 

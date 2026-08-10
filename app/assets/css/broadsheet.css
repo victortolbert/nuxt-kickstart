@@ -9,7 +9,7 @@
    `.claude/skills/technical-broadsheet/` — markup copies across unchanged.
 
    Tokens alias onto Nuxt UI's `--ui-*` variables, so the layout inherits all
-   six themes plus light/dark for free. For the exact palette of the original
+   seven themes plus light/dark for free. For the exact palette of the original
    design, select the `broadsheet` theme (themes/broadsheet.css).
 
    Deliberately unlayered: these rules must beat Tailwind utilities emitted by

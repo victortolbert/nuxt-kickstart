@@ -292,7 +292,7 @@
   "landing": {
     "hero": {
       "title": "Empieza con los cimientos decididos",
-      "subtitle": "Kickstart es un starter de Nuxt 4 opinado y centrado en el contenido. Autenticación sin contraseña, panel de administración, correo, ejemplos en tiempo real, tokens de diseño, seis temas e i18n — ya configurados.",
+      "subtitle": "Kickstart es un starter de Nuxt 4 opinado y centrado en el contenido. Autenticación sin contraseña, panel de administración, correo, ejemplos en tiempo real, tokens de diseño, siete temas e i18n — ya configurados.",
       "getStarted": "Comenzar",
       "whatsInside": "Qué Incluye",
       "terminal": "terminal"
@@ -321,7 +321,7 @@
         "title": "Temas e i18n",
         "description": "{themes} con cambio sin parpadeo, {tokens} y localización en/es lista para ampliar",
         "links": {
-          "themes": "Seis temas OKLCH",
+          "themes": "Siete temas OKLCH",
           "tokens": "herramientas de tokens de diseño"
         }
       }
