@@ -1,0 +1,217 @@
+<!--
+  Technical broadsheet — component markup reference.
+
+  Class names are the contract: the same names are used by the standalone
+  template (assets/template.html) and by the Nuxt layout in this repo
+  (app/assets/css/broadsheet.css). Copy the markup, keep the classes.
+
+  Full stylesheet: assets/template.html
+-->
+
+
+<!-- ========================================================================
+     MASTHEAD — eyebrow, headline, standfirst, status strip
+     Eyebrow is middle-dot separated facts, never a sentence.
+     Standfirst carries the whole thesis; bold the load-bearing words.
+     ======================================================================== -->
+
+<header class="bs-masthead">
+  <p class="bs-eyebrow">Working guide · evlog 2.24.0 · Nuxt 4</p>
+  <h1>What evlog gives you, and where to spend it</h1>
+  <p class="bs-standfirst">
+    evlog is already installed and wired in — but nothing in your 129 server files uses
+    it yet. It replaces scattered <code>console.log</code> calls with <strong>one
+    structured record per request</strong>. Here's the whole idea in three concepts.
+  </p>
+
+  <dl class="bs-status">
+    <div><dt>Package</dt><dd class="on">2.24.0</dd></div>
+    <div><dt>Nuxt module</dt><dd class="on">registered</dd></div>
+    <div><dt>Drain</dt><dd class="off">none yet</dd></div>
+    <div><dt>Routes using it</dt><dd class="off">0</dd></div>
+  </dl>
+</header>
+
+
+<!-- ========================================================================
+     RAIL — sticky table of contents, ≥1000px only
+     ======================================================================== -->
+
+<nav class="bs-rail" aria-label="Sections">
+  <p class="bs-rail-title">Contents</p>
+  <ol>
+    <li><a href="#wide">The wide event</a></li>
+    <li><a href="#drain">Drains</a></li>
+    <li><a href="#cheat">Cheat sheet</a></li>
+  </ol>
+</nav>
+
+
+<!-- ========================================================================
+     SECTION — lettered, rule under the h2
+     ======================================================================== -->
+
+<section id="wide">
+  <h2><span class="num">A</span>The wide event</h2>
+
+  <p>Lead with the idea, then the evidence.</p>
+
+  <h3>A sub-point</h3>
+
+  <ul class="bs-plain">
+    <li>List items are sans, same 68ch measure as paragraphs.</li>
+  </ul>
+</section>
+
+
+<!-- ========================================================================
+     PANEL — bordered box with a label strip
+     Left: uppercase label. Right: dimmed path or qualifier.
+     ======================================================================== -->
+
+<div class="bs-panel">
+  <div class="bs-panel-head">
+    <span>Emitted event</span>
+    <span class="path">pretty mode · dev default</span>
+  </div>
+<pre><span class="k">const</span> log = <span class="f">useLogger</span>(event)
+
+log.<span class="add">set</span>({ scan: { url, renderUsed: !!render } })
+
+<span class="k">catch</span> (err) {
+  log.<span class="add">error</span>(err)  <span class="c">// attaches to the same event</span>
+}</pre>
+</div>
+
+<!--
+  Inline syntax spans inside <pre>:
+    .c   comment (faint, italic)     .k   keyword (signal)
+    .s   string (good)               .f   function name (bold)
+    .del removed (bad)               .add added (good)
+  Highlight only what the sentence around the block is about. A fully
+  colored block says nothing.
+-->
+
+
+<!-- ========================================================================
+     COMPARE — before/after two-up. Use instead of prose describing a diff.
+     ======================================================================== -->
+
+<div class="bs-compare">
+  <div class="bs-panel">
+    <div class="bs-panel-head">
+      <span class="bs-tag now">Today</span><span class="path">run-scan.ts</span>
+    </div>
+<pre>console.<span class="del">error</span>(<span class="s">'Failed to persist scan:'</span>, err)</pre>
+  </div>
+
+  <div class="bs-panel">
+    <div class="bs-panel-head">
+      <span class="bs-tag next">With a logger</span><span class="path">run-scan.ts</span>
+    </div>
+<pre>log.<span class="add">error</span>(err)</pre>
+  </div>
+</div>
+
+
+<!-- ========================================================================
+     EVENT TREE — annotated terminal output. Real values, never foo/bar.
+
+     Must be a <pre> element. Whitespace is significant here (white-space: pre),
+     and Vue's template compiler condenses whitespace everywhere EXCEPT inside
+     <pre> — a <div> collapses the whole tree onto one line in an SFC.
+     ======================================================================== -->
+
+<div class="bs-panel">
+  <div class="bs-panel-head"><span>Emitted event</span></div>
+<pre class="bs-evt"><span class="route">POST /api/scan</span>   <span class="ok">200</span>   <span class="dur">4.28s</span>
+<span class="tree">├─</span> <span class="key">scan.url</span>         <span class="val">https://acme.com</span>
+<span class="tree">├─</span> <span class="key">scan.score</span>       <span class="val">62</span>
+<span class="tree">└─</span> <span class="key">stages.saving</span>    <span class="val">14ms</span>  <span class="fail">✕ persist failed</span></pre>
+</div>
+
+
+<!-- ========================================================================
+     FAN-OUT — one source, many sinks. Nodes + stems, no SVG.
+     ======================================================================== -->
+
+<div class="bs-panel">
+  <div class="bs-panel-head"><span>How an event travels</span></div>
+  <div class="bs-fan">
+    <div class="bs-node">your handler<span class="sub">log.set(…)</span></div>
+    <div class="bs-stem"></div>
+    <div class="bs-node emph">wide event<span class="sub">enrich → redact → sample</span></div>
+    <div class="bs-stem"></div>
+    <div class="bs-spread">
+      <div class="bs-node">console<span class="sub">always</span></div>
+      <div class="bs-node">.evlog/logs<span class="sub">evlog/fs</span></div>
+      <div class="bs-node">Axiom<span class="sub">evlog/axiom</span></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ========================================================================
+     NOTE — a LABELED BOX, not a left-stripe card. The label owns a strip.
+     Add .caution to turn the label warn-colored.
+     ======================================================================== -->
+
+<div class="bs-note">
+  <span class="bs-note-label">The key habit</span>
+  <p>
+    <code>log.set()</code> merges — call it five times in five different functions and
+    you still get one event.
+  </p>
+</div>
+
+<div class="bs-note caution">
+  <span class="bs-note-label">Before you deploy</span>
+  <p>A drain that blocks the response defeats the point.</p>
+</div>
+
+
+<!-- ========================================================================
+     STEPS — decimal-leading-zero counters in bordered squares
+     ======================================================================== -->
+
+<ol class="bs-steps">
+  <li>
+    <h3>Register the module</h3>
+    <p>One line in <code>nuxt.config.ts</code>.</p>
+  </li>
+  <li>
+    <h3>Add a drain</h3>
+    <p>Events print to the console until something catches them.</p>
+  </li>
+</ol>
+
+
+<!-- ========================================================================
+     TABLE — border lives on the scroll wrapper, not the table
+     ======================================================================== -->
+
+<div class="bs-table-wrap">
+  <table>
+    <thead>
+      <tr><th class="mono">Call</th><th>Where</th><th>Does</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mono"><code>useLogger(event)</code></td>
+        <td>Server routes</td>
+        <td>Gets the logger for this request</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ========================================================================
+     FOOTER — provenance. Say what the doc was verified against, and mean it.
+     ======================================================================== -->
+
+<footer class="bs-footer">
+  <span>evlog 2.24.0</span>
+  <span>evlog.dev/start/installation</span>
+  <span>Verified against installed package, not docs</span>
+</footer>

@@ -1,0 +1,672 @@
+/* ==========================================================================
+   Technical broadsheet — document layout
+   --------------------------------------------------------------------------
+   Editorial newspaper structure for technical docs: mono eyebrow, balanced
+   headline, standfirst, status strip, sticky rail, hairline panels.
+
+   Everything is scoped under `.bs-shell` so this file changes nothing outside
+   the broadsheet layout. The class names match the portable skill at
+   `.claude/skills/technical-broadsheet/` — markup copies across unchanged.
+
+   Tokens alias onto Nuxt UI's `--ui-*` variables, so the layout inherits all
+   six themes plus light/dark for free. For the exact palette of the original
+   design, select the `broadsheet` theme (themes/broadsheet.css).
+
+   Deliberately unlayered: these rules must beat Tailwind utilities emitted by
+   Nuxt UI's Prose components when markdown renders inside `.bs-prose`.
+   ========================================================================== */
+
+.bs-shell {
+  /* Surfaces: page -> raised box -> label strip / inline code.
+     `--bs-sunk` is mixed rather than aliased to `--ui-bg-muted`: several themes
+     (including the default, where primary and neutral are both `neutral`) give
+     `--ui-bg-elevated` and `--ui-bg-muted` the same value, which would collapse
+     the three-surface ramp and make every panel-head strip invisible. Mixing
+     toward `--ui-bg-inverted` always shifts, and always in the right direction —
+     lighter than the panel in dark mode, darker in light. */
+  --bs-ground: var(--ui-bg);
+  --bs-panel: var(--ui-bg-elevated);
+  --bs-sunk: color-mix(in oklch, var(--ui-bg-elevated) 94%, var(--ui-bg-inverted));
+
+  /* ink ramp: body -> secondary -> paths, comments, counters */
+  --bs-ink: var(--ui-text-highlighted);
+  --bs-ink-dim: var(--ui-text-muted);
+  --bs-ink-faint: var(--ui-text-dimmed);
+
+  /* hairlines: structural -> row separators */
+  --bs-rule: var(--ui-border);
+  --bs-rule-soft: var(--ui-border-muted);
+
+  /* The single accent, read from `--color-primary-500` rather than
+     `--ui-primary`. `app.config.ts` sets `colors.primary: 'neutral'`, so
+     `--ui-primary` resolves to the neutral ramp under every theme — the themes'
+     own primary ramps never reach it. Reading the ramp directly gives each
+     theme its actual identity colour (Nord cyan, Dracula pink, Broadsheet teal)
+     while still honouring the deliberately-neutral default theme.
+     The wash is mixed rather than hardcoded so it stays legible in both modes. */
+  --bs-signal: var(--color-primary-500, var(--ui-primary));
+  --bs-signal-wash: color-mix(in oklch, var(--bs-signal) 12%, var(--ui-bg));
+
+  /* semantic only — never decorative */
+  --bs-good: var(--ui-success);
+  --bs-warn: var(--ui-warning);
+  --bs-bad: var(--ui-error);
+
+  /* The mono/sans inversion IS the style, so neither stack follows the
+     per-theme font variables: `--theme-font-sans` defaults to JetBrains Mono
+     in this project, which would make body prose monospace and collapse the
+     distinction the layout depends on. */
+  --bs-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --bs-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   SHELL — single column until the rail has room to exist
+   -------------------------------------------------------------------------- */
+
+.bs-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px 120px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 56px;
+  background: var(--bs-ground);
+  color: var(--bs-ink);
+  font-family: var(--bs-sans);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+@media (min-width: 1000px) {
+  .bs-shell { grid-template-columns: 196px minmax(0, 1fr); }
+}
+
+.bs-shell *,
+.bs-shell *::before,
+.bs-shell *::after { box-sizing: border-box; }
+
+/* --------------------------------------------------------------------------
+   SKIP LINK — off-screen until focused, then a normal panel-style chip
+   -------------------------------------------------------------------------- */
+
+.bs-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 10;
+  font-family: var(--bs-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--bs-signal);
+  background: var(--bs-panel);
+  border: 1px solid var(--bs-signal);
+  padding: 9px 14px;
+}
+
+/* `:focus` as well as `:focus-visible` — a skip link is only ever reached by
+   keyboard, so the "no ring on mouse click" rationale does not apply, and
+   programmatic focus must reveal it too. */
+.bs-skip:focus,
+.bs-skip:focus-visible {
+  left: 24px;
+  top: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   MASTHEAD
+   -------------------------------------------------------------------------- */
+
+.bs-masthead {
+  grid-column: 1 / -1;
+  border-bottom: 1px solid var(--bs-rule);
+  padding: 56px 0 32px;
+  margin-bottom: 48px;
+}
+
+.bs-eyebrow {
+  font-family: var(--bs-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bs-signal);
+  margin: 0 0 20px;
+}
+
+.bs-masthead h1 {
+  font-family: var(--bs-mono);
+  font-size: clamp(30px, 5.2vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  text-wrap: balance;
+  margin: 0 0 20px;
+  color: var(--bs-ink);
+}
+
+.bs-standfirst {
+  font-size: 18.5px;
+  line-height: 1.6;
+  color: var(--bs-ink-dim);
+  max-width: 60ch;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.bs-standfirst strong { color: var(--bs-ink); font-weight: 600; }
+
+/* --------------------------------------------------------------------------
+   RAIL — sticky contents, wide viewports only
+   -------------------------------------------------------------------------- */
+
+.bs-rail { display: none; }
+
+@media (min-width: 1000px) {
+  .bs-rail {
+    display: block;
+    grid-column: 1;
+    align-self: start;
+    position: sticky;
+    top: 32px;
+    padding-bottom: 40px;
+  }
+}
+
+.bs-rail-title {
+  font-family: var(--bs-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bs-ink-faint);
+  padding-bottom: 12px;
+  margin: 0 0 12px;
+  border-bottom: 1px solid var(--bs-rule);
+}
+
+.bs-rail ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bs-rail a {
+  display: block;
+  font-family: var(--bs-mono);
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--bs-ink-dim);
+  text-decoration: none;
+  padding: 6px 0 6px 11px;
+  border-left: 2px solid transparent;
+  touch-action: manipulation;
+  transition: color 120ms, border-color 120ms;
+}
+
+.bs-rail a:hover,
+.bs-rail a:focus-visible,
+.bs-rail a[data-active='true'] { color: var(--bs-signal); border-left-color: var(--bs-signal); }
+
+/* --------------------------------------------------------------------------
+   CONTENT FLOW — `.bs-main` for hand-authored markup, `.bs-prose` for the
+   ContentRenderer output of a markdown document.
+   -------------------------------------------------------------------------- */
+
+.bs-main { grid-column: 1 / -1; min-width: 0; }
+
+@media (min-width: 1000px) { .bs-main { grid-column: 2; } }
+
+.bs-main section { margin-bottom: 68px; scroll-margin-top: 24px; }
+
+.bs-main h2,
+.bs-prose h2 {
+  font-family: var(--bs-mono);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  text-wrap: balance;
+  margin: 68px 0 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--bs-rule);
+  color: var(--bs-ink);
+  scroll-margin-top: 24px;
+}
+
+.bs-main section > h2:first-child,
+.bs-prose > h2:first-child { margin-top: 0; }
+
+.bs-main h2 .num,
+.bs-prose h2 .num {
+  color: var(--bs-ink-faint);
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.bs-main h3,
+.bs-prose h3 {
+  font-family: var(--bs-mono);
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  margin: 36px 0 10px;
+  color: var(--bs-ink);
+  scroll-margin-top: 24px;
+}
+
+/* h4 exists so a step or sub-point nested under an h3 keeps the heading order
+   honest without introducing a fourth visual weight. */
+.bs-main h4,
+.bs-prose h4 {
+  font-family: var(--bs-mono);
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  margin: 28px 0 8px;
+  color: var(--bs-ink);
+  scroll-margin-top: 24px;
+}
+
+.bs-main p,
+.bs-prose p { max-width: 68ch; margin: 0 0 16px; text-wrap: pretty; }
+
+.bs-main section > p:first-of-type { margin-top: 22px; }
+
+.bs-main a,
+.bs-prose a {
+  color: var(--bs-signal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.bs-main strong,
+.bs-prose strong { font-weight: 600; color: var(--bs-ink); }
+
+.bs-shell :not(pre) > code {
+  font-family: var(--bs-mono);
+  font-size: 0.885em;
+  background: var(--bs-sunk);
+  border: 1px solid var(--bs-rule-soft);
+  border-radius: 0;
+  padding: 1px 5px;
+  white-space: nowrap;
+  color: inherit;
+}
+
+.bs-plain,
+.bs-prose ul,
+.bs-prose ol { max-width: 68ch; padding-left: 20px; margin: 0 0 16px; }
+
+.bs-prose ul { list-style: disc; }
+.bs-prose ol { list-style: decimal; }
+
+.bs-plain li,
+.bs-prose li { margin-bottom: 8px; }
+
+/* --------------------------------------------------------------------------
+   PANEL — bordered box + label strip. No shadow, no radius, ever.
+   -------------------------------------------------------------------------- */
+
+.bs-panel {
+  background: var(--bs-panel);
+  border: 1px solid var(--bs-rule);
+  border-radius: 0;
+  margin: 22px 0;
+}
+
+.bs-panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--bs-rule);
+  background: var(--bs-sunk);
+  font-family: var(--bs-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bs-ink-dim);
+}
+
+.bs-panel-head .path {
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--bs-ink-faint);
+  font-weight: 500;
+}
+
+.bs-panel pre {
+  margin: 0;
+  padding: 14px;
+  overflow-x: auto;
+  font-family: var(--bs-mono);
+  font-size: 12.8px;
+  line-height: 1.62;
+  color: var(--bs-ink);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  tab-size: 2;
+}
+
+.bs-panel pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 1em;
+  white-space: inherit;
+}
+
+/* Highlight only what the surrounding sentence is about. A fully coloured
+   block says nothing. */
+.bs-panel pre .c { color: var(--bs-ink-faint); font-style: italic; }
+.bs-panel pre .k { color: var(--bs-signal); }
+.bs-panel pre .s { color: var(--bs-good); }
+.bs-panel pre .f { font-weight: 700; }
+.bs-panel pre .del { color: var(--bs-bad); }
+.bs-panel pre .add { color: var(--bs-good); }
+
+/* --------------------------------------------------------------------------
+   COMPARE — before / after
+   -------------------------------------------------------------------------- */
+
+.bs-compare {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 26px 0;
+}
+
+@media (min-width: 760px) {
+  .bs-compare { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+
+.bs-compare .bs-panel { margin: 0; height: 100%; }
+
+.bs-tag {
+  font-family: var(--bs-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border: 1px solid currentColor;
+}
+
+.bs-tag.now { color: var(--bs-bad); }
+.bs-tag.next { color: var(--bs-good); }
+
+/* --------------------------------------------------------------------------
+   EVENT TREE — annotated terminal output; whitespace is significant
+   -------------------------------------------------------------------------- */
+
+/* Must be a <pre> element, not a <div>: Vue's template compiler condenses
+   whitespace everywhere except inside <pre>, which would collapse the whole
+   tree onto one line. */
+.bs-evt {
+  margin: 0;
+  font-family: var(--bs-mono);
+  font-size: 12.8px;
+  line-height: 1.75;
+  padding: 14px;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.bs-evt .route { font-weight: 700; }
+.bs-evt .ok { color: var(--bs-good); font-weight: 700; }
+.bs-evt .dur { color: var(--bs-warn); }
+.bs-evt .tree { color: var(--bs-ink-faint); }
+.bs-evt .key { color: var(--bs-ink-dim); }
+.bs-evt .val { color: var(--bs-signal); }
+.bs-evt .fail { color: var(--bs-bad); font-weight: 700; }
+
+/* --------------------------------------------------------------------------
+   FAN-OUT — one source, many sinks. Boxes and stems, no SVG.
+   -------------------------------------------------------------------------- */
+
+.bs-fan {
+  display: grid;
+  gap: 0;
+  padding: 26px 14px;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.bs-node {
+  font-family: var(--bs-mono);
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--bs-rule);
+  background: var(--bs-sunk);
+  padding: 8px 13px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.bs-node.emph {
+  border-color: var(--bs-signal);
+  color: var(--bs-signal);
+  background: var(--bs-signal-wash);
+}
+
+.bs-node .sub {
+  display: block;
+  font-weight: 500;
+  font-size: 10.5px;
+  color: var(--bs-ink-faint);
+  letter-spacing: 0.04em;
+}
+
+.bs-node.emph .sub { color: var(--bs-signal); opacity: 0.75; }
+
+.bs-stem { width: 1px; height: 22px; background: var(--bs-rule); }
+
+.bs-spread {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  border-top: 1px solid var(--bs-rule);
+  padding-top: 22px;
+  width: 100%;
+}
+
+.bs-spread .bs-node { background: var(--bs-panel); }
+
+/* --------------------------------------------------------------------------
+   TABLE — border on the scroll wrapper so it survives overflow
+   -------------------------------------------------------------------------- */
+
+.bs-table-wrap { overflow-x: auto; margin: 22px 0; border: 1px solid var(--bs-rule); }
+
+.bs-table-wrap table,
+.bs-prose table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+
+.bs-table-wrap th,
+.bs-prose th {
+  font-family: var(--bs-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--bs-ink-dim);
+  background: var(--bs-sunk);
+  padding: 9px 13px;
+  border-bottom: 1px solid var(--bs-rule);
+  white-space: nowrap;
+}
+
+.bs-table-wrap td,
+.bs-prose td {
+  padding: 10px 13px;
+  border-bottom: 1px solid var(--bs-rule-soft);
+  vertical-align: top;
+  background: var(--bs-panel);
+}
+
+.bs-table-wrap tr:last-child td,
+.bs-prose tr:last-child td { border-bottom: 0; }
+
+.bs-table-wrap td.mono,
+.bs-table-wrap th.mono { font-family: var(--bs-mono); font-size: 12.4px; white-space: nowrap; }
+
+.bs-table-wrap td.mono code { background: none; border: 0; padding: 0; font-size: 1em; }
+
+/* --------------------------------------------------------------------------
+   NOTE — a labelled box. Deliberately not a side-stripe card: the inset
+   accent stripe reads as “active row” elsewhere in this design system.
+   -------------------------------------------------------------------------- */
+
+.bs-note {
+  border: 1px solid var(--bs-rule);
+  background: var(--bs-panel);
+  padding: 0;
+  margin: 24px 0;
+}
+
+.bs-note-label {
+  display: block;
+  font-family: var(--bs-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bs-signal);
+  background: var(--bs-sunk);
+  border-bottom: 1px solid var(--bs-rule);
+  padding: 8px 15px;
+}
+
+.bs-note.caution .bs-note-label { color: var(--bs-warn); }
+
+.bs-note .bs-note-body { padding: 13px 15px; }
+
+.bs-note .bs-note-body > :first-child { margin-top: 0; }
+.bs-note .bs-note-body > :last-child { margin-bottom: 0; }
+
+.bs-note .bs-note-body p {
+  margin: 0 0 10px;
+  max-width: 62ch;
+  font-size: 15px;
+}
+
+/* --------------------------------------------------------------------------
+   STATUS STRIP — hard facts with on/off states
+   -------------------------------------------------------------------------- */
+
+.bs-status {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+  border: 1px solid var(--bs-rule);
+  margin: 30px 0 0;
+  background: var(--bs-panel);
+}
+
+.bs-status > div {
+  padding: 13px 15px;
+  border-right: 1px solid var(--bs-rule);
+}
+
+.bs-status > div:last-child { border-right: 0; }
+
+.bs-status dt {
+  font-family: var(--bs-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--bs-ink-faint);
+  margin-bottom: 5px;
+}
+
+.bs-status dd {
+  font-family: var(--bs-mono);
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.01em;
+  color: var(--bs-ink);
+  /* Values sit in a column and get compared down it — lock the digit width. */
+  font-variant-numeric: tabular-nums;
+}
+
+.bs-status dd.on { color: var(--bs-good); }
+.bs-status dd.off { color: var(--bs-ink-faint); }
+
+/* --------------------------------------------------------------------------
+   STEPS — leading-zero counters in bordered squares
+   -------------------------------------------------------------------------- */
+
+.bs-steps { counter-reset: s; list-style: none; padding: 0; margin: 26px 0 0; }
+
+.bs-steps > li {
+  counter-increment: s;
+  position: relative;
+  padding-left: 42px;
+  margin-bottom: 34px;
+  list-style: none;
+}
+
+.bs-steps > li::before {
+  content: counter(s, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--bs-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--bs-signal);
+  border: 1px solid var(--bs-signal);
+  width: 28px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  letter-spacing: 0.02em;
+}
+
+.bs-steps :is(h3, h4) { margin-top: 0; }
+
+/* --------------------------------------------------------------------------
+   FOOTER
+   -------------------------------------------------------------------------- */
+
+.bs-footer {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--bs-rule);
+  padding-top: 22px;
+  font-family: var(--bs-mono);
+  font-size: 12px;
+  color: var(--bs-ink-faint);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+}
+
+.bs-shell :focus-visible { outline: 2px solid var(--bs-signal); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bs-shell * { transition: none !important; animation: none !important; }
+}
+
+/* --------------------------------------------------------------------------
+   PRINT — the rail is navigation, not content
+   -------------------------------------------------------------------------- */
+
+@media print {
+  .bs-shell { display: block; max-width: none; padding: 0; }
+  .bs-rail { display: none; }
+  .bs-panel, .bs-note, .bs-table-wrap, .bs-status { break-inside: avoid; }
+}

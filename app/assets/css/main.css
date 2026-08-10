@@ -3,6 +3,8 @@
 /* Font import handled by @nuxt/fonts module for optimized loading */
 @import "./themes/index.css";
 @import "./print.css";
+/* Scoped under `.bs-shell` — inert outside the `broadsheet` layout */
+@import "./broadsheet.css";
 
 /* Base settings - colors come from Nuxt UI (app.config) or theme CSS */
 

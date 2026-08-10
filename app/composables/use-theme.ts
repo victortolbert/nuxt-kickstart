@@ -44,6 +44,13 @@ export const themes: ThemeConfig[] = [
     description: 'Warm, playful carnival colors',
     radius: '0.75rem',
   },
+  {
+    id: 'broadsheet',
+    label: 'Broadsheet',
+    icon: 'i-tabler-news',
+    description: 'Newsprint greys with a single teal signal',
+    radius: '0rem',
+  },
 ]
 
 const STORAGE_KEY = 'kickstart-theme'

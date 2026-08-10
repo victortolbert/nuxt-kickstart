@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Document title — a working guide</title>
+
+<style>
+/* ==========================================================================
+   TOKENS — see references/tokens.css for the annotated source of truth.
+   ========================================================================== */
+
+:root {
+  --bs-ground: oklch(98.2% 0.003 220);
+  --bs-panel: oklch(100% 0 0);
+  --bs-sunk: oklch(96% 0.005 222);
+  --bs-ink: oklch(24% 0.016 245);
+  --bs-ink-dim: oklch(48% 0.014 240);
+  --bs-ink-faint: oklch(62% 0.011 235);
+  --bs-rule: oklch(90% 0.008 225);
+  --bs-rule-soft: oklch(94% 0.006 225);
+  --bs-signal: oklch(52% 0.13 205);
+  --bs-signal-wash: oklch(96% 0.022 205);
+  --bs-good: oklch(52% 0.13 155);
+  --bs-warn: oklch(58% 0.12 70);
+  --bs-bad: oklch(53% 0.18 22);
+
+  --bs-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --bs-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bs-ground: oklch(15.5% 0.012 245);
+    --bs-panel: oklch(19% 0.014 245);
+    --bs-sunk: oklch(22% 0.015 245);
+    --bs-ink: oklch(92% 0.008 220);
+    --bs-ink-dim: oklch(70% 0.012 228);
+    --bs-ink-faint: oklch(58% 0.012 232);
+    --bs-rule: oklch(28% 0.014 243);
+    --bs-rule-soft: oklch(24% 0.013 244);
+    --bs-signal: oklch(76% 0.12 200);
+    --bs-signal-wash: oklch(26% 0.035 205);
+    --bs-good: oklch(74% 0.13 155);
+    --bs-warn: oklch(78% 0.12 72);
+    --bs-bad: oklch(70% 0.15 22);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bs-ground: oklch(15.5% 0.012 245);
+  --bs-panel: oklch(19% 0.014 245);
+  --bs-sunk: oklch(22% 0.015 245);
+  --bs-ink: oklch(92% 0.008 220);
+  --bs-ink-dim: oklch(70% 0.012 228);
+  --bs-ink-faint: oklch(58% 0.012 232);
+  --bs-rule: oklch(28% 0.014 243);
+  --bs-rule-soft: oklch(24% 0.013 244);
+  --bs-signal: oklch(76% 0.12 200);
+  --bs-signal-wash: oklch(26% 0.035 205);
+  --bs-good: oklch(74% 0.13 155);
+  --bs-warn: oklch(78% 0.12 72);
+  --bs-bad: oklch(70% 0.15 22);
+  color-scheme: dark;
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bs-ground);
+  color: var(--bs-ink);
+  font-family: var(--bs-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --------------------------------------------------------------------------
+   SHELL — single column until the rail has room to exist.
+   -------------------------------------------------------------------------- */
+
+.bs-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px 120px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 56px;
+}
+
+@media (min-width: 1000px) {
+  .bs-shell { grid-template-columns: 196px minmax(0, 1fr); }
+}
+
+/* --------------------------------------------------------------------------
+   MASTHEAD
+   -------------------------------------------------------------------------- */
+
+.bs-masthead {
+  grid-column: 1 / -1;
+  border-bottom: 1px solid var(--bs-rule);
+  padding: 56px 0 32px;
+  margin-bottom: 48px;
+}
+
+.bs-eyebrow {
+  font-family: var(--bs-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bs-signal);
+  margin: 0 0 20px;
+}
+
+.bs-masthead h1 {
+  font-family: var(--bs-mono);
+  font-size: clamp(30px, 5.2vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  text-wrap: balance;
+  margin: 0 0 20px;
+}
+
+.bs-standfirst {
+  font-size: 18.5px;
+  line-height: 1.6;
+  color: var(--bs-ink-dim);
+  max-width: 60ch;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.bs-standfirst strong { color: var(--bs-ink); font-weight: 600; }
+
+/* --------------------------------------------------------------------------
+   RAIL — sticky contents, wide viewports only
+   -------------------------------------------------------------------------- */
+
+.bs-rail { display: none; }
+
+@media (min-width: 1000px) {
+  .bs-rail {
+    display: block;
+    grid-column: 1;
+    align-self: start;
+    position: sticky;
+    top: 32px;
+    padding-bottom: 40px;
+  }
+}
+
+.bs-rail-title {
+  font-family: var(--bs-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bs-ink-faint);
+  padding-bottom: 12px;
+  margin: 0 0 12px;
+  border-bottom: 1px solid var(--bs-rule);
+}
+
+.bs-rail ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bs-rail a {
+  display: block;
+  font-family: var(--bs-mono);
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--bs-ink-dim);
+  text-decoration: none;
+  padding: 6px 0 6px 11px;
+  border-left: 2px solid transparent;
+  transition: color 120ms, border-color 120ms;
+}
+
+.bs-rail a:hover,
+.bs-rail a:focus-visible { color: var(--bs-signal); border-left-color: var(--bs-signal); }
+
+/* --------------------------------------------------------------------------
+   CONTENT FLOW
+   -------------------------------------------------------------------------- */
+
+.bs-main { grid-column: 1 / -1; min-width: 0; }
+
+@media (min-width: 1000px) { .bs-main { grid-column: 2; } }
+
+.bs-main section { margin-bottom: 68px; scroll-margin-top: 24px; }
+
+.bs-main h2 {
+  font-family: var(--bs-mono);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  text-wrap: balance;
+  margin: 0 0 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--bs-rule);
+}
+
+.bs-main h2 .num {
+  color: var(--bs-ink-faint);
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.bs-main h3 {
+  font-family: var(--bs-mono);
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  margin: 36px 0 10px;
+}
+
+.bs-main p { max-width: 68ch; margin: 0 0 16px; text-wrap: pretty; }
+
+.bs-main section > p:first-of-type { margin-top: 22px; }
+
+.bs-main a { color: var(--bs-signal); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+.bs-main strong { font-weight: 600; }
+
+.bs-shell code {
+  font-family: var(--bs-mono);
+  font-size: 0.885em;
+  background: var(--bs-sunk);
+  border: 1px solid var(--bs-rule-soft);
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+
+.bs-plain { max-width: 68ch; padding-left: 20px; margin: 0 0 16px; }
+.bs-plain li { margin-bottom: 8px; }
+
+/* --------------------------------------------------------------------------
+   PANEL — bordered box + label strip. No shadow, no radius, ever.
+   -------------------------------------------------------------------------- */
+
+.bs-panel {
+  background: var(--bs-panel);
+  border: 1px solid var(--bs-rule);
+  margin: 22px 0;
+}
+
+.bs-panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--bs-rule);
+  background: var(--bs-sunk);
+  font-family: var(--bs-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bs-ink-dim);
+}
+
+.bs-panel-head .path {
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--bs-ink-faint);
+  font-weight: 500;
+}
+
+.bs-panel pre {
+  margin: 0;
+  padding: 14px;
+  overflow-x: auto;
+  font-family: var(--bs-mono);
+  font-size: 12.8px;
+  line-height: 1.62;
+  color: var(--bs-ink);
+  tab-size: 2;
+}
+
+.bs-panel pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 1em;
+  white-space: inherit;
+}
+
+/* Highlight only what the surrounding sentence is about. */
+.bs-panel pre .c { color: var(--bs-ink-faint); font-style: italic; }
+.bs-panel pre .k { color: var(--bs-signal); }
+.bs-panel pre .s { color: var(--bs-good); }
+.bs-panel pre .f { font-weight: 700; }
+.bs-panel pre .del { color: var(--bs-bad); }
+.bs-panel pre .add { color: var(--bs-good); }
+
+/* --------------------------------------------------------------------------
+   COMPARE — before / after
+   -------------------------------------------------------------------------- */
+
+.bs-compare {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 26px 0;
+}
+
+@media (min-width: 760px) {
+  .bs-compare { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+
+.bs-compare .bs-panel { margin: 0; height: 100%; }
+
+.bs-tag {
+  font-family: var(--bs-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border: 1px solid currentColor;
+}
+
+.bs-tag.now { color: var(--bs-bad); }
+.bs-tag.next { color: var(--bs-good); }
+
+/* --------------------------------------------------------------------------
+   EVENT TREE — annotated terminal output; whitespace is significant
+   -------------------------------------------------------------------------- */
+
+.bs-evt {
+  margin: 0;
+  font-family: var(--bs-mono);
+  font-size: 12.8px;
+  line-height: 1.75;
+  padding: 14px;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.bs-evt .route { font-weight: 700; }
+.bs-evt .ok { color: var(--bs-good); font-weight: 700; }
+.bs-evt .dur { color: var(--bs-warn); }
+.bs-evt .tree { color: var(--bs-ink-faint); }
+.bs-evt .key { color: var(--bs-ink-dim); }
+.bs-evt .val { color: var(--bs-signal); }
+.bs-evt .fail { color: var(--bs-bad); font-weight: 700; }
+
+/* --------------------------------------------------------------------------
+   FAN-OUT — one source, many sinks. Boxes and stems, no SVG.
+   -------------------------------------------------------------------------- */
+
+.bs-fan {
+  display: grid;
+  gap: 0;
+  padding: 26px 14px;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.bs-node {
+  font-family: var(--bs-mono);
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--bs-rule);
+  background: var(--bs-sunk);
+  padding: 8px 13px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.bs-node.emph {
+  border-color: var(--bs-signal);
+  color: var(--bs-signal);
+  background: var(--bs-signal-wash);
+}
+
+.bs-node .sub {
+  display: block;
+  font-weight: 500;
+  font-size: 10.5px;
+  color: var(--bs-ink-faint);
+  letter-spacing: 0.04em;
+}
+
+.bs-node.emph .sub { color: var(--bs-signal); opacity: 0.75; }
+
+.bs-stem { width: 1px; height: 22px; background: var(--bs-rule); }
+
+.bs-spread {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  border-top: 1px solid var(--bs-rule);
+  padding-top: 22px;
+  width: 100%;
+}
+
+.bs-spread .bs-node { background: var(--bs-panel); }
+
+/* --------------------------------------------------------------------------
+   TABLE — border on the scroll wrapper so it survives overflow
+   -------------------------------------------------------------------------- */
+
+.bs-table-wrap { overflow-x: auto; margin: 22px 0; border: 1px solid var(--bs-rule); }
+
+.bs-table-wrap table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+
+.bs-table-wrap th {
+  font-family: var(--bs-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--bs-ink-dim);
+  background: var(--bs-sunk);
+  padding: 9px 13px;
+  border-bottom: 1px solid var(--bs-rule);
+  white-space: nowrap;
+}
+
+.bs-table-wrap td {
+  padding: 10px 13px;
+  border-bottom: 1px solid var(--bs-rule-soft);
+  vertical-align: top;
+  background: var(--bs-panel);
+}
+
+.bs-table-wrap tr:last-child td { border-bottom: 0; }
+
+.bs-table-wrap td.mono,
+.bs-table-wrap th.mono { font-family: var(--bs-mono); font-size: 12.4px; white-space: nowrap; }
+
+.bs-table-wrap td.mono code { background: none; border: 0; padding: 0; font-size: 1em; }
+
+/* --------------------------------------------------------------------------
+   NOTE — a labelled box. Deliberately not a side-stripe card: the inset
+   accent stripe is reserved for active/selected rows elsewhere in the system.
+   -------------------------------------------------------------------------- */
+
+.bs-note {
+  border: 1px solid var(--bs-rule);
+  background: var(--bs-panel);
+  padding: 0;
+  margin: 24px 0;
+}
+
+.bs-note-label {
+  display: block;
+  font-family: var(--bs-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bs-signal);
+  background: var(--bs-sunk);
+  border-bottom: 1px solid var(--bs-rule);
+  padding: 8px 15px;
+}
+
+.bs-note.caution .bs-note-label { color: var(--bs-warn); }
+
+.bs-note p {
+  margin: 0;
+  padding: 0 15px;
+  max-width: 62ch;
+  font-size: 15px;
+}
+
+.bs-note > p:first-of-type { margin-top: 13px; }
+.bs-note > p:last-child { margin-bottom: 13px; }
+.bs-note p + p { margin-top: 10px; }
+
+/* --------------------------------------------------------------------------
+   STATUS STRIP — hard facts with on/off states
+   -------------------------------------------------------------------------- */
+
+.bs-status {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+  border: 1px solid var(--bs-rule);
+  margin: 30px 0 0;
+  background: var(--bs-panel);
+}
+
+.bs-status div {
+  padding: 13px 15px;
+  border-right: 1px solid var(--bs-rule);
+}
+
+.bs-status div:last-child { border-right: 0; }
+
+.bs-status dt {
+  font-family: var(--bs-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--bs-ink-faint);
+  margin-bottom: 5px;
+}
+
+.bs-status dd {
+  font-family: var(--bs-mono);
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.bs-status dd.on { color: var(--bs-good); }
+.bs-status dd.off { color: var(--bs-ink-faint); }
+
+/* --------------------------------------------------------------------------
+   STEPS — leading-zero counters in bordered squares
+   -------------------------------------------------------------------------- */
+
+.bs-steps { counter-reset: s; list-style: none; padding: 0; margin: 26px 0 0; }
+
+.bs-steps > li {
+  counter-increment: s;
+  position: relative;
+  padding-left: 42px;
+  margin-bottom: 34px;
+}
+
+.bs-steps > li::before {
+  content: counter(s, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--bs-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--bs-signal);
+  border: 1px solid var(--bs-signal);
+  width: 28px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  letter-spacing: 0.02em;
+}
+
+.bs-steps h3 { margin-top: 0; }
+
+/* --------------------------------------------------------------------------
+   FOOTER + a11y
+   -------------------------------------------------------------------------- */
+
+.bs-footer {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--bs-rule);
+  padding-top: 22px;
+  font-family: var(--bs-mono);
+  font-size: 12px;
+  color: var(--bs-ink-faint);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+}
+
+.bs-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+:focus-visible { outline: 2px solid var(--bs-signal); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+
+<body>
+<div class="bs-shell">
+
+  <header class="bs-masthead">
+    <p class="bs-eyebrow">Working guide · subject 1.0.0 · context</p>
+    <h1>A claim or a question, not a noun phrase</h1>
+    <p class="bs-standfirst">
+      Two to four sentences carrying the entire thesis, with the
+      <strong>load-bearing words</strong> in bold. A reader who stops here should
+      still have learned the main point.
+    </p>
+    <dl class="bs-status">
+      <div><dt>Version</dt><dd class="on">1.0.0</dd></div>
+      <div><dt>Wired in</dt><dd class="on">yes</dd></div>
+      <div><dt>In use</dt><dd class="off">not yet</dd></div>
+    </dl>
+  </header>
+
+  <nav class="bs-rail" aria-label="Sections">
+    <p class="bs-rail-title">Contents</p>
+    <ol>
+      <li><a href="#one">First idea</a></li>
+      <li><a href="#two">Second idea</a></li>
+    </ol>
+  </nav>
+
+  <main class="bs-main">
+
+    <section id="one">
+      <h2><span class="num">A</span>First idea</h2>
+
+      <p>
+        Lead with the idea, then the evidence. State the inversion plainly before
+        showing any code.
+      </p>
+
+      <div class="bs-compare">
+        <div class="bs-panel">
+          <div class="bs-panel-head">
+            <span class="bs-tag now">Today</span><span class="path">file.ts</span>
+          </div>
+<pre>console.<span class="del">error</span>(<span class="s">'failed'</span>, err)</pre>
+        </div>
+        <div class="bs-panel">
+          <div class="bs-panel-head">
+            <span class="bs-tag next">After</span><span class="path">file.ts</span>
+          </div>
+<pre>log.<span class="add">error</span>(err)</pre>
+        </div>
+      </div>
+
+      <div class="bs-note">
+        <span class="bs-note-label">The key habit</span>
+        <p>One short paragraph. The label does the work a heading would.</p>
+      </div>
+    </section>
+
+    <section id="two">
+      <h2><span class="num">B</span>Second idea</h2>
+
+      <ol class="bs-steps">
+        <li>
+          <h3>Do the first thing</h3>
+          <p>Numbered because order matters. If it doesn't, use a list.</p>
+        </li>
+        <li>
+          <h3>Do the second thing</h3>
+          <p>Close with the sentence that says what the reader now knows.</p>
+        </li>
+      </ol>
+
+      <div class="bs-table-wrap">
+        <table>
+          <thead>
+            <tr><th class="mono">Call</th><th>Where</th><th>Does</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono"><code>doThing()</code></td>
+              <td>Server routes</td>
+              <td>Does the thing</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bs-footer">
+    <span>subject 1.0.0</span>
+    <span>docs.example.com</span>
+    <span>Verified against the installed package, not the docs</span>
+  </footer>
+
+</div>
+</body>
+</html>

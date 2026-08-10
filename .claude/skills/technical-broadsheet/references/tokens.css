@@ -1,0 +1,88 @@
+/* ==========================================================================
+   Technical broadsheet — design tokens
+   --------------------------------------------------------------------------
+   Standalone palette. Three surfaces, a three-step ink ramp, two rule weights,
+   one accent, three semantic states. Every value is OKLCH so light and dark
+   share a perceptual lightness scale.
+
+   Light is defined on bare :root so it is never trapped inside a media query.
+   Dark is applied twice: once for the system default (guarded so an explicit
+   light choice wins) and once for an explicit dark choice.
+   ========================================================================== */
+
+:root {
+  /* surfaces: page -> raised box -> label strip / inline code */
+  --bs-ground: oklch(98.2% 0.003 220);
+  --bs-panel: oklch(100% 0 0);
+  --bs-sunk: oklch(96% 0.005 222);
+
+  /* ink ramp: body -> secondary -> paths, comments, counters */
+  --bs-ink: oklch(24% 0.016 245);
+  --bs-ink-dim: oklch(48% 0.014 240);
+  --bs-ink-faint: oklch(62% 0.011 235);
+
+  /* hairlines: structural -> row separators */
+  --bs-rule: oklch(90% 0.008 225);
+  --bs-rule-soft: oklch(94% 0.006 225);
+
+  /* the single accent, plus its wash for emphasis fills */
+  --bs-signal: oklch(52% 0.13 205);
+  --bs-signal-wash: oklch(96% 0.022 205);
+
+  /* semantic only — never decorative */
+  --bs-good: oklch(52% 0.13 155);
+  --bs-warn: oklch(58% 0.12 70);
+  --bs-bad: oklch(53% 0.18 22);
+
+  /* mono carries structure, sans carries prose */
+  --bs-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --bs-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bs-ground: oklch(15.5% 0.012 245);
+    --bs-panel: oklch(19% 0.014 245);
+    --bs-sunk: oklch(22% 0.015 245);
+
+    --bs-ink: oklch(92% 0.008 220);
+    --bs-ink-dim: oklch(70% 0.012 228);
+    --bs-ink-faint: oklch(58% 0.012 232);
+
+    --bs-rule: oklch(28% 0.014 243);
+    --bs-rule-soft: oklch(24% 0.013 244);
+
+    --bs-signal: oklch(76% 0.12 200);
+    --bs-signal-wash: oklch(26% 0.035 205);
+
+    --bs-good: oklch(74% 0.13 155);
+    --bs-warn: oklch(78% 0.12 72);
+    --bs-bad: oklch(70% 0.15 22);
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bs-ground: oklch(15.5% 0.012 245);
+  --bs-panel: oklch(19% 0.014 245);
+  --bs-sunk: oklch(22% 0.015 245);
+
+  --bs-ink: oklch(92% 0.008 220);
+  --bs-ink-dim: oklch(70% 0.012 228);
+  --bs-ink-faint: oklch(58% 0.012 232);
+
+  --bs-rule: oklch(28% 0.014 243);
+  --bs-rule-soft: oklch(24% 0.013 244);
+
+  --bs-signal: oklch(76% 0.12 200);
+  --bs-signal-wash: oklch(26% 0.035 205);
+
+  --bs-good: oklch(74% 0.13 155);
+  --bs-warn: oklch(78% 0.12 72);
+  --bs-bad: oklch(70% 0.15 22);
+
+  color-scheme: dark;
+}

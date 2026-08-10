@@ -80,6 +80,7 @@ const swatch = computed<Record<ThemeId, string>>(() => ({
   dracula: 'oklch(0.68 0.20 320)',
   catppuccin: 'oklch(0.68 0.18 295)',
   carnival: 'oklch(0.68 0.19 35)',
+  broadsheet: 'oklch(0.52 0.13 205)',
 }))
 const hueLabel = computed<Record<ThemeId, string>>(() => ({
   system: `${appPrimary.value} (app.config)`,
@@ -88,5 +89,6 @@ const hueLabel = computed<Record<ThemeId, string>>(() => ({
   dracula: 'Pink (~hue 320)',
   catppuccin: 'Mauve (~hue 295)',
   carnival: 'Orange (~hue 35)',
+  broadsheet: 'Teal (~hue 205)',
 }))
 </script>

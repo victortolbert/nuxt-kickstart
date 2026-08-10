@@ -1,4 +1,4 @@
-export type ThemeId = 'system' | 'lyra' | 'nord' | 'dracula' | 'catppuccin' | 'carnival'
+export type ThemeId = 'system' | 'lyra' | 'nord' | 'dracula' | 'catppuccin' | 'carnival' | 'broadsheet'
 
 export interface ThemeConfig {
   id: ThemeId

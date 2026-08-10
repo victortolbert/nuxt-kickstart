@@ -8,6 +8,7 @@ CSS and static assets processed by the bundler.
 assets/css/
 ├── main.css              # Base styles, Tailwind, typography
 ├── print.css             # Print-specific styles
+├── broadsheet.css        # Broadsheet document layout (scoped to .bs-shell)
 ├── debug.css             # Layout debugging helpers
 ├── debug-grid.css        # Grid overlay for debugging
 ├── fonts/                # @font-face declarations
@@ -17,12 +18,13 @@ assets/css/
     ├── nord.css          # Nord
     ├── dracula.css       # Dracula
     ├── catppuccin.css    # Catppuccin
-    └── carnival.css      # Carnival
+    ├── carnival.css      # Carnival
+    └── broadsheet.css    # Broadsheet
 ```
 
 ## Theme System
 
-CSS Zen Garden-style theming using CSS variables. 6 user-facing themes (System/default, Lyra, Nord, Dracula, Catppuccin, Carnival) — see `themes/` for the authoritative list and `shared/types/theme.ts` for the typed IDs.
+CSS Zen Garden-style theming using CSS variables. 7 user-facing themes (System/default, Lyra, Nord, Dracula, Catppuccin, Carnival, Broadsheet) — see `themes/` for the authoritative list and `shared/types/theme.ts` for the typed IDs.
 
 - **Light mode**: `:root[data-theme="<id>"]`
 - **Dark mode**: `.dark[data-theme="<id>"]`

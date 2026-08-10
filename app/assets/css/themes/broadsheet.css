@@ -1,0 +1,87 @@
+/* Broadsheet theme - cool-grey newsprint with a single teal signal */
+/* Character: hairline rules, zero radius, mono structure over sans prose */
+/* Palette preserved verbatim from the original technical-broadsheet document, */
+/* so selecting this theme reproduces that document's exact look. */
+
+:root[data-theme="broadsheet"] {
+  /* Typography - sans body prose; the mono/sans inversion lives in
+     broadsheet.css, which pins its own stacks and does not read these. */
+  --theme-font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --theme-font-display: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  /* Core UI settings - nothing rounds */
+  --ui-radius: 0rem;
+
+  /* Background & Foreground - newsprint */
+  --ui-bg: oklch(98.2% 0.003 220);
+  --ui-bg-inverted: oklch(15.5% 0.012 245);
+  --ui-bg-elevated: oklch(100% 0 0);
+  --ui-bg-muted: oklch(96% 0.005 222);
+  --ui-bg-accented: oklch(94% 0.006 225);
+
+  /* Text colors - three-step ink ramp */
+  --ui-text: oklch(24% 0.016 245);
+  --ui-text-muted: oklch(48% 0.014 240);
+  --ui-text-dimmed: oklch(62% 0.011 235);
+  --ui-text-highlighted: oklch(24% 0.016 245);
+  --ui-text-inverted: oklch(98.2% 0.003 220);
+
+  /* Border colors - two hairline weights */
+  --ui-border: oklch(90% 0.008 225);
+  --ui-border-muted: oklch(94% 0.006 225);
+  --ui-border-accented: oklch(86% 0.01 225);
+  --ui-border-inverted: oklch(24% 0.016 245);
+
+  /* Primary color - the single signal (teal) */
+  --color-primary-50: oklch(0.97 0.015 205);
+  --color-primary-100: oklch(0.94 0.028 205);
+  --color-primary-200: oklch(0.88 0.05 205);
+  --color-primary-300: oklch(0.79 0.075 205);
+  --color-primary-400: oklch(0.67 0.10 205);
+  --color-primary-500: oklch(0.52 0.13 205);
+  --color-primary-600: oklch(0.47 0.125 207);
+  --color-primary-700: oklch(0.41 0.11 210);
+  --color-primary-800: oklch(0.34 0.09 213);
+  --color-primary-900: oklch(0.28 0.07 216);
+  --color-primary-950: oklch(0.21 0.05 220);
+
+  /* Chart colors - the semantic trio plus two neutral extensions */
+  --color-chart-1: oklch(0.52 0.13 205);  /* Signal */
+  --color-chart-2: oklch(0.52 0.13 155);  /* Good */
+  --color-chart-3: oklch(0.58 0.12 70);   /* Warn */
+  --color-chart-4: oklch(0.53 0.18 22);   /* Bad */
+  --color-chart-5: oklch(0.48 0.014 240); /* Ink dim */
+}
+
+.dark[data-theme="broadsheet"] {
+  /* Background & Foreground - the same page after dark */
+  --ui-bg: oklch(15.5% 0.012 245);
+  --ui-bg-inverted: oklch(98.2% 0.003 220);
+  --ui-bg-elevated: oklch(19% 0.014 245);
+  --ui-bg-muted: oklch(22% 0.015 245);
+  --ui-bg-accented: oklch(26% 0.016 245);
+
+  /* Text colors */
+  --ui-text: oklch(92% 0.008 220);
+  --ui-text-muted: oklch(70% 0.012 228);
+  --ui-text-dimmed: oklch(58% 0.012 232);
+  --ui-text-highlighted: oklch(92% 0.008 220);
+  --ui-text-inverted: oklch(15.5% 0.012 245);
+
+  /* Border colors */
+  --ui-border: oklch(28% 0.014 243);
+  --ui-border-muted: oklch(24% 0.013 244);
+  --ui-border-accented: oklch(34% 0.016 243);
+  --ui-border-inverted: oklch(92% 0.008 220);
+
+  /* Signal lifts in dark so it still carries the eyebrow and links */
+  --color-primary-400: oklch(0.82 0.10 200);
+  --color-primary-500: oklch(0.76 0.12 200);
+  --color-primary-600: oklch(0.68 0.12 202);
+
+  --color-chart-1: oklch(0.76 0.12 200);
+  --color-chart-2: oklch(0.74 0.13 155);
+  --color-chart-3: oklch(0.78 0.12 72);
+  --color-chart-4: oklch(0.70 0.15 22);
+  --color-chart-5: oklch(0.70 0.012 228);
+}

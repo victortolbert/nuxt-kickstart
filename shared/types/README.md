@@ -18,8 +18,8 @@ TypeScript types used in both client and server contexts. Import via
 
 ## Theme Types
 
-Theme IDs cover the 6 user-facing themes (`default`, `lyra`, `nord`, `dracula`,
-`catppuccin`, `carnival`) — see `theme.ts` for the source of truth.
+Theme IDs cover the 7 user-facing themes (`default`, `lyra`, `nord`, `dracula`,
+`catppuccin`, `carnival`, `broadsheet`) — see `theme.ts` for the source of truth.
 
 ## Usage
 

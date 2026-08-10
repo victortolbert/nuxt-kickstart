@@ -60,7 +60,8 @@
     "blocks": "Blocks",
     "overview": "Overview",
     "profile": "Profile",
-    "llmOptimizer": "LLM Visibility Optimizer"
+    "llmOptimizer": "LLM Visibility Optimizer",
+    "broadsheetLayout": "Broadsheet layout"
   },
   "common": {
     "loading": "Loading...",
@@ -105,7 +106,8 @@
     "showLess": "Show Less",
     "seeAll": "See All",
     "noResults": "No results found",
-    "empty": "No items"
+    "empty": "No items",
+    "skipToContent": "Skip to content"
   },
   "search": {
     "placeholder": "Search...",
@@ -135,7 +137,8 @@
       "nord": "Nord",
       "dracula": "Dracula",
       "catppuccin": "Catppuccin",
-      "carnival": "Carnival"
+      "carnival": "Carnival",
+      "broadsheet": "Broadsheet"
     },
     "descriptions": {
       "system": "Uses app.config colors (primary + neutral)",
@@ -143,7 +146,8 @@
       "nord": "Arctic, north-bluish palette",
       "dracula": "Dark purple/pink palette",
       "catppuccin": "Warm pastel colors",
-      "carnival": "Warm, playful carnival colors"
+      "carnival": "Warm, playful carnival colors",
+      "broadsheet": "Newsprint greys with a single teal signal"
     }
   },
   "auth": {
@@ -791,6 +795,9 @@
       },
       "podcasts": {
         "desc": "A podcast player demo — episodes, playback progress, and subscriptions."
+      },
+      "broadsheet": {
+        "desc": "Live reference for the technical broadsheet document layout — masthead, rail, hairline panels."
       }
     }
   },

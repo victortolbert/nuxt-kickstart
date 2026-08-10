@@ -15,8 +15,8 @@ describe('useTheme', () => {
   })
 
   describe('themes array', () => {
-    it('exports 6 theme configurations', () => {
-      expect(themes).toHaveLength(6)
+    it('exports 7 theme configurations', () => {
+      expect(themes).toHaveLength(7)
     })
 
     it('contains expected theme ids', () => {
@@ -27,6 +27,7 @@ describe('useTheme', () => {
       expect(themeIds).toContain('dracula')
       expect(themeIds).toContain('catppuccin')
       expect(themeIds).toContain('carnival')
+      expect(themeIds).toContain('broadsheet')
     })
 
     it('each theme has required properties', () => {
@@ -131,6 +132,10 @@ describe('useTheme', () => {
       // Cycle to carnival (index 5)
       cycleTheme()
       expect(theme.value).toBe('carnival')
+
+      // Cycle to broadsheet (index 6)
+      cycleTheme()
+      expect(theme.value).toBe('broadsheet')
 
       // Cycle back to system (index 0)
       cycleTheme()
