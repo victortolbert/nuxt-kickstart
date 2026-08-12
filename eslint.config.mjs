@@ -186,6 +186,26 @@ export default withNuxt(
             // Matches files like [projectId].vue, [userName].ts, etc.
             '\\[([a-zA-Z0-9]+)\\].[jt]s(x)?',
             '\\[([a-zA-Z0-9]+)\\].vue',
+            // …and the same for a dynamic segment that is a *directory* rather
+            // than a file, e.g. server/api/podcasts/[podcastId]/index.get.ts.
+            // The rule checks directory names too and reports them separately,
+            // which the two patterns above do not cover — they require a file
+            // extension. Without this, nine server routes fail on a name that
+            // cannot be changed without renaming the route param they declare.
+            //
+            // Anchored on purpose. `ignore` entries are tested against every
+            // path segment, so an unanchored `\[([a-zA-Z0-9]+)\]` also matches
+            // any *file* whose name merely contains brackets, and makes the two
+            // patterns above dead config.
+            //
+            // Known limitation, and not fixable here: filename-case bails on
+            // the whole file when any segment matches (rules/filename-case.js
+            // early-returns after testing `pathSegments`, which includes the
+            // basename). So filenames under a dynamic directory are unchecked
+            // regardless of anchoring. The only real fix is renaming these
+            // directories to kebab-case, which renames the route params they
+            // declare — deliberately out of scope for a lint fix.
+            '^\\[([a-zA-Z0-9]+)\\]$',
           ],
         }],
       },

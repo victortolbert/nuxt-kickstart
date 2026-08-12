@@ -94,7 +94,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^9.0.0",
+    "@antfu/eslint-config": "^9.3.0",
     "@commitlint/cli": "^21.2.1",
     "@eslint/eslintrc": "^3.3.5",
     "@figma-plugin/helpers": "^0.15.2",
