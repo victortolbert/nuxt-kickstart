@@ -604,7 +604,7 @@ public class UserService {
 }
 ```
 
-### C#
+### C\#
 
 ```csharp
 // C# with records, pattern matching, and LINQ

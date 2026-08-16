@@ -16,6 +16,7 @@ Kickstart supports sourcing content from an external GitHub repository, enabling
 By default, Kickstart loads content from the local `content/` directory. With external content enabled, collections can be sourced from a remote GitHub repository while maintaining a local-first development experience.
 
 **Key capabilities**:
+
 - Source all or specific collections from an external repository
 - Private repository authentication via GitHub Personal Access Token
 - Per-collection override (keep some collections local)
@@ -44,6 +45,7 @@ NUXT_CONTENT_AUTH_TOKEN=ghp_YourPersonalAccessTokenHere
 ```
 
 **Creating a GitHub PAT**:
+
 1. Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
 2. Generate new token with `repo` scope (full control of private repositories)
 3. Copy the token immediately (you won't see it again)
@@ -58,6 +60,7 @@ NUXT_CONTENT_BRANCH=main
 ```
 
 Use different branches per environment:
+
 - `main` for production
 - `develop` for staging
 - `preview` for preview deployments
@@ -72,6 +75,7 @@ NUXT_CONTENT_LOCAL_COLLECTIONS=notes,logs
 ```
 
 **Common use cases**:
+
 - `notes` - Keep personal notes private
 - `logs` - Environment-specific logs
 - `templates` - Application-specific templates
@@ -110,6 +114,7 @@ your-org/kickstart-content/
 ```
 
 **Requirements**:
+
 - Directory names must match collection names in `content.config.ts`
 - Frontmatter schema must match collection definitions
 - File paths relative to repository root
@@ -184,6 +189,7 @@ rm -rf .content-cache
 ```
 
 Useful when:
+
 - Switching branches in external repository
 - Debugging content loading issues
 - Clearing stale cached content
@@ -208,10 +214,12 @@ GET /api/health/content
 ```
 
 **Status values**:
+
 - `ok` - Content source configured and accessible
 - `error` - Configuration error or connectivity issue
 
 **HTTP status codes**:
+
 - `200` - Healthy
 - `503` - Error (external configured but repository URL missing)
 
@@ -228,6 +236,7 @@ GET /api/health/content
 **Cause**: Invalid GitHub token or repository URL.
 
 **Solutions**:
+
 1. Verify `NUXT_CONTENT_AUTH_TOKEN` has `repo` scope
 2. Check token hasn't expired
 3. Confirm `NUXT_CONTENT_REPO_URL` format: `https://github.com/{owner}/{repo}`
@@ -238,6 +247,7 @@ GET /api/health/content
 **Cause**: Cached content not refreshing.
 
 **Solution**:
+
 ```bash
 rm -rf .content-cache
 pnpm dev
@@ -248,6 +258,7 @@ pnpm dev
 **Cause**: Some collections should remain local.
 
 **Solution**: Add collection names to `NUXT_CONTENT_LOCAL_COLLECTIONS`:
+
 ```bash
 NUXT_CONTENT_LOCAL_COLLECTIONS=notes,logs,templates
 ```

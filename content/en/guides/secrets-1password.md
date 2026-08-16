@@ -40,6 +40,7 @@ op://<vault>/<item>/[section/]<field>
 ```
 
 Examples:
+
 - `op://Kickstart Local/kickstart-turso/credential` — item's default credential/password field
 - `op://Kickstart Local/kickstart-github-oauth/username` — custom field by label
 - `op://Kickstart Local/kickstart-twilio/API/account-sid` — field inside a named section
@@ -51,6 +52,7 @@ Field names are the lowercased labels visible in the 1Password UI. Use `op item 
 ### 1. Create items in 1Password
 
 Each secret becomes an item in the `Kickstart Local` vault. Typical item types:
+
 - **API Credential** — for tokens (Turso, Resend, OG image secret, Twilio auth token)
 - **Login** — for OAuth client ID + secret pairs (GitHub, Google)
 - **Database** — for Turso URL + auth token bundle
@@ -127,6 +129,7 @@ When the child exits, the secrets are gone.
 **dotenv re-reads can bypass resolution.** Tools that call `dotenv.config()` themselves will read `.env.1password` from disk and see the `op://` strings as literal values. Nuxt/Nitro reads `.env` (not `.env.1password`) at startup, so `op run` wrapping works cleanly — the resolved env vars take precedence over anything dotenv would load. If a tool insists on reading its own env file, point it elsewhere or pre-resolve.
 
 **AI agents with shell access can still call `op read` themselves.** `op run` protects against *passive* exfiltration (file reads, editor indexes, backup tools) but not against an agent that actively invokes the 1Password CLI. Real guardrails:
+
 - Use a 1Password **service account** scoped to only the `Kickstart Local` vault
 - Don't grant agents unrestricted shell in sessions where production secrets are loaded
 - Audit `op` usage via 1Password activity log
@@ -175,8 +178,8 @@ OP_SERVICE_ACCOUNT_TOKEN=ops_... op run --env-file=.env.1password -- printenv
 
 ## Further reading
 
-- 1Password CLI docs: https://developer.1password.com/docs/cli
-- `op run` reference: https://developer.1password.com/docs/cli/reference/commands/run
-- Secret references: https://developer.1password.com/docs/cli/secret-reference-syntax
-- GitHub Action: https://github.com/1Password/load-secrets-action
-- Service accounts: https://developer.1password.com/docs/service-accounts
+- 1Password CLI docs: <https://developer.1password.com/docs/cli>
+- `op run` reference: <https://developer.1password.com/docs/cli/reference/commands/run>
+- Secret references: <https://developer.1password.com/docs/cli/secret-reference-syntax>
+- GitHub Action: <https://github.com/1Password/load-secrets-action>
+- Service accounts: <https://developer.1password.com/docs/service-accounts>

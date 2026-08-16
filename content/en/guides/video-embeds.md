@@ -91,12 +91,14 @@ The tweet ID is the number at the end of a tweet URL:
 ## Theme Support
 
 Both components automatically adapt to your current color mode:
+
 - **YouTube**: Uses privacy-enhanced mode with rounded corners
 - **Tweets**: Re-render with Twitter's dark/light theme when you toggle color mode
 
 ## Print Support
 
 Embeds are print-friendly:
+
 - YouTube shows a placeholder with the video URL
 - Tweets render as static content with a link to view on X
 

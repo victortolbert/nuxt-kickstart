@@ -286,8 +286,8 @@ importers:
         specifier: ^25.9.3
         version: 25.9.3
       '@victortolbert/preflight':
-        specifier: ^0.3.0
-        version: 0.3.0(@commitlint/cli@21.2.1(@types/node@25.9.3)(conventional-commits-parser@7.1.2)(typescript@6.0.3))(taze@19.14.1)
+        specifier: ^0.4.0
+        version: 0.4.0(@commitlint/cli@21.2.1(@types/node@25.9.3)(conventional-commits-parser@7.1.2)(typescript@6.0.3))(taze@19.14.1)
       '@vitest/coverage-v8':
         specifier: ^4.1.8
         version: 4.1.8(vitest@4.1.8)
@@ -6590,8 +6590,8 @@ packages:
     engines: {node: '>=20'}
     hasBin: true
 
-  '@victortolbert/preflight@0.3.0':
-    resolution: {integrity: sha512-dKaqxmj3r8xPlm6Znp0ZHGMIQ+dEx5kBnKJIVaPaIebE5djxeWZ1rSOoiSCXixh7Xb7o6naoUPoD13icJALt7g==}
+  '@victortolbert/preflight@0.4.0':
+    resolution: {integrity: sha512-wNkeYv7eYdDKoaaxBuVF1ZxN6XuFf8QEtJf3Z7Dz+f8BgMPMb2+ayf8Y1RJzinXgR939fby0cyBu8lV+owCrOQ==}
     engines: {node: '>=24'}
     hasBin: true
     peerDependencies:
@@ -20123,7 +20123,7 @@ snapshots:
       - rollup
       - supports-color
 
-  '@victortolbert/preflight@0.3.0(@commitlint/cli@21.2.1(@types/node@25.9.3)(conventional-commits-parser@7.1.2)(typescript@6.0.3))(taze@19.14.1)':
+  '@victortolbert/preflight@0.4.0(@commitlint/cli@21.2.1(@types/node@25.9.3)(conventional-commits-parser@7.1.2)(typescript@6.0.3))(taze@19.14.1)':
     dependencies:
       '@clack/prompts': 1.7.0
       '@commitlint/config-conventional': 21.2.0

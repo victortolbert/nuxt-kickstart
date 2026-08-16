@@ -20,6 +20,7 @@ This error occurs when the `redirect_uri` parameter sent to GitHub doesn't match
 ## Current Configuration
 
 ### GitHub OAuth App Settings (Correct ✓)
+
 - **Application name**: Kickstart
 - **Homepage URL**: `https://nuxt-kickstart.example.com`
 - **Authorization callback URL**: `https://nuxt-kickstart.example.com/api/auth/callback/github`
@@ -29,35 +30,45 @@ This error occurs when the `redirect_uri` parameter sent to GitHub doesn't match
 Go to your Vercel project → Settings → Environment Variables and verify:
 
 ### 1. BETTER_AUTH_URL (CRITICAL)
+
 ```
 BETTER_AUTH_URL=https://nuxt-kickstart.example.com
 ```
+
 **Important:**
+
 - NO trailing slash
 - Must be HTTPS in production
 - Must match exactly what users type in browser
 - This is used by Better Auth to construct OAuth callback URLs
 
 ### 2. NUXT_PUBLIC_SITE_URL
+
 ```
 NUXT_PUBLIC_SITE_URL=https://nuxt-kickstart.example.com
 ```
+
 **Important:**
+
 - Should match BETTER_AUTH_URL
 - Used for generating absolute URLs
 
 ### 3. GitHub OAuth Credentials
+
 ```
 NUXT_OAUTH_GITHUB_CLIENT_ID=your_client_id_here
 NUXT_OAUTH_GITHUB_CLIENT_SECRET=your_client_secret_here
 ```
+
 **Verify:**
+
 - Client ID and Secret are from the correct GitHub OAuth App
 - Not from a different environment (dev/staging)
 
 ## Troubleshooting Steps
 
 ### Step 1: Verify Vercel Environment Variables
+
 ```bash
 # In Vercel dashboard, check these variables are set for Production:
 BETTER_AUTH_URL=https://nuxt-kickstart.example.com
@@ -68,7 +79,9 @@ BETTER_AUTH_SECRET=<32-char-secret>
 ```
 
 ### Step 2: Check Environment Variable Scope
+
 In Vercel, environment variables have scopes:
+
 - ✓ **Production** - Must be checked
 - Preview - Optional
 - Development - Optional
@@ -76,7 +89,9 @@ In Vercel, environment variables have scopes:
 Make sure `BETTER_AUTH_URL` is set for **Production** environment.
 
 ### Step 3: Redeploy After Changing Env Vars
+
 After updating environment variables:
+
 1. Go to Deployments tab
 2. Find the latest deployment
 3. Click "..." → "Redeploy"
@@ -86,7 +101,9 @@ After updating environment variables:
 Environment variables only take effect after redeployment.
 
 ### Step 4: Test the Callback URL Manually
+
 Visit this URL to see what Better Auth returns:
+
 ```
 https://nuxt-kickstart.example.com/api/auth/callback/github
 ```
@@ -94,6 +111,7 @@ https://nuxt-kickstart.example.com/api/auth/callback/github
 You should see a JSON response or an error message (not a 404).
 
 ### Step 5: Check GitHub OAuth App Configuration
+
 In GitHub → Settings → Developer settings → OAuth Apps:
 
 1. Click on your Kickstart app
@@ -105,6 +123,7 @@ In GitHub → Settings → Developer settings → OAuth Apps:
 ## Common Mistakes
 
 ### ❌ Trailing Slash
+
 ```bash
 # WRONG:
 BETTER_AUTH_URL=https://nuxt-kickstart.example.com/
@@ -114,6 +133,7 @@ BETTER_AUTH_URL=https://nuxt-kickstart.example.com
 ```
 
 ### ❌ HTTP Instead of HTTPS
+
 ```bash
 # WRONG (in production):
 BETTER_AUTH_URL=http://nuxt-kickstart.example.com
@@ -123,6 +143,7 @@ BETTER_AUTH_URL=https://nuxt-kickstart.example.com
 ```
 
 ### ❌ www vs non-www Mismatch
+
 ```bash
 # Make sure both match:
 BETTER_AUTH_URL=https://nuxt-kickstart.example.com
@@ -134,7 +155,9 @@ BETTER_AUTH_URL=https://nuxt-kickstart.example.com
 ```
 
 ### ❌ Wrong GitHub OAuth App
+
 You might have created multiple GitHub OAuth Apps (dev, staging, production). Make sure:
+
 - The Client ID/Secret in Vercel match the app configured with `https://nuxt-kickstart.example.com`
 - Not accidentally using credentials from a localhost or Netlify OAuth app
 
@@ -159,6 +182,7 @@ To see what `redirect_uri` is actually being sent to GitHub:
 5. Check the URL parameters - find `redirect_uri`
 
 The `redirect_uri` parameter should be:
+
 ```
 redirect_uri=https%3A%2F%2Fnuxt-kickstart.example.com%2Fapi%2Fauth%2Fcallback%2Fgithub
 ```

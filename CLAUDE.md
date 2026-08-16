@@ -96,6 +96,7 @@ This project uses **Nuxt UI v4** (`@nuxt/ui` 4.x) with breaking changes from v2.
 Call `mcp__nuxt-ui-remote__get-component({ componentName: "X", sections: ["usage", "api"] })` before using any `U*` component.
 
 Key changes vs. legacy v2 patterns:
+
 - `UDivider` → `USeparator`
 - `UModal`: use `v-model:open` + `title`/`description` props + `#body`/`#footer` slots (not `UCard` wrapper)
 - `USelect`/`USelectMenu`: `:items` (not `:options`)
@@ -182,12 +183,15 @@ Kickstart uses a **storage adapter pattern** for file uploads, supporting multip
 - **Production**: `s3` (AWS S3) or `cloudinary` providers (serverless-compatible)
 
 ### Configuration
+
 Set `NUXT_STORAGE_PROVIDER` environment variable:
+
 - `local` - Local filesystem (dev only, won't work on Vercel/Netlify)
 - `s3` - AWS S3 bucket (recommended for production)
 - `cloudinary` - Cloudinary CDN (alternative to S3)
 
 ### Usage
+
 ```typescript
 import { handleFileUpload } from '#server/utils/upload'
 

@@ -17,7 +17,7 @@ visibility: private
 The **AI Champions Challenge Scoreboard** is a live, real-time competition scoreboard for team-based events. Think of it as a game show board for conferences, hackathons, team offsites, or any event where teams compete across multiple challenges and judges score them live.
 
 No login required. No accounts needed. Just open the URL and go.
-    https://nuxt-kickstart.example.com/labs/scoreboard
+    <https://nuxt-kickstart.example.com/labs/scoreboard>
     ---
 
 ## What It Does
@@ -84,6 +84,7 @@ You're part of a team competing in a series of challenges. Here's what to expect
 5. **Medals matter** — top 3 teams get gold, silver, and bronze medals on the board
 
 **Tips for teams:**
+
 - You can see which challenge is active from the colored banner at the top
 - Progress dots show how many challenges are done vs remaining
 - Scores are cumulative across all challenges — consistency wins
@@ -107,6 +108,7 @@ As a judge, you receive a unique scoring link. No account or login needed.
 6. **Repeat** — when the next challenge activates, your form resets automatically
 
 **Tips for judges:**
+
 - Your link is unique — don't share it with other judges
 - Scores update the leaderboard immediately after submission
 - You can only score the currently active challenge
@@ -153,6 +155,7 @@ Challenges have three states:
 | **Locked** | Scoring complete, scores are final | Re-activate (with confirmation) |
 
 **Challenge flow:**
+
 1. All challenges start as **Upcoming**
 2. Admin clicks **Activate** to start the first challenge
 3. Judges score teams while the challenge is active
@@ -182,6 +185,7 @@ Challenges have three states:
 ### Small Meeting (2 Teams, 1 Judge, 3 Challenges)
 
 Perfect for a quick team comparison:
+
 - 2 teams competing
 - 1 judge (the manager or facilitator)
 - 3 short challenges (e.g., pitch, demo, Q&A)
@@ -190,6 +194,7 @@ Perfect for a quick team comparison:
 ### Medium Workshop (4-6 Teams, 3 Judges, 5 Challenges)
 
 Good for a half-day workshop or offsite:
+
 - 4-6 teams
 - 3 judges (rotating or fixed panel)
 - 5 challenges across the event
@@ -198,6 +203,7 @@ Good for a half-day workshop or offsite:
 ### Large Conference (8+ Teams, 5 Judges, 7 Challenges)
 
 Full-scale competition:
+
 - 8+ teams
 - 5 judges (executive panel)
 - 7 challenges spanning multiple sessions

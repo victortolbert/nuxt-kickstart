@@ -1,5 +1,6 @@
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import preflightSecurityHeaders from '@victortolbert/preflight/security-headers'
 
 // Minimal local shapes for Rollup's warning handler — `rollup` isn't a hoisted
 // direct dependency, so we avoid importing its types.
@@ -228,6 +229,13 @@ export default defineNuxtConfig({
 
   // Redirect old /admin/* paths to /app/admin/* for bookmark compatibility
   routeRules: {
+    // Three security headers on `/**`, from Preflight. Spread first so a local
+    // rule below can override; nothing here shares its key today.
+    //
+    // These used to live in `netlify.toml`, which no host this repo deploys to
+    // reads any more — `routeRules` is applied by Nitro on every preset, so the
+    // policy now survives a change of host. See ADR-0012 in the Preflight repo.
+    ...preflightSecurityHeaders,
     '/admin/email/**': { redirect: '/app/admin/email/**' },
     '/admin/trash': { redirect: '/app/admin/trash' },
     '/admin/content/**': { redirect: '/app/admin/content/**' },

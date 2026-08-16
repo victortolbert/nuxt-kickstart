@@ -1,0 +1,17 @@
+# Markdownlint ignore (gitignore syntax). Lints authored prose only, and skips
+# anything generated or vendored.
+#
+# Needed for `lint:md` to be runnable at all: without it `markdownlint .` walks
+# node_modules, and the 725 vendored agent-skill docs under `.claude/` dwarf the
+# ~148 files this repo actually authors.
+
+# Generated / deps
+node_modules/
+.nuxt/
+.output/
+.data/
+dist/
+coverage/
+
+# Vendored agent tooling — third-party documentation, not ours to lint
+.claude/

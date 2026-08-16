@@ -1,6 +1,9 @@
 {
   "version": 1,
   "files": {
+    ".editorconfig": {
+      "computedHash": "22c77efd3e695680f24f5e043cf1951ea7f310cb2876af7c1f4345b18b606c79"
+    },
     ".nvmrc": {
       "computedHash": "7add09abfdd044ac178d0a04a733342dc3ade5fbc80352c1800e8a536002a2e4"
     },

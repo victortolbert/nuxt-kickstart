@@ -110,6 +110,7 @@ If you add more Better Auth social providers, their callbacks follow the same pa
 ### Local Development
 
 The app uses local SQLite by default (`.data/auth.db`), which requires no setup. This is ideal for:
+
 - Local development
 - Testing
 - Avoiding corporate proxy issues
@@ -119,6 +120,7 @@ The app uses local SQLite by default (`.data/auth.db`), which requires no setup.
 For serverless/edge deployments, you'll need a remote database:
 
 **[Turso](https://turso.tech/)** (Recommended - SQLite at the edge)
+
 ```bash
 # Create database
 turso db create kickstart
@@ -180,6 +182,7 @@ Ensure `BETTER_AUTH_SECRET` (32+ chars) and `BETTER_AUTH_URL` are set in your pl
 ## Monitoring
 
 Consider adding:
+
 - Error tracking (Sentry)
 - Analytics (Plausible, Fathom)
 - Uptime monitoring (Better Uptime, Pingdom)

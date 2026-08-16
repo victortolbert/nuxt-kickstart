@@ -5,6 +5,7 @@ Framework-agnostic utilities, testable without a Nuxt context.
 ## Purpose
 
 Code that:
+
 - Has no Vue/Nuxt dependencies
 - Can be unit tested in isolation
 - May be extracted to npm packages

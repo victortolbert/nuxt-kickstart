@@ -342,7 +342,11 @@ Optional, per feature: `RESEND_API_KEY` (magic link / email OTP), `NUXT_OAUTH_GI
 
 > **Build memory:** the production build needs roughly an 8 GB Node heap. If your Docker builder has less RAM (Docker Desktop defaults to ~8 GB), the build can be OOM-killed — either raise Docker's memory (Settings → Resources), or lower the heap with `--build-arg NODE_BUILD_HEAP_MB=7168`.
 
+<!-- -->
+
 > **Database schema:** the image does not run `db:init`. The local fallback auto-creates its tables, but a Turso database must be provisioned separately — run the schema/migration scripts against `TURSO_DATABASE_URL` before first boot.
+
+<!-- -->
 
 > **File uploads:** the default `local` storage provider writes to the container filesystem and won't persist across restarts. For production set `NUXT_STORAGE_PROVIDER=s3` (or `cloudinary`) with the matching credentials — see the [File Storage guide](/guides/file-storage).
 

@@ -17,49 +17,51 @@ created: '2026-06-11'
 ::directory-tree
 ---
 items:
-  - label: app/
+
+- label: app/
     comment: "Nuxt app (alias ~ or @)"
     children:
-      - label: assets/css/themes/
+  - label: assets/css/themes/
         comment: Theme CSS files (one per theme)
-      - label: components/
+  - label: components/
         comment: Vue components, kebab-case
-      - label: composables/
+  - label: composables/
         comment: use-*.ts (auto-imported)
-      - label: layouts/
+  - label: layouts/
         comment: default, landing, blank
-      - label: middleware/
+  - label: middleware/
         comment: auth, guest, admin, app-auth.global, dev-only
-      - label: pages/
+  - label: pages/
         comment: Routes
-  - label: content/
+- label: content/
     comment: Markdown/YAML content (see Collections)
-  - label: schemas/
+- label: schemas/
     comment: Content collection schemas (Zod), registered in index.ts
-  - label: server/
+- label: server/
     comment: "Nitro server (alias #server)"
     children:
-      - label: api/
+  - label: api/
         comment: REST endpoints (content, email, examples, tokens)
-      - label: routes/_ws/
+  - label: routes/_ws/
         comment: WebSocket handlers (scoreboard)
-      - label: db/ + podcasts-db/
+  - label: db/ + podcasts-db/
         comment: Core auth schema + the podcast example's isolated DB
-      - label: utils/
+  - label: utils/
         comment: Email, storage adapters, upload
-  - label: shared/
+- label: shared/
     comment: "Code shared app/server (alias #shared — preferred)"
     children:
-      - label: types/
+  - label: types/
         comment: TypeScript types
-      - label: utils/
+  - label: utils/
         comment: Pure utilities (case, abilities, glossary)
-  - label: i18n/locales/
+- label: i18n/locales/
     comment: en.json, es.json
-  - label: lib/style-dictionary/
+- label: lib/style-dictionary/
     comment: Design tokens pipeline
-  - label: test/
+- label: test/
     comment: "unit/ + nuxt/ (vitest), e2e/ (Playwright)"
+
 ---
 ::
 

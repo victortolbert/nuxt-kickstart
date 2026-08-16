@@ -175,7 +175,7 @@ Then register it:
 @import "./my-theme.css";
 ```
 
-2. Add to `app/composables/use-theme.ts`:
+1. Add to `app/composables/use-theme.ts`:
 
 ```ts
 export const themes: ThemeConfig[] = [
@@ -189,7 +189,7 @@ export const themes: ThemeConfig[] = [
 ]
 ```
 
-3. Update `shared/types/theme.ts`:
+1. Update `shared/types/theme.ts`:
 
 ```ts
 export type ThemeId = 'system' | 'lyra' | 'nord' | 'dracula' | 'catppuccin' | 'carnival' | 'broadsheet' | 'my-theme'
@@ -205,6 +205,7 @@ Access the component catalog to preview UI components with the active theme:
 4. Use quick theme switch at the top
 
 Categories include:
+
 - **Layout** - Container, Card, Divider, Skeleton
 - **Forms** - Button, Input, Textarea, Select, Checkbox, Radio, Switch
 - **Data Display** - Table, Badge, Avatar, Icon, Progress

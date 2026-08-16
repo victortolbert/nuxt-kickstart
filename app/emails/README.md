@@ -76,7 +76,7 @@ the template data. Rendering lives in `server/utils/maizzle.ts` (via
 
 ## Dev preview & build
 
-- `pnpm dev` runs Maizzle's own preview server on **http://localhost:4321**
+- `pnpm dev` runs Maizzle's own preview server on **<http://localhost:4321>**
   (provided by `@maizzle/nuxt`).
 - `pnpm run build` compiles templates to `server/assets/emails/`.
 - Runtime `render()` reads template sources via the working directory (works in

@@ -47,6 +47,7 @@ Click any theme card to apply it immediately. The active theme shows a highlight
 ### Preview Section
 
 The settings page includes a live preview area showing:
+
 - Button variants (Primary, Neutral, Outline, Ghost)
 - Badge colors (Primary, Success, Warning, Error)
 - Text colors (Default, Muted, Dimmed)
@@ -88,6 +89,7 @@ Click category headers to expand/collapse component lists.
 #### Live Preview
 
 The bottom of the catalog shows a live preview with:
+
 - Button styles
 - Badge variants
 - Form inputs

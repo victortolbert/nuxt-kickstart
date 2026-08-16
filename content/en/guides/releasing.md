@@ -36,23 +36,23 @@ pnpm run typecheck
 pnpm run lint
 ```
 
-2. Merge `develop` into `main`:
+1. Merge `develop` into `main`:
 
 ```bash
 git checkout main
 git merge develop
 ```
 
-3. Tag the release and push:
+1. Tag the release and push:
 
 ```bash
 git tag v0.2.0
 git push origin main --follow-tags
 ```
 
-4. The GitHub Action (`.github/workflows/release.yml`) runs automatically on tag push, generates the changelog from conventional commits, and creates a GitHub Release.
+1. The GitHub Action (`.github/workflows/release.yml`) runs automatically on tag push, generates the changelog from conventional commits, and creates a GitHub Release.
 
-5. Switch back to `develop`:
+2. Switch back to `develop`:
 
 ```bash
 git checkout develop
@@ -93,6 +93,6 @@ Scoped commits (e.g., `feat(auth):`) get grouped under their scope.
 
 The CI workflow uses the built-in `secrets.GITHUB_TOKEN` which requires no setup. If you ever want to run `pnpm run release` locally (not recommended), create a token at:
 
-https://github.com/settings/tokens/new?scopes=repo&description=changelogithub
+<https://github.com/settings/tokens/new?scopes=repo&description=changelogithub>
 
 And add `GITHUB_TOKEN=ghp_...` to your `.env`.
