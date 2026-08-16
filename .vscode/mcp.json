@@ -6,10 +6,7 @@
     },
     "context7": {
       "type": "http",
-      "url": "https://mcp.context7.com/mcp",
-      "headers": {
-        "CONTEXT7_API_KEY": "ctx7sk-4658a281-7755-4b36-bceb-e2a9af9fac4e"
-      }
+      "url": "https://mcp.context7.com/mcp"
     },
     "figma-remote": {
       "url": "https://mcp.figma.com/mcp",
