@@ -20,7 +20,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
-          node-version: 24
+          # Read from `.nvmrc` rather than repeating the version here. That file
+          # is managed by Preflight, and until now nothing enforced it — CI could
+          # drift from the declared Node version with no failure to point at.
+          node-version-file: .nvmrc
           cache: pnpm
 
       - name: Install dependencies
