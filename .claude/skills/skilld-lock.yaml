@@ -1,19 +1,19 @@
 skills:
   vue-skilld:
     packageName: vue
-    version: 3.5.38
-    packages: "vue@3.5.38"
+    version: 3.5.41
+    packages: "vue@3.5.41"
     repo: vuejs/core
     source: "https://github.com/vuejs/core/tree/main/docs"
-    syncedAt: 2026-06-12
+    syncedAt: 2026-08-17
     generator: skilld
   nuxt-og-image-skilld:
     packageName: nuxt-og-image
-    version: 6.6.0
-    packages: "nuxt-og-image@6.6.0"
+    version: 6.7.8
+    packages: "nuxt-og-image@6.7.8"
     repo: nuxt-modules/og-image
-    source: "https://github.com/nuxt-modules/og-image/tree/v6.6.0/docs"
-    syncedAt: 2026-06-12
+    source: "https://github.com/nuxt-modules/og-image/tree/v6.7.8/docs"
+    syncedAt: 2026-08-17
     generator: skilld
   zod-skilld:
     packageName: zod
@@ -33,9 +33,9 @@ skills:
     generator: skilld
   nuxt-skilld:
     packageName: nuxt
-    version: 4.4.8
-    packages: "nuxt@4.4.8"
+    version: 4.5.2
+    packages: "nuxt@4.5.2"
     repo: nuxt/nuxt
-    source: "https://github.com/nuxt/nuxt/tree/v4.4.8/docs"
-    syncedAt: 2026-06-11
+    source: "https://github.com/nuxt/nuxt/tree/v4.5.2/docs"
+    syncedAt: 2026-08-17
     generator: skilld

@@ -7,15 +7,15 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue').EffectScope
-  const MaizzleConfigKey: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/useConfig.js').MaizzleConfigKey
-  const RenderContextKey: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/renderContext.js').RenderContextKey
-  const _setCurrentTemplate: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/useCurrentTemplate.js')._setCurrentTemplate
+  const MaizzleConfigKey: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/useConfig.js').MaizzleConfigKey
+  const RenderContextKey: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/renderContext.js').RenderContextKey
+  const _setCurrentTemplate: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/useCurrentTemplate.js')._setCurrentTemplate
   const computed: typeof import('vue').computed
   const createApp: typeof import('vue').createApp
   const customRef: typeof import('vue').customRef
   const defineAsyncComponent: typeof import('vue').defineAsyncComponent
   const defineComponent: typeof import('vue').defineComponent
-  const defineConfig: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/defineConfig.js').defineConfig
+  const defineConfig: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/defineConfig.js').defineConfig
   const effectScope: typeof import('vue').effectScope
   const getCurrentInstance: typeof import('vue').getCurrentInstance
   const getCurrentScope: typeof import('vue').getCurrentScope
@@ -59,27 +59,27 @@ declare global {
   const triggerRef: typeof import('vue').triggerRef
   const unref: typeof import('vue').unref
   const useAttrs: typeof import('vue').useAttrs
-  const useBaseUrl: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/useBaseUrl.js').useBaseUrl
-  const useConfig: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/useConfig.js').useConfig
+  const useBaseUrl: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/useBaseUrl.js').useBaseUrl
+  const useConfig: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/useConfig.js').useConfig
   const useCssModule: typeof import('vue').useCssModule
   const useCssVars: typeof import('vue').useCssVars
-  const useCurrentTemplate: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/useCurrentTemplate.js').useCurrentTemplate
-  const useDoctype: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/useDoctype.js').useDoctype
-  const useEvent: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/useEvent.js').useEvent
-  const useFont: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/useFont.js').useFont
+  const useCurrentTemplate: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/useCurrentTemplate.js').useCurrentTemplate
+  const useDoctype: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/useDoctype.js').useDoctype
+  const useEvent: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/useEvent.js').useEvent
+  const useFont: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/useFont.js').useFont
   const useHead: typeof import('@unhead/vue').useHead
   const useHeadSafe: typeof import('@unhead/vue').useHeadSafe
   const useId: typeof import('vue').useId
   const useModel: typeof import('vue').useModel
-  const useOutlookFallback: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/useOutlookFallback.js').useOutlookFallback
-  const useOutputPath: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/useOutputPath.js').useOutputPath
-  const usePlaintext: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/usePlaintext.js').usePlaintext
-  const usePreheader: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/usePreheader.js').usePreheader
+  const useOutlookFallback: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/useOutlookFallback.js').useOutlookFallback
+  const useOutputPath: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/useOutputPath.js').useOutputPath
+  const usePlaintext: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/usePlaintext.js').usePlaintext
+  const usePreheader: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/usePreheader.js').usePreheader
   const useSeoMeta: typeof import('@unhead/vue').useSeoMeta
   const useSlots: typeof import('vue').useSlots
   const useTemplateRef: typeof import('vue').useTemplateRef
-  const useTransformers: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/useTransformers.js').useTransformers
-  const useUrlQuery: typeof import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/useUrlQuery.js').useUrlQuery
+  const useTransformers: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/useTransformers.js').useTransformers
+  const useUrlQuery: typeof import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/useUrlQuery.js').useUrlQuery
   const watch: typeof import('vue').watch
   const watchEffect: typeof import('vue').watchEffect
   const watchPostEffect: typeof import('vue').watchPostEffect
@@ -91,15 +91,15 @@ declare global {
   export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, ShallowRef, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
   // @ts-ignore
-  export type { FontRegistration, RenderContext, TailwindBlock } from '../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/renderContext.d'
-  import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/renderContext.d')
+  export type { FontRegistration, RenderContext, TailwindBlock } from '../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/renderContext.d'
+  import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/renderContext.d')
   // @ts-ignore
-  export type { FontProvider, UseFontOptions } from '../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/useFont.d'
-  import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/useFont.d')
+  export type { FontProvider, UseFontOptions } from '../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/useFont.d'
+  import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/useFont.d')
   // @ts-ignore
-  export type { UsePlaintextOptions } from '../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/usePlaintext.d'
-  import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/usePlaintext.d')
+  export type { UsePlaintextOptions } from '../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/usePlaintext.d'
+  import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/usePlaintext.d')
   // @ts-ignore
-  export type { UsePreheaderOptions } from '../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/usePreheader.d'
-  import('../node_modules/.pnpm/@maizzle+framework@6.0.0_@modelcontextprotocol+sdk@1.29.0_zod@4.4.3__@nuxt+kit@4.4.8_ma_01e5a28efd609f3a75937e35c2a0f98c/node_modules/@maizzle/framework/dist/composables/usePreheader.d')
+  export type { UsePreheaderOptions } from '../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/usePreheader.d'
+  import('../node_modules/.pnpm/@maizzle+framework@6.1.0_@nuxt+kit@4.5.2_magic-string@1.2.0_magicast@0.5.4_oxc-parser@0_940cc26649597d4b875fbc2a1dac8d33/node_modules/@maizzle/framework/dist/composables/usePreheader.d')
 }

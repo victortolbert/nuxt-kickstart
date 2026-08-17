@@ -2,13 +2,13 @@
 name: nuxt-og-image-skilld
 description: "ALWAYS use when writing code importing \"nuxt-og-image\". Consult for debugging, best practices, or modifying nuxt-og-image, nuxt og image, og-image, og image."
 metadata:
-  version: 6.6.0
+  version: 6.7.8
   generated_by: Anthropic · Haiku 4.5
-  generated_at: 2026-06-12
+  generated_at: 2026-08-17
 ---
 
-# nuxt-modules/og-image `nuxt-og-image@6.6.0`
-**Tags:** beta: 6.0.0, latest: 6.6.0
+# nuxt-modules/og-image `nuxt-og-image@6.7.8`
+**Tags:** beta: 6.0.0, latest: 6.7.8
 
 **References:** [package.json](./.skilld/pkg/package.json) • [README](./.skilld/pkg/README.md) • [Docs](./.skilld/docs/_INDEX.md) • [Issues](./.skilld/issues/_INDEX.md) • [Releases](./.skilld/releases/_INDEX.md)
 
@@ -19,79 +19,101 @@ Use `skilld search "query" -p nuxt-og-image` instead of grepping `.skilld/` dire
 <!-- skilld:api-changes -->
 ## API Changes
 
-This section documents version-specific API changes — prioritize recent major/minor releases.
+This section documents version-specific API changes for nuxt-og-image v6.7.8, prioritizing recent major/minor releases.
 
-- BREAKING: `defineOgImageComponent()` → `defineOgImage()` — v6 changed the composable name, old function still works but is deprecated. Migration CLI auto-renames [source](./.skilld/docs/content/6.migration-guide/v6.md:L224:235)
+### Breaking Changes (v5 → v6)
 
-- BREAKING: Component filenames require renderer suffix — v6 changed from `components/OgImage/MyTemplate.vue` to `components/OgImage/MyTemplate.takumi.vue` (or `.satori.vue`, `.browser.vue`). Components without suffix no longer load [source](./.skilld/docs/content/6.migration-guide/v6.md:L71:112)
+- BREAKING: **Component file suffix required** — OG Image components must include renderer suffix in filename (`.takumi.vue`, `.satori.vue`, `.browser.vue`). Old pattern `components/OgImage/MyTemplate.vue` no longer works. Run `npx nuxt-og-image migrate v6` to rename automatically. [source](./.skilld/docs/content/6.migration-guide/v6.md#component-renderer-suffix-required)
 
-- BREAKING: `<OgImage>` and `<OgImageScreenshot>` components removed — v6 removed Vue components entirely, use `defineOgImage()` and `defineOgImageScreenshot()` composables instead. Template references silently fail [source](./.skilld/docs/content/6.migration-guide/v6.md:L175:199)
+- BREAKING: **Renderer dependencies no longer bundled** — Install `@takumi-rs/core`/`@takumi-rs/wasm` (Takumi), `satori`+`@resvg/resvg-js` (Satori), or `playwright-core` (Browser) explicitly. Running `nuxi dev` prompts for missing dependencies in interactive terminals. [source](./.skilld/docs/content/6.migration-guide/v6.md#install-renderer-dependencies)
 
-- BREAKING: `ogImage.fonts` config removed — v6 delegates font management to `@nuxt/fonts` module with `global: true`. Config-based fonts no longer load [source](./.skilld/docs/content/6.migration-guide/v6.md:L140:167)
+- BREAKING: **`<OgImage>` and `<OgImageScreenshot>` components removed** — Use `defineOgImage()` and `defineOgImageScreenshot()` composables instead. Template example: replace `<OgImage :title="title" />` with `<script setup>` calling `defineOgImage('ComponentName', { title })`. [source](./.skilld/docs/content/6.migration-guide/v6.md#ogimageandog-image-screenshot-components-removed)
 
-- BREAKING: Renderer dependencies no longer bundled — v6 requires explicit installation: `@takumi-rs/core` (Node.js) or `@takumi-rs/wasm` (Edge) for Takumi, `satori` + `@resvg/resvg-js` for Satori, `playwright-core` for Browser renderer [source](./.skilld/docs/content/6.migration-guide/v6.md:L35:69)
+- BREAKING: **Object syntax with `url` replaced by `useSeoMeta`** — Old pattern `defineOgImage({ url: '/my-image.png', width: 1200 })` no longer works. Use `useSeoMeta({ ogImage: '/my-image.png', ogImageWidth: 1200, ... })` directly. [source](./.skilld/docs/content/6.migration-guide/v6.md#object-syntax-with-url-replaced-by-useseometa)
 
-- BREAKING: URL path format changed — v6 shortened OG image endpoints: `/__og-image__/image/` → `/_og/d/`, `/__og-image__/static/` → `/_og/s/`. Hardcoded URL paths break [source](./.skilld/docs/content/6.migration-guide/v6.md:L322:355)
+- BREAKING: **URL path format completely restructured** — v5 format `/__og-image__/image/?width=1200&title=...` changed to v6 Cloudinary-style `/_og/s/w_1200,title_...,p_<base64>.png`. Static paths: `/__og-image__/static/` → `/_og/s/`. Font paths removed (now served by `@nuxt/fonts`). Hardcoded URLs must use `defineOgImage()` return value. [source](./.skilld/docs/content/6.migration-guide/v6.md#new-cloudinary-style-url-encoding)
 
-- BREAKING: `chromium` renderer renamed to `browser` — v6 renamed for clarity. Component files must use `.browser.vue` suffix and config references must update [source](./.skilld/docs/content/6.migration-guide/v6.md:L414:436)
+- BREAKING: **`ogImage.fonts` config removed** — Custom fonts now configured via `@nuxt/fonts` module with `global: true` setting. Remove `fonts` key from Nuxt config and install `@nuxt/fonts`. Inter (400, 700) bundled as fallback. [source](./.skilld/docs/content/6.migration-guide/v6.md#fonts-nuxtfonts-integration)
 
-- BREAKING: `#nuxt-og-image-utils` import alias removed — v6 removed legacy alias, import from `#og-image/shared` instead. Old imports fail [source](./.skilld/docs/content/6.migration-guide/v6.md:L476:483)
+- BREAKING: **Cache key format changed** — Query parameters no longer included in cache keys. v5: `/page?foo=bar` and `/page?baz=qux` cached separately. v6: share same cache. URL path encodes all options; query param overrides only work in dev/prerender, not production. [source](./.skilld/docs/content/6.migration-guide/v6.md#cache-key-changes)
 
-- BREAKING: `useOgImageRuntimeConfig` import path changed — v6 moved import from `#og-image/shared` to `#og-image/app/utils`. Old import path returns deprecated stub [source](./.skilld/docs/content/6.migration-guide/v6.md:L485:492)
+- BREAKING: **Nuxt Content v2 support removed** — Requires `@nuxt/content` v3+. Module no longer handles `ogImage` frontmatter in v2. Use `defineOgImage()` in page components instead. [source](./.skilld/docs/content/6.migration-guide/v6.md#nuxt-content-v2-support-removed)
 
-- BREAKING: Nuxt Content v2 support removed — v6 requires Content v3+. Automatic frontmatter handling for v2 no longer works [source](./.skilld/docs/content/6.migration-guide/v6.md:L385:396)
+- BREAKING: **Chromium renderer renamed to `browser`** — Update component filenames from `.chromium.vue` to `.browser.vue`. Update config option from `chromium: 'playwright'` to `browser: 'playwright'`. [source](./.skilld/docs/content/6.migration-guide/v6.md#chromium-renderer-renamed-to-browser)
 
-- BREAKING: Cache key format changed — v6 excluded query parameters from cache keys and changed key structure for CDN compatibility. URL query params no longer affect cached images [source](./.skilld/docs/content/6.migration-guide/v6.md:L301:320)
+- BREAKING: **`#nuxt-og-image-utils` alias removed** — Update imports to use `#og-image/shared` instead of legacy `#nuxt-og-image-utils`. [source](./.skilld/docs/content/6.migration-guide/v6.md#nuxt-og-image-utils-alias-removed)
 
-- BREAKING: Object `url` syntax replaced by `useSeoMeta()` — v6 removed `defineOgImage({ url: '/image.png' })` pattern, use `useSeoMeta({ ogImage: '/image.png' })` instead [source](./.skilld/docs/content/6.migration-guide/v6.md:L213:222)
+- BREAKING: **Sharp JPEG errors now throw** — Previously logged error and silently fell back to PNG. v6 throws error if Sharp fails for JPEG rendering. Ensure Sharp is properly installed and runtime supports it. [source](./.skilld/docs/content/6.migration-guide/v6.md#sharp-jpeg-errors)
 
-- BREAKING: `ogImage.componentOptions` config removed — v6 removed config option since components no longer exist [source](./.skilld/docs/content/6.migration-guide/v6.md:L205:211)
+- BREAKING: **`useOgImageRuntimeConfig` import path changed** — Update imports from `#og-image/shared` to `#og-image/app/utils`. [source](./.skilld/docs/content/6.migration-guide/v6.md#useogimageeruntimeconfig-import-path)
 
-- BREAKING: `strictNuxtContentPaths` config removed — v6 removed deprecated option [source](./.skilld/docs/content/6.migration-guide/v6.md:L402:412)
+- BREAKING: **`componentOptions` config option removed** — No longer needed since components are gone. Remove from Nuxt config entirely. [source](./.skilld/docs/content/6.migration-guide/v6.md#componentoptions-config-removed)
 
-- BREAKING: Browser `node` binding removed — v6 removed `browser: 'node'` option, use `'playwright'` instead [source](./.skilld/docs/content/6.migration-guide/v6.md:L438:453)
+- BREAKING: **`browser: 'node'` compatibility option removed** — Use `browser: 'playwright'` instead. Old pattern for Node.js-based browser rendering no longer supported. [source](./.skilld/docs/content/6.migration-guide/v6.md#browser-node-binding-removed)
 
-- BREAKING: UnoCSS runtime removed — v6 removed runtime transformer, UnoCSS now resolved at build time only [source](./.skilld/releases/v6.0.2.md)
+- BREAKING: **`strictNuxtContentPaths` config removed** — Deprecated option had no effect in Nuxt Content v3. Remove from config. [source](./.skilld/docs/content/6.migration-guide/v6.md#strictnuxtcontentpaths-removed)
 
-- NEW: `defineOgImageSchema()` composable — v6.2.0 added new composable for defining OG image schemas with type safety [source](./.skilld/releases/v6.2.0.md:L11)
+### New APIs (v6+)
 
-- DEPRECATED: `html` parameter — v6.3.0 deprecated `defineOgImage({ html: '...' })` due to SSRF risk, will be removed in next major version. Use Vue components instead [source](./.skilld/docs/content/4.api/0.define-og-image.md:L84:91)
+- NEW: **`defineOgImage()` composable** — Primary API for defining OG images with component name as first argument, props as second, options as third. Replaces deprecated `defineOgImageComponent()`. Returns array of generated image URLs. Example: `defineOgImage('NuxtSeo', { title: 'Hello' })`. [source](./.skilld/docs/content/4.api/0.define-og-image.md)
 
-- NEW: URL signing to prevent parameter tampering — v6.3.0 added security feature to sign URLs and prevent modification attacks [source](./.skilld/releases/v6.3.0.md:L11)
+- NEW: **Multiple OG images per page** — Define variants with different dimensions/keys via third argument. Example: `defineOgImage('NuxtSeo', { title: 'Page' }, [{ key: 'og' }, { key: 'whatsapp', width: 800, height: 800 }])`. Shared props in second arg override per-variant via `props` key. [source](./.skilld/docs/content/4.api/0.define-og-image.md#multiple-og-images)
 
-- NEW: Multiple OG images per page — v6 added support for different dimensions per platform via `defineOgImage(component, props, [{ key: 'og' }, { key: 'whatsapp', width: 800 }])` [source](./.skilld/docs/content/7.releases/2.v6.md:L50:59)
+- NEW: **Takumi renderer as recommended default** — Rust-based renderer 2-10x faster than Satori. Feature-compatible with Satori (Tailwind, fonts, emoji, edge runtimes). Select via `.takumi.vue` suffix or `'MyTemplate.takumi'` dot notation. [source](./.skilld/docs/content/7.releases/2.v6.md#takumi-renderer-recommended)
 
-**Also changed:** First-class CSS support (Tailwind v4, UnoCSS, CSS variables, Nuxt UI v3 colors) in v6 · Takumi as recommended renderer in v6 · Redesigned DevTools with Bluesky support in v6 · CLI commands `create` and `switch` in v6.1.0 · Production preview toggle in devtools (v6.1.0) · Component creation from empty state in devtools (v6.1.0) · Cloudflare Browser Rendering support in v6 · Community templates must be ejected in v6
+- NEW: **First-class CSS support** — Build-time CSS processing with zero config: Tailwind v4 (with `@theme` values), UnoCSS, CSS variables, Nuxt UI v3 semantic colors (`primary`, `secondary`, etc. resolved from `app.config.ts`). All work directly in OG templates without extra setup. [source](./.skilld/docs/content/7.releases/2.v6.md#first-class-css-support)
+
+- NEW: **`cacheVersion` config option** — Controls cache key namespacing. Default: module version (auto-invalidate on upgrade). Set `cacheVersion: 'v1'` for static version or `false` to disable versioning entirely. [source](./.skilld/docs/content/6.migration-guide/v6.md#cache-version-control)
+
+- NEW: **Cloudflare Browser Rendering support** — Use Cloudflare Browser Rendering for runtime screenshots on Cloudflare Workers/Pages via `ogImage: { browser: { provider: 'cloudflare', binding: 'BROWSER' } }`. [source](./.skilld/docs/content/6.migration-guide/v6.md#cloudflare-browser-rendering-support)
+
+- NEW: **`/_og/r/<path>` resolver endpoint** — Render another page's OG image on listings without reconstructing URL. Alternative to hardcoding OG URLs for embeds. [source](./.skilld/releases/v6.3.10.md)
+
+- NEW: **Nuxt UI v3 color mode aware tokens** — v6.5.0 adds automatic resolution of semantic colors from Nuxt UI via `data-theme` attribute. Example: use `class="text-primary-500"` directly in OG templates when `@nuxt/ui` is installed. [source](./.skilld/docs/content/7.releases/2.v6.md#nuxt-ui-v3-color-support)
+
+- NEW: **URL signing by default** — v6.7.0 signs OG image URLs by default for security. Disable via `NUXT_OG_IMAGE_SECRET=''` if needed (v6.7.5+ warns when signing disabled). [source](./.skilld/releases/v6.7.0.md)
+
+- NEW: **Devtools as a layer** — v6.6.0 ships redesigned DevTools with better image preview, improved error reporting, Bluesky social card support, and more accessible interface. Loaded as a module layer. [source](./.skilld/releases/v6.6.0.md)
+
+### Deprecated APIs
+
+- DEPRECATED: **`defineOgImageComponent()` composable** — Use `defineOgImage()` instead. API identical - just remove "Component" from function name. Example: `defineOgImageComponent('NuxtSeo', {})` → `defineOgImage('NuxtSeo', {})`. Still works but marked for removal. [source](./.skilld/docs/content/6.migration-guide/v6.md#defineogimagecomponent-deprecated)
+
+- DEPRECATED: **Inline HTML templates via `html` option** — Will be removed in next major version due to SSRF risk. Migrate to Vue components. Use `security.strict` to disable this option now. [source](./.skilld/docs/content/4.api/0.define-og-image.md#html)
+
+- DEPRECATED: **`fonts` option on `defineOgImage()`** — Configure fonts via `@nuxt/fonts` module instead with `global: true` setting. [source](./.skilld/docs/content/4.api/0.define-og-image.md#fonts)
+
+**Also changed:** Community templates must be ejected before production build via `npx nuxt-og-image eject <Name>` · Hash mode for long prerendered URLs (auto-switches when URL > 200 chars) · `defineOgImage()` now returns array of paths instead of string · Component renderer variants via dot notation (`'MyTemplate.takumi'`) or PascalCase (`'MyTemplateTakumi'`)
 <!-- /skilld:api-changes -->
 
 <!-- skilld:best-practices -->
 ## Best Practices
 
-- Use Takumi as your default renderer — it's 2-10x faster than Satori with complete CSS support including gradients, shadows, CSS Grid, and 2D/3D transforms, making it the recommended choice for most use cases [source](./.skilld/docs/content/2.renderers/1.takumi.md#pros)
+- Use Takumi (`.takumi.vue`) as your primary renderer — it's 2–10x faster than Satori with complete CSS support (gradients, shadows, transforms, CSS Grid). Only switch to Satori if you need a lighter dependency footprint or to Browser if prerendering with full CSS needs [source](./.skilld/docs/content/2.renderers/0.index.md#choosing-a-renderer)
 
-- Name OG Image components with the `.takumi.vue` suffix to enable automatic renderer detection and tree-shaking of unused code — no manual renderer configuration needed [source](./.skilld/docs/content/0.getting-started/5.getting-familiar-with-nuxt-og-image.md#part-3-creating-your-own-template:L113)
+- Enable build caching for prerendered sites to avoid regenerating unchanged images between deployments. The cache automatically invalidates when options change, templates are modified, or the module version changes [source](./.skilld/docs/content/3.guides/2.build-cache.md#setup)
 
-- Use the multiple OG image variants pattern with shared props to avoid duplication — pass shared props as the second argument and an array of size/key variants as the third [source](./.skilld/docs/content/4.api/0.define-og-image.md#shared-props-with-variants-recommended)
+- Pass minimal props to `defineOgImage()` — send only a slug or ID and fetch full data inside your OG image component via `$fetch()`. This keeps URLs short, reduces HTML bloat per page, and avoids exceeding the 200-character prerender hash threshold [source](./.skilld/docs/content/3.guides/16.performance.md#reduce-url-size)
 
-- Keep runtime OG image URLs short by passing only essential props (slug, ID) and fetching full data inside the component — encodes all props in the path, so long URLs add HTML bloat and hurt caching efficiency [source](./.skilld/docs/content/3.guides/11.performance.md#reduce-url-size)
+- Set up persistent storage for runtime caching in production using Nitro's `cache` storage (recommended for all cached content) or `runtimeCacheStorage` (OG images only). The default in-memory cache is lost on server restart [source](./.skilld/docs/content/3.guides/3.runtime-cache.md#persistent-storage)
 
-- Prerender OG images for high-traffic pages using route rules — build-time rendering has zero runtime cost and automatically generates short hash-based URLs that persist across deployments [source](./.skilld/docs/content/3.guides/11.performance.md#prerender)
+- Require URL signing in production with a stable secret to prevent DOS attacks and cache poisoning. Enable `strict` mode for all recommended security defaults in one flag, including signing, query size limits, and dimension clamping [source](./.skilld/docs/content/3.guides/18.security.md#strict-mode)
 
-- Enable persistent cache storage for production (Redis, KV, or NuxtHub) — the default in-memory cache is lost on server restart, causing unnecessary regeneration; configure via `runtimeCacheStorage` option [source](./.skilld/docs/content/3.guides/3.runtime-cache.md#persistent-storage)
+- Avoid wildcard route rules like `/**` with caching options (`swr`, `isr`, or `cache`) — Nitro cannot exclude OG image routes from global cache rules. Use specific patterns like `/blog/**` and `/products/**` instead [source](./.skilld/docs/content/3.guides/5.route-rules.md#wildcard-route-rules-warning)
 
-- Enable `buildCache` in CI environments to persist prerendered images across deployments — automatically invalidates when options, templates, or module versions change, reducing build times and avoiding unnecessary regeneration [source](./.skilld/docs/content/3.guides/3.build-cache.md)
+- Enable zero runtime mode when all OG images are prerendered at build time — removes 81% of Nitro code from production, including all renderer and dependency code. Requires prerendering all pages that use OG images [source](./.skilld/docs/content/3.guides/1.zero-runtime.md)
 
-- Use the `/_og/r/` resolver endpoint in listing pages and galleries instead of reconstructing image URLs — it fetches the target page's og:image meta tag and redirects to the current URL, surviving template edits without hardcoded URL breakage [source](./.skilld/docs/content/3.guides/4.resolve-og-images.md#introduction)
+- Include the renderer suffix in component filenames (`.takumi.vue`, `.satori.vue`, `.browser.vue`) to enable automatic renderer detection and tree-shaking. Unsuffixed components will not be recognized [source](./.skilld/docs/content/2.renderers/0.index.md#component-naming-convention)
 
-- Configure `@nuxt/fonts` with `global: true` for any custom font used in OG images — manual font loading, CSS @font-face, or CDN links do not work because font resolution happens in the server-side rendering context without DOM access [source](./.skilld/docs/content/3.guides/5.custom-fonts.md#setup)
+- Use the props-based pattern for i18n — resolve translations at the page level with `useI18n()` and pass translated strings as props to your OG image component. Direct `useI18n()` calls inside OG image components (which render as Nuxt Islands) won't have locale context or lazy-loaded messages [source](./.skilld/docs/content/4.integrations/3.i18n.md#pattern-1-props-based-recommended)
 
-- Use `:style` bindings for dynamic values (colors, sizes) and keep Tailwind class names static — the module processes CSS classes at build time and cannot resolve dynamic class names like `` `border-${color}` `` [source](./.skilld/docs/content/0.getting-started/5.getting-familiar-with-nuxt-og-image.md#part-3-creating-your-own-template:L157)
+- For performance-critical images with dynamic content, avoid dynamic image URLs (which trigger 100–500ms fetches) and keep font combinations static across components to reduce Satori's font binary re-parsing overhead. Use base64-encoded images when optimizing for speed [source](./.skilld/docs/content/3.guides/16.performance.md#optimize-components)
 
-- Enable strict security mode (`security.strict: true`) in production to enforce URL signing, disable deprecated inline HTML, and restrict runtime generation to your origin — requires setting `NUXT_OG_IMAGE_SECRET` via environment variable or config [source](./.skilld/docs/content/3.guides/13.security.md#strict-mode)
+- Provide explicit `width` and `height` for all images instead of relying on auto-detection — dimension detection is slow and often incorrect. Use base64 images over URL fetches when performance is critical [source](./.skilld/docs/content/3.guides/10.icons-and-images.md#provide-width--height)
 
-- Use the `.key` option to generate multiple images per page with different dimensions — set `key: 'og'` (default, generates both og:image and twitter:image), `key: 'twitter'` (twitter:image only), or custom strings for additional variants [source](./.skilld/docs/content/4.api/0.define-og-image.md#key)
+- Always set `mode="svg"` when using Nuxt Icon's `Icon` component or Nuxt UI's `UIcon` component in OG image templates — without SVG mode the icons will not render correctly [source](./.skilld/docs/content/3.guides/10.icons-and-images.md#nuxt-icon--nuxt-ui)
 
-- Set `data-theme` on the root element when using Tailwind v4 to enable per-image theme switching — bind `:data-theme="colorMode"` to swap between light/dark semantic tokens like `bg-inverted` and `text-muted` [source](./.skilld/docs/content/3.guides/7.styling.md#dynamic-data-theme-per-image-color-mode)
+- Use dynamic `data-theme` bindings on the root element for theme-aware color resolution with Tailwind v4 — bind `:data-theme="colorMode"` to a prop to swap themes per image. The build process resolves both theme variants at compile time and emits paired classes [source](./.skilld/docs/content/3.guides/11.styling.md#dynamic-data-theme-per-image-color-mode)
 
-- Avoid wildcard route rules with caching directives on `/**` as they break OG image routes due to a Nitro limitation — use specific route patterns like `/blog/**` or `/products/**` instead [source](./.skilld/docs/content/3.guides/2.route-rules.md#wildcard-route-rules-warning)
+- Configure custom fonts via `@nuxt/fonts` with `global: true` instead of the deprecated `ogImage.fonts` option — the module automatically detects and uses fonts from `@nuxt/fonts` at build time [source](./.skilld/docs/content/7.releases/2.v6.md#nuxtfonts-required-for-custom-fonts)
 <!-- /skilld:best-practices -->

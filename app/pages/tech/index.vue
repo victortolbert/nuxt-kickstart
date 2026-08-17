@@ -139,6 +139,7 @@
 
 <script setup lang="ts">
 import type { TableColumn } from '@nuxt/ui'
+import type { Component } from 'vue'
 import type { TechBucket } from '~/utils/tech-taxonomy'
 import { h } from 'vue'
 import { NuxtLink, UBadge, UIcon } from '#components'
@@ -237,7 +238,10 @@ const columns = computed<TableColumn<TechItem>[]>(() => [
     header: t('pages.tech.columns.name'),
     cell: ({ row }) => {
       const item = row.original
-      return h(NuxtLink, { to: item.path, class: 'flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-[var(--color-primary-500)]' }, () => [
+      // `NuxtLink as Component`: with typedPages + i18n, `to` is a union over every
+      // generated route, and resolving it against the collection item type here trips
+      // TS2590 (union too complex to represent).
+      return h(NuxtLink as Component, { to: item.path, class: 'flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-[var(--color-primary-500)]' }, () => [
         h('div', { class: 'size-7 shrink-0 flex items-center justify-center bg-elevated border border-default' }, [
           item.icon?.name
             ? h(UIcon, { name: item.icon.name, class: 'size-4' })
