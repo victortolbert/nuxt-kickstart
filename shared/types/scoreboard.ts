@@ -1,5 +1,5 @@
 /**
- * Types for the scoreboard example (`/examples/scoreboard-mvp`).
+ * Types for the scoreboard example (`/labs/scoreboard`).
  */
 
 /** How a team is visually identified on the scoreboard. */

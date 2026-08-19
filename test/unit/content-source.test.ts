@@ -101,20 +101,42 @@ describe('content-source utilities', () => {
     it('returns external config when repo is configured', () => {
       vi.stubEnv('NUXT_CONTENT_REPO_URL', 'https://github.com/user/repo.git')
       vi.stubEnv('NUXT_CONTENT_AUTH_TOKEN', 'token123')
+      vi.stubEnv('NUXT_CONTENT_BRANCH', '')
       vi.stubEnv('NUXT_CONTENT_LOCAL_COLLECTIONS', '')
 
       const result = createCollectionSource('content/projects', 'projects')
 
       expect(result).toEqual({
-        repository: 'https://github.com/user/repo.git',
         include: 'content/projects',
-        authToken: 'token123',
+        repository: {
+          url: 'https://github.com/user/repo.git',
+          branch: 'main',
+          auth: { token: 'token123' },
+        },
+      })
+    })
+
+    // Regression: `branch` was computed by getContentSource() but dropped on the
+    // way out of createCollectionSource(), so @nuxt/content only ever saw the
+    // ref embedded in the URL and fell back to `main`. NUXT_CONTENT_BRANCH was
+    // silently inert.
+    it('forwards NUXT_CONTENT_BRANCH to the repository config', () => {
+      vi.stubEnv('NUXT_CONTENT_REPO_URL', 'https://github.com/user/repo.git')
+      vi.stubEnv('NUXT_CONTENT_AUTH_TOKEN', 'token123')
+      vi.stubEnv('NUXT_CONTENT_BRANCH', 'develop')
+      vi.stubEnv('NUXT_CONTENT_LOCAL_COLLECTIONS', '')
+
+      const result = createCollectionSource('content/projects', 'projects')
+
+      expect(result).toMatchObject({
+        repository: { branch: 'develop' },
       })
     })
 
     it('returns local path for collections in local-only list', () => {
       vi.stubEnv('NUXT_CONTENT_REPO_URL', 'https://github.com/user/repo.git')
       vi.stubEnv('NUXT_CONTENT_AUTH_TOKEN', 'token123')
+      vi.stubEnv('NUXT_CONTENT_BRANCH', '')
       vi.stubEnv('NUXT_CONTENT_LOCAL_COLLECTIONS', 'notes,prompts')
 
       const notesResult = createCollectionSource('content/notes', 'notes')
@@ -124,23 +146,29 @@ describe('content-source utilities', () => {
       expect(notesResult).toBe('content/notes')
       expect(promptsResult).toBe('content/prompts')
       expect(projectsResult).toEqual({
-        repository: 'https://github.com/user/repo.git',
         include: 'content/projects',
-        authToken: 'token123',
+        repository: {
+          url: 'https://github.com/user/repo.git',
+          branch: 'main',
+          auth: { token: 'token123' },
+        },
       })
     })
 
-    it('handles collection with external repo but no auth token', () => {
+    it('omits auth when no token is configured', () => {
       vi.stubEnv('NUXT_CONTENT_REPO_URL', 'https://github.com/user/repo.git')
       vi.stubEnv('NUXT_CONTENT_AUTH_TOKEN', '')
+      vi.stubEnv('NUXT_CONTENT_BRANCH', '')
       vi.stubEnv('NUXT_CONTENT_LOCAL_COLLECTIONS', '')
 
       const result = createCollectionSource('content/projects', 'projects')
 
       expect(result).toEqual({
-        repository: 'https://github.com/user/repo.git',
         include: 'content/projects',
-        authToken: undefined,
+        repository: {
+          url: 'https://github.com/user/repo.git',
+          branch: 'main',
+        },
       })
     })
   })

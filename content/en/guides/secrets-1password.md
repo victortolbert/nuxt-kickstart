@@ -76,7 +76,7 @@ Wrapper scripts in `package.json`:
 
 ```bash
 pnpm dev:op      # op run --env-file=.env.1password -- nuxt dev --no-fork
-pnpm build:op    # op run --env-file=.env.1password -- nuxt build
+pnpm build:op    # op run --env-file=.env.1password -- (8GB heap) nuxt build
 ```
 
 For one-off scripts:

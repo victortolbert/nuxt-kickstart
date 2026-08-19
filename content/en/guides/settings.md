@@ -33,14 +33,18 @@ Choose how Kickstart responds to system appearance:
 
 #### Theme Selection
 
-Select from four built-in themes:
+Select from seven built-in themes (`app/composables/use-theme.ts` is the source
+of truth):
 
 | Theme | Icon | Style |
 |-------|------|-------|
-| **Lyra** | Palette | Default blue/slate (shadcn-inspired) |
-| **Nord** | Snowflake | Arctic blues and cyans |
-| **Dracula** | Ghost | Deep purples and pinks |
+| **Default** | Settings | Uses `app.config` colors (primary + neutral) |
+| **Lyra** | Palette | Blue/slate, shadcn-inspired |
+| **Nord** | Snowflake | Arctic, north-bluish palette |
+| **Dracula** | Ghost | Dark purple/pink palette |
 | **Catppuccin** | Coffee | Warm pastels (Mocha variant) |
+| **Carnival** | Carousel | Warm, playful carnival colors |
+| **Broadsheet** | News | Newsprint greys with a single teal signal |
 
 Click any theme card to apply it immediately. The active theme shows a highlighted border.
 

@@ -41,14 +41,14 @@ Run `pnpm nuxi prepare` after clone to generate `.nuxt/`. Run `pnpm run db:init`
 - **Vue blocks**: `<script setup lang="ts">` → `<template>` → `<style>`
 - **Component casing in templates**: kebab-case (enforced). Exception: `app/emails/**` (Maizzle templates) use **PascalCase** (`<Layout>`, `<Container>`) and `<script>`-first block order — scoped override in `eslint.config.mjs`
 - **TypeScript**: `interface` over `type` for objects. Strict mode. Avoid `any`
-- **Pre-commit**: `lint-staged` via `simple-git-hooks`
+- **Pre-commit**: `nano-staged` via `simple-git-hooks`
 
 ## Import Aliases (Nuxt 4)
 
 | Alias | Resolves To | Note |
 | --- | --- | --- |
 | `~` / `@` | `app/` | `~/components/foo.vue` |
-| `~~` / `@@` | project root | `~~/shared/data/quotes.ts` |
+| `~~` / `@@` | project root | `~~/shared/data/daily-quotes.ts` |
 | `#shared` | `shared/` | **Preferred** for shared/ imports |
 | `#server` | `server/` | Server-only code |
 
@@ -64,7 +64,9 @@ TDD: write failing test → implement → verify → refactor.
 | Component | `test/nuxt/` | `nuxt` | Nuxt |
 | E2E smoke | `test/e2e/` | — (Playwright) | Chromium, port 3210 |
 
-Test files match source: `shared/utils/case.ts` → `test/unit/case.test.ts`. Coverage tracks `shared/utils/`, `app/utils/`, `lib/`; target >70% for utilities. Vitest config (`vitest.config.ts`) defines the `unit` and `nuxt` projects. OG Image module disabled during tests (`process.env.VITEST`).
+Test files match source: `shared/utils/case.ts` → `test/unit/case.test.ts`. Coverage tracks `shared/utils/`, `app/utils/`, `app/composables/`, `app/middleware/`, `server/`, and `lib/`; target >70% for utilities. Vitest config (`vitest.config.ts`) defines the `unit` and `nuxt` projects. OG Image module disabled during tests (`process.env.VITEST`).
+
+`pnpm run test` and its `test:unit`/`test:nuxt`/`test:watch` siblings are bare `vitest` — watch mode in a terminal. Use `pnpm exec vitest run` for a one-shot pass. Playwright browsers are not installed by `pnpm install`; run `pnpm exec playwright install chromium` once before `test:e2e`.
 
 ## Content Architecture
 
@@ -161,7 +163,7 @@ Localized collections: `guides` ships en + es sources in one collection (see `ap
 ## Git Conventions
 
 - Conventional commits: `type(scope): description`
-- Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`
+- Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `content` (`content` is added by the Preflight commitlint config)
 - Atomic commits — one logical change per commit
 - No Claude footnote in commits
 

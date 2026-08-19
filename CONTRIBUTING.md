@@ -30,17 +30,38 @@ pnpm run fresh        # clean + dev in one
 Changing a content schema under `schemas/`? Run `pnpm run clean` so the content
 cache regenerates against the new schema.
 
-## The gate — run before every PR
-
-All five must pass:
+### E2E setup (first run only)
 
 ```bash
-pnpm run lint         # eslint (lint:fix to auto-fix)
-pnpm run typecheck    # vue-tsc
-pnpm run test         # vitest (unit + nuxt projects)
-pnpm run test:e2e     # Playwright smoke (port 3210)
-pnpm run build        # production build
+pnpm exec playwright install chromium
 ```
+
+`pnpm install` does not download browsers — `playwright` is deliberately absent
+from `allowBuilds` in `pnpm-workspace.yaml`, so its postinstall never runs.
+Without this, `pnpm run test:e2e` fails with *"Executable doesn't exist"*.
+
+## The gate — run before every PR
+
+All six must pass:
+
+```bash
+pnpm exec preflight check  # config drift against the Preflight presets
+pnpm run lint              # eslint (lint:fix to auto-fix)
+pnpm run typecheck         # nuxt typecheck (vue-tsc)
+pnpm exec vitest run       # unit + nuxt projects, one shot
+pnpm run test:e2e          # Playwright smoke (port 3210)
+pnpm run build             # production build
+```
+
+`preflight check` is the one most easily missed: CI runs it first, and it fails
+if a file Preflight manages (`.editorconfig`, `.nvmrc`, `axe-linter.yml`) has
+diverged without this repo declaring it. To keep a deliberate local change,
+declare the file under `unmanaged` in `preflight.config.ts` — that file is
+optional and does not exist yet, so create it when you first need one.
+
+Use `pnpm exec vitest run`, not `pnpm run test`: the latter is bare `vitest`,
+which starts watch mode in a terminal and never exits. CI is unaffected — vitest
+runs once when it detects a non-TTY.
 
 | Command | Purpose |
 | --- | --- |
@@ -48,8 +69,11 @@ pnpm run build        # production build
 | `pnpm run build` | Production build |
 | `pnpm run preview` | Preview the production build |
 | `pnpm run lint` / `lint:fix` | Check / auto-fix code style |
+| `pnpm run lint:md` / `lint:md:fix` | Check / auto-fix Markdown (markdownlint) |
 | `pnpm run typecheck` | TypeScript checks |
-| `pnpm run test` / `test:unit` / `test:nuxt` | Vitest |
+| `pnpm run test` / `test:unit` / `test:nuxt` | Vitest (watch mode) |
+| `pnpm exec vitest run` | Vitest, one shot |
+| `pnpm run test:coverage` | Coverage report |
 | `pnpm run test:e2e` | Playwright smoke tests |
 | `pnpm run clean` / `clean:full` / `fresh` | Reset build artifacts |
 
@@ -68,7 +92,7 @@ pnpm run build        # production build
 
 ## Pull requests
 
-- **Conventional commits**: `type(scope): description` (`feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`). Atomic — one logical change per commit. No AI/tool footnotes in commit messages.
+- **Conventional commits**: `type(scope): description` (`feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `content`). Atomic — one logical change per commit. No AI/tool footnotes in commit messages.
 - Keep the gate green; add tests for new behavior.
 - If you touch UI, check it across all themes + light/dark and keep it accessible.
 - Update docs alongside code: `CONTEXT.md` for new domain terms, `docs/adr/` for decisions worth recording, the relevant `**/README.md`, and the in-app guides under `content/en/guides/`.
@@ -77,9 +101,8 @@ pnpm run build        # production build
 
 Use `useRuntimeConfig()` — never read `process.env` directly in app/server code.
 
-- `NUXT_PUBLIC_GOOGLE_MAPS_KEY` — Google Maps API key
+- `NUXT_PUBLIC_GOOGLE_MAPS_KEY` — Google Maps API key (`/examples/maps` degrades silently without it)
 - `NUXT_PUBLIC_SITE_URL` — production site URL
-- `NUXT_PUBLIC_DEV` — dev-mode flag (auto-set in dev)
 
 Secrets resolve from 1Password at runtime via `pnpm dev:op` (see the Secrets
 guide at `/guides/secrets-1password`).

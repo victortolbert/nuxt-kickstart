@@ -57,7 +57,8 @@ describe('WorldClock', () => {
 
 ## Test Templates
 
-Copy a template from `test/templates/` to scaffold a new test with consistent structure, edge-case examples, and mocking patterns. Use `vi.stubEnv` for environment variables (not `vi.mock`). Coverage targets `shared/utils/`, `app/utils/`, and `lib/`.
+Copy a template from `test/templates/` to scaffold a new test with consistent structure, edge-case examples, and mocking patterns. Use `vi.stubEnv` for environment variables (not `vi.mock`). Coverage targets six globs (`vitest.config.ts`): `shared/utils/`, `app/utils/`,
+`app/composables/`, `app/middleware/`, `server/`, and `lib/`.
 
 ## Learn More
 

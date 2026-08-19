@@ -13,6 +13,7 @@ Server-side utilities, auto-imported in the Nitro server context.
 | `email.ts`             | Email Transport: the single Resend client (`sendEmail`) |
 | `email-templates.ts`   | HTML email template rendering (magic link, OTP, …)     |
 | `markdown-to-email.ts` | Markdown → inline-CSS email HTML                       |
+| `maizzle.ts`           | Renders the `app/emails/*.vue` Maizzle templates (`renderMaizzleTemplate`) |
 | `unsubscribe.ts`       | Email unsubscribe list management                      |
 | `upload.ts`            | `handleFileUpload()` entry point for uploads           |
 | `storage-adapter.ts`   | Storage provider selection (local / s3 / cloudinary)   |
@@ -21,6 +22,7 @@ Server-side utilities, auto-imported in the Nitro server context.
 | `scoreboard-events.ts` | Scoreboard event bus feeding the `/_ws` stream          |
 | `style-dictionary.ts`  | Server-side Style Dictionary token transforms          |
 | `token-generators/`    | Token Generators: one module per export-format family + shared helpers + `transformTokens` registry (the `/api/tokens/transform` custom path) |
+| `llm-optimizer/`       | LLM Visibility Optimizer server modules (fetching, scoring, providers) |
 
 ## File Uploads
 

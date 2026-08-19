@@ -19,6 +19,15 @@ machineTranslated: true
 2. Clónalo y ejecuta `pnpm install`
 3. Ejecuta `pnpm run init`
 4. Revisa el diff y haz commit
+5. `pnpm dev` — la aplicación arranca en `http://localhost:3000`
+
+`pnpm install` ejecuta `nuxt prepare` y crea la base de datos SQLite local, así
+que el paso 5 funciona en un clon recién creado **sin archivo `.env`**. El
+contenido, los temas, i18n y estas guías se renderizan. El inicio de sesión es
+lo único que requiere configuración: copia `.env.example` a `.env` y define
+`BETTER_AUTH_SECRET` (32+ caracteres, `openssl rand -base64 32`) más las
+credenciales de un proveedor cuando quieras autenticación. Consulta
+[Primeros Pasos](/guides/getting-started) para el recorrido completo.
 
 ## Qué Hace `pnpm run init`
 
@@ -36,10 +45,16 @@ Es idempotente — al re-ejecutarlo después de un renombrado no encuentra ocurr
 
 ## Lista Manual (después de init)
 
-- [ ] `package.json` — actualiza `author` y `repository`
+Esto es lo que `init` deliberadamente **no** toca: reescribe los tokens del
+nombre de la plantilla, no la identidad del autor de la plantilla.
+
+- [ ] `package.json` — reemplaza el bloque `author` (nombre / email / url). Todavía no hay campo `repository`; añade uno que apunte a tu repositorio
+- [ ] `.github/FUNDING.yml` — apunta a los patrocinadores del autor de la plantilla; cámbialo o elimínalo
 - [ ] `README.md` — reescribe la introducción para tu proyecto
-- [ ] `app/components/base-logo.vue` — reemplaza el logo
+- [ ] `app/components/app/app-logo.vue` — el nombre es un wordmark de texto (`pnpm run init` lo renombra); dale estilo o añade un logotipo aquí
 - [ ] `public/favicon.svg` / `favicon-dark.svg` — reemplaza los favicons
+- [ ] `public/img/screenshots/kickstart/` — renombra el directorio con el slug de tu proyecto y reemplaza los SVG de ejemplo (nada los referencia todavía, así que es cosmético)
+- [ ] `maizzle.config.ts.bak` — archivo de respaldo suelto en la plantilla; se puede eliminar
 - [ ] `.env.1password` — apunta las referencias `op://` a tu propia bóveda o elimina el archivo y usa `.env` plano
 - [ ] `content/en/posts/` — reemplaza las publicaciones de ejemplo
 - [ ] Textos de la página de inicio y enlaces sociales (`app/pages/index.vue`, `app/layouts/landing.vue`, `app/components/landing/contact-section.vue`)

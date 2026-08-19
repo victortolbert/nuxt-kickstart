@@ -11,6 +11,7 @@ Code shared between client (`app/`) and server (`server/`). Import via the
 | `utils/`   | Pure functions used on client + server (auto-imported) |
 | `schemas/` | Zod schemas (auth, content, common) for validation     |
 | `data/`    | Static data + token fixtures (quotes, sample tokens…)  |
+| `llm-optimizer/` | LLM Visibility Optimizer analysis modules + samples (backs `/labs/llm-vo`) |
 
 ## Key Files
 

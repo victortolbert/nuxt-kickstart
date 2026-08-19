@@ -1,20 +1,23 @@
 # Shared Types
 
 TypeScript types used in both client and server contexts. Import via
-`#shared/types/*`. `index.ts` re-exports the public surface.
+`#shared/types/*`.
 
 ## Key Files
 
 | File                   | Purpose                                       |
 | ---------------------- | --------------------------------------------- |
-| `scoreboard.ts`     | Scoreboard example types (TeamIdentityMode)  |
+| `scoreboard.ts`        | Scoreboard example types (TeamIdentityMode)   |
 | `theme.ts`             | Theme IDs and configuration types             |
 | `appearance.ts`        | Color-mode / appearance preference types      |
 | `auth.ts`              | User, session, and role types                 |
 | `navigation.ts`        | Navigation menu item types                    |
 | `locale.ts`            | i18n locale types                             |
-| `eds-block.ts`         | EDS (Edge Delivery Services) block types       |
+| `llm-optimizer.ts`     | LLM Visibility Optimizer types (`/labs/llm-vo`) |
 | `index.ts`             | Barrel re-exports                             |
+
+`index.ts` re-exports every file **except `llm-optimizer.ts`**, which is
+imported by its own path. Import it as `#shared/types/llm-optimizer`.
 
 ## Theme Types
 

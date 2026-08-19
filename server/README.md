@@ -13,6 +13,7 @@ Nitro server powering API endpoints, authentication, and server-side logic.
 | `db/`       | Core Better Auth Drizzle schema (`schema.ts`)       |
 | `podcasts-db/` | Podcast example's isolated DB: schema + client (deletable with the example) |
 | `types/`    | Server-only TypeScript declarations                 |
+| `assets/`   | Compiled Maizzle email HTML — committed build output, ESLint-ignored (see `docs/adr/0004`) |
 
 `auth.ts` configures Better Auth (providers, plugins, database hooks).
 

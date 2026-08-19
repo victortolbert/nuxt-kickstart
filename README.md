@@ -11,10 +11,23 @@ Start new projects with the foundations decided: use this repo as a GitHub templ
 ```bash
 pnpm install
 pnpm run init          # one-time: rename the template tokens to your project
-cp .env.example .env
-# Edit .env: set BETTER_AUTH_SECRET (32+ chars) — generate with: openssl rand -base64 32
-pnpm dev
+pnpm dev               # http://localhost:3000
 ```
+
+`pnpm install` prepares Nuxt types and creates the local SQLite database, so the
+app runs immediately — **no `.env` is needed to browse it**. Content, themes,
+i18n, and the docs all work on a bare clone.
+
+You need environment variables once you want to *sign in*:
+
+```bash
+cp .env.example .env
+# BETTER_AUTH_SECRET (32+ chars) — generate with: openssl rand -base64 32
+# RESEND_API_KEY for magic link / email OTP; NUXT_OAUTH_GITHUB_* for GitHub sign-in
+```
+
+Without them the server logs `[Better Auth]: Social provider github is missing
+clientId or clientSecret` and sign-in is unavailable — everything else still runs.
 
 ### Dev Container (Docker)
 
@@ -202,7 +215,8 @@ definePageMeta({ middleware: ['auth'] })
 
 ## Scoreboard MVP
 
-Real-time scoring app at `/examples/scoreboard-mvp` with auto-negotiating transport.
+Real-time scoring app at `/labs/scoreboard` with auto-negotiating transport. (The
+old `/examples/scoreboard-mvp` URL still works via a redirect in `nuxt.config.ts`.)
 
 | Transport | Path | Fallback Order |
 |-----------|------|---------------|
@@ -245,18 +259,20 @@ Use `useTheme()` composable. Persists to `localStorage['kickstart-theme']`. Bloc
 app/
   assets/css/themes/  # Theme CSS files
   components/         # Vue components (charts/, content/, landing/, etc.)
-  composables/        # ~27 composables (useTheme, useScoreboardStream, etc.)
+  composables/        # 23 composables (useTheme, useScoreboardStream, etc.)
+  emails/             # Maizzle email templates (Vue SFCs)
   layouts/            # Page layouts
   middleware/         # Route guards (admin, auth, guest)
   pages/              # Routes
-    app/admin/        #   Admin panel (user management)
-    examples/         #   Scoreboard, charts, design tokens
+    app/admin/        #   Admin panel (user management, email)
+    examples/         #   Calendar, charts, maps, tables demos
+    labs/             #   Scoreboard, podcasts, broadsheet, llm-vo
   utils/              # Client utilities (tech-config, etc.)
 content/              # Markdown content (docs, posts, registries, i18n)
 i18n/locales/         # en, es
 server/
-  api/                # API routes (admin/, scoreboard/, auth)
-  db/                 # Drizzle schema + migrations
+  api/                # API routes (admin/, scoreboard/, podcasts/, llm-optimizer/, auth)
+  db/                 # Drizzle schema (drizzle-kit has generated no migrations yet)
   routes/
     _ws/              # WebSocket handlers
     api/auth/         # Better Auth handler
@@ -291,16 +307,23 @@ Collection schemas live in `schemas/`, grouped by area, registered in `schemas/i
 
 ```bash
 pnpm dev              # Dev server
+pnpm run preview      # Preview the production build
 pnpm run build        # Production build
-pnpm run test         # All tests (vitest)
-pnpm run test:unit    # Unit tests only
-pnpm run test:nuxt    # Component tests
+pnpm run test         # All tests (vitest — watch mode)
+pnpm exec vitest run  # All tests, one shot
+pnpm run test:unit    # Unit tests only (watch)
+pnpm run test:nuxt    # Component tests (watch)
+pnpm run test:coverage # Coverage report
 pnpm run test:e2e     # Playwright E2E tests
 pnpm run lint:fix     # Lint + auto-fix
+pnpm run lint:md:fix  # Markdown lint + auto-fix
 pnpm run typecheck    # TypeScript checks
 pnpm run init         # One-time template rename
 pnpm run changelog    # Preview release notes
+pnpm run up           # Interactive major-version dependency upgrade (taze)
 ```
+
+First `test:e2e` run needs the browser binary: `pnpm exec playwright install chromium`.
 
 Run `pnpm nuxi prepare` after clone to generate `.nuxt/` types.
 
@@ -344,7 +367,7 @@ Optional, per feature: `RESEND_API_KEY` (magic link / email OTP), `NUXT_OAUTH_GI
 
 <!-- -->
 
-> **Database schema:** the image does not run `db:init`. The local fallback auto-creates its tables, but a Turso database must be provisioned separately — run the schema/migration scripts against `TURSO_DATABASE_URL` before first boot.
+> **Database schema:** the image does not run `db:init`. The local fallback auto-creates its tables, but a Turso database must be provisioned separately before first boot — run `TURSO_DATABASE_URL=… TURSO_AUTH_TOKEN=… pnpm run db:init` from your machine (both variables in the same command; `scripts/init-better-auth-db.ts` falls back to local SQLite without them). Column-adding migrations are the `scripts/add-*-columns.ts` scripts, run the same way.
 
 <!-- -->
 

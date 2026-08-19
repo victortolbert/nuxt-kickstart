@@ -51,12 +51,24 @@ export function getLocalCollections(): string[] {
 }
 
 /**
- * Collection source configuration
+ * Collection source configuration.
+ *
+ * Mirrors `@nuxt/content`'s `CollectionSource` with the object form of
+ * `repository`. The flat `repository: string` + `authToken` form still works,
+ * but it cannot carry a branch: when `repository` is a string the module
+ * derives the ref by parsing the URL itself (`branch: ref || 'main'`), so a
+ * plain `https://github.com/owner/repo` always resolves to `main`. The object
+ * form is the only way `NUXT_CONTENT_BRANCH` reaches the module — and it also
+ * avoids `authToken`, which `@nuxt/content` marks deprecated in favour of
+ * `repository.auth`.
  */
 interface CollectionSourceConfig {
-  repository: string
   include: string
-  authToken?: string
+  repository: {
+    url: string
+    branch: string
+    auth?: { token: string }
+  }
 }
 
 /**
@@ -82,8 +94,13 @@ export function createCollectionSource(
 
   // External repo configured and collection should be external
   return {
-    repository: contentSource.repository,
     include: localPath,
-    authToken: contentSource.authToken,
+    repository: {
+      url: contentSource.repository,
+      branch: contentSource.branch,
+      ...(contentSource.authToken
+        ? { auth: { token: contentSource.authToken } }
+        : {}),
+    },
   }
 }

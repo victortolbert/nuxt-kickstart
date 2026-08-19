@@ -24,9 +24,10 @@ Kickstart currently supports the following languages:
 |------|----------|-------------|
 | `en` | English | English (default) |
 | `es` | Spanish | Español |
-| `fr` | French | Français |
-| `de` | German | Deutsch |
-| `kn` | Kannada | ಕನ್ನಡ |
+
+Only `en` and `es` are configured — in `nuxt.config.ts` (`i18n.locales`), in
+`i18n/locales/`, and under `content/`. Adding a language means adding it in all
+three places.
 
 ## Directory Structure
 
@@ -36,15 +37,10 @@ Content is organized by locale in the `content/` directory:
 content/
   en/                    # English (default)
     guides/
-    projects/
-    milestones/
+    posts/
+    apps/
+    blocks/
   es/                    # Spanish
-    guides/
-  fr/                    # French
-    guides/
-  de/                    # German
-    guides/
-  kn/                    # Kannada
     guides/
 ```
 

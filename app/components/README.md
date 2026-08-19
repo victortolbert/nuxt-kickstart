@@ -17,7 +17,10 @@ Vue 3 Single File Components, auto-imported globally.
 | `content/`        | Content rendering helpers (TOC, prose, logos)    |
 | `content-editor/` | In-app markdown editor + frontmatter form        |
 | `email/`          | Email compose/draft/analytics UI                 |
-| `examples/`       | Example-app components (podcast, scoreboard…)    |
+| `examples/`       | Pattern-demo components (calendar, charts, maps, tables) |
+| `podcasts/`       | Podcast example app UI (`/labs/podcasts`)        |
+| `scoreboard/`     | Scoreboard example app UI (`/labs/scoreboard`)   |
+| `llm-optimizer/`  | LLM Visibility Optimizer UI (`/labs/llm-vo`)     |
 | `landing/`        | Landing page sections                            |
 | `og-image/`       | Satori OG image templates                        |
 | `calendar/`       | FullCalendar wrapper                             |

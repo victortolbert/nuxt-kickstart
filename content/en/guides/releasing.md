@@ -91,7 +91,7 @@ Scoped commits (e.g., `feat(auth):`) get grouped under their scope.
 
 ## No local token needed
 
-The CI workflow uses the built-in `secrets.GITHUB_TOKEN` which requires no setup. If you ever want to run `pnpm run release` locally (not recommended), create a token at:
+The CI workflow uses the built-in `secrets.GITHUB_TOKEN` which requires no setup. There is no `release` script — releases are cut by CI. If you ever want to publish release notes from your machine (not recommended), run `pnpm exec changelogithub` with a token created at:
 
 <https://github.com/settings/tokens/new?scopes=repo&description=changelogithub>
 

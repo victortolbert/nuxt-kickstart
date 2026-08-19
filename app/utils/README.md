@@ -14,6 +14,9 @@ Pure utility functions, auto-imported globally.
 | `map-styles.ts`           | Google Maps style definitions                    |
 | `navigate.ts`             | Navigation helpers                               |
 | `ui-locale.ts`            | Maps app locales to Nuxt UI locale messages      |
+| `tech-taxonomy.ts`        | `TECH_BUCKETS` + `techBucket()` — groups registry entries |
+| `write-request.ts`        | `WRITE_TIMEOUT_MS` + `isTimeoutError()` for write calls |
+| `llm-optimizer-grade.ts`  | Grade/severity display metadata for `/labs/llm-vo` |
 
 ## Tech Config
 

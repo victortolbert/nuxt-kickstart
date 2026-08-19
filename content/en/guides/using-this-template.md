@@ -18,6 +18,14 @@ created: '2026-06-11'
 2. Clone it and run `pnpm install`
 3. Run `pnpm run init`
 4. Review the diff, then commit
+5. `pnpm dev` — the app runs straight away at `http://localhost:3000`
+
+`pnpm install` runs `nuxt prepare` and creates the local SQLite database, so
+step 5 works on a bare clone with **no `.env` file**. Content, themes, i18n, and
+these guides all render. Sign-in is the one thing that needs configuration —
+copy `.env.example` to `.env` and set `BETTER_AUTH_SECRET` (32+ chars,
+`openssl rand -base64 32`) plus a provider credential when you want auth. See
+[Getting Started](/guides/getting-started) for the full environment walkthrough.
 
 ## What `pnpm run init` Does
 
@@ -35,10 +43,16 @@ It is idempotent — re-running after a rename finds zero occurrences and change
 
 ## Manual Checklist (after init)
 
-- [ ] `package.json` — update `author` and `repository`
+These are the things `init` deliberately does **not** touch — it rewrites the
+template's name tokens, not the template author's identity.
+
+- [ ] `package.json` — replace the `author` block (name / email / url). There is no `repository` field yet; add one pointing at your repo
+- [ ] `.github/FUNDING.yml` — points at the template author's GitHub sponsors; change or delete it
 - [ ] `README.md` — rewrite the intro for your project
 - [ ] `app/components/app/app-logo.vue` — the app name is a text wordmark (`pnpm run init` renames it); restyle it or add a logomark here
 - [ ] `public/favicon.svg` / `favicon-dark.svg` — replace favicons
+- [ ] `public/img/screenshots/kickstart/` — rename the directory to your project slug and replace the placeholder SVGs (nothing references them yet, so this is cosmetic)
+- [ ] `maizzle.config.ts.bak` — a stray backup file committed to the template; safe to delete
 - [ ] `.env.1password` — point the `op://` references at your own vault (see [Secrets](/guides/using-this-template#secrets)) or delete the file and use plain `.env`
 - [ ] `content/en/posts/` — replace the sample posts
 - [ ] Landing page copy and social links (`app/pages/index.vue`, `app/layouts/landing.vue`, `app/components/landing/contact-section.vue`)
@@ -47,12 +61,13 @@ It is idempotent — re-running after a rename finds zero occurrences and change
 
 Everything optional is designed to be removable:
 
-- **Example apps** (podcast, scoreboard) — delete `app/pages/examples/`, the `examples/` schemas, their content folders, and the related `server/api/{examples,scoreboard}` routes. The podcast app also has its own isolated database in `server/podcasts-db/` — delete that folder too (the core/auth DB in `server/db/` is unaffected)
+- **Example apps** (podcast, scoreboard, broadsheet, LLM optimizer) — these live under `app/pages/labs/`, not `app/pages/examples/`. Delete the `app/pages/labs/{podcasts,scoreboard}` pages, their components (`app/components/{podcasts,scoreboard}/`), the `examples/` schemas, their content folders, and the `server/api/{podcasts,scoreboard}` routes. Also drop the `/examples/scoreboard-mvp` and `/examples/podcast-app` redirect rules in `nuxt.config.ts`, which would otherwise point at deleted pages. The podcast app has its own isolated database in `server/podcasts-db/` — delete that folder too (the core/auth DB in `server/db/` is unaffected)
+- **Pattern demos** — `app/pages/examples/` is separate: calendar, charts, maps, tables, and the design-tokens studio. Deleting it does not touch the example apps above
 - **Email subsystem** — delete the `systems/email` schemas, `content/email-*/`, `server/api/email/`, and the admin email pages
 - **Design tokens tool** — delete `app/components/tokens/`, `lib/style-dictionary/`, and `server/api/tokens/`
 - **A theme** — delete its CSS file in `app/assets/css/themes/`, remove it from `use-theme.ts` and `shared/types/theme.ts`
 
-After any trim, run the gate: `pnpm run lint:fix && pnpm run typecheck && pnpm run test`.
+After any trim, run the gate: `pnpm run lint:fix && pnpm run typecheck && pnpm exec vitest run`.
 
 ## Agent Skills (Agentic-Ready)
 

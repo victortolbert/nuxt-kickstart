@@ -39,7 +39,8 @@ Three ways to change themes:
 
 ## Color Modes
 
-Kickstart supports three color modes via `@nuxtjs/color-mode`:
+Kickstart supports three color modes. Color mode ships inside `@nuxt/ui` v4 —
+`@nuxtjs/color-mode` is not a declared dependency of this project:
 
 | Mode | Behavior |
 |------|----------|

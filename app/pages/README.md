@@ -7,8 +7,8 @@ File-based routing. Each `.vue` file becomes a route.
 | Pattern         | Example                     | Route                  |
 | --------------- | --------------------------- | ---------------------- |
 | `index.vue`     | `pages/index.vue`           | `/`                    |
-| `[param].vue`   | `pages/examples/[slug].vue` | `/examples/:slug`      |
-| `[...slug].vue` | `pages/[...slug].vue`       | catch-all (content)    |
+| `[param].vue`   | `pages/app/admin/users/[id].vue` | `/app/admin/users/:id` |
+| `[...slug].vue` | `pages/guides/[...slug].vue`| `/guides/*`            |
 
 The root `[...slug].vue` renders arbitrary Nuxt Content documents by path.
 
@@ -20,13 +20,20 @@ The root `[...slug].vue` renders arbitrary Nuxt Content documents by path.
 | `guides/`        | Guides collection (docs)                 |
 | `posts/`         | Posts index                              |
 | `tech/`          | Tech registry                            |
-| `examples/`      | Example apps and pattern demos           |
+| `examples/`      | Pattern demos (calendar, charts, maps, tables, design tokens) |
+| `labs/`          | Example apps — scoreboard, podcasts, broadsheet, llm-vo |
 | `blocks/`        | App blocks showcase                      |
-| `app/`           | Authenticated dashboard + admin suite    |
-| `admin/`         | Admin screens (email, trash, content)    |
+| `app/`           | Authenticated dashboard + admin suite (admin screens live at `app/admin/`) |
 | `login.vue`      | Auth entry (magic link / OTP / GitHub)   |
+| `settings.vue`, `appearance.vue` | User preferences         |
+| `about.vue`, `contact.vue` | Marketing pages                |
 | `privacy.vue`, `terms.vue` | Legal pages                    |
+| `unsubscribe.vue` | Email unsubscribe landing               |
 | `[...slug].vue`  | Catch-all content renderer               |
+
+There is no top-level `admin/` route — the admin suite is nested under
+`app/admin/`. Legacy `/admin/**` and `/examples/scoreboard-mvp` URLs are kept
+alive by redirect rules in `nuxt.config.ts`.
 
 ## Page Titles & SEO
 

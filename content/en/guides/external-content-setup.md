@@ -17,11 +17,20 @@ By default, Kickstart loads content from the local `content/` directory. With ex
 
 **Key capabilities**:
 
-- Source all or specific collections from an external repository
+- Source collections from an external repository
 - Private repository authentication via GitHub Personal Access Token
 - Per-collection override (keep some collections local)
 - Multi-environment configuration (local/dev/test/qa/preview/prod)
 - Health check endpoint for monitoring
+
+::note
+**Only two collections are wired up today.** `createCollectionSource()` is
+called by `meta` (`schemas/publishing/meta.ts`) and `tech`
+(`schemas/registries/tech.ts`) only. Every other collection — `guides`,
+`posts`, `apps`, `blocks`, `email*`, `examples*` — hardcodes a local source and
+ignores these variables. To externalize one, route its `source` through
+`createCollectionSource()` in its schema file.
+::
 
 ## Environment Variables
 
@@ -65,6 +74,13 @@ Use different branches per environment:
 - `develop` for staging
 - `preview` for preview deployments
 
+::note
+The branch is passed to `@nuxt/content` as `repository.branch`. The flat
+`repository: '<url>'` string form cannot carry one — the module derives the ref
+by parsing the URL and falls back to `main` — so `createCollectionSource()`
+returns the object form instead.
+::
+
 ### NUXT_CONTENT_LOCAL_COLLECTIONS
 
 Comma-separated list of collections to keep local even when external content is configured.
@@ -97,21 +113,15 @@ Your external content repository must mirror the local `content/` directory stru
 
 ```
 your-org/kickstart-content/
-├── projects/
-│   ├── project-alpha.md
-│   └── project-beta.md
-├── notes/
-│   └── daily-standup.md
-├── resources/
-│   └── learning-resources.md
-├── tech/
-│   ├── nuxt.md
-│   └── vue.md
-├── people/
-│   └── adam-wathan.md
-└── guides/
-    └── content-management.md
+├── _meta/
+│   └── landing.md
+└── tech/
+    ├── nuxt.md
+    └── vue.md
 ```
+
+Those are the two collections currently wired to `createCollectionSource()`.
+Mirror the local `content/` layout for any collection you add support for.
 
 **Requirements**:
 
@@ -182,10 +192,10 @@ pull the latest from the external repository.
 
 ### Clear the cache
 
-Remove the `.content-cache` directory:
+Remove the content cache directory:
 
 ```bash
-rm -rf .content-cache
+pnpm run clean:content   # rm -rf .data/content
 ```
 
 Useful when:
@@ -249,7 +259,7 @@ GET /api/health/content
 **Solution**:
 
 ```bash
-rm -rf .content-cache
+pnpm run clean:content
 pnpm dev
 ```
 

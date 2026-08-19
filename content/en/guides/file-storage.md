@@ -132,6 +132,8 @@ Files are uploaded to an AWS S3 bucket.
 **Dependencies**:
 
 ```bash
+# Already a dependency in this template — no install needed.
+# For a project that has removed it:
 pnpm add @aws-sdk/client-s3
 ```
 
@@ -174,6 +176,8 @@ Files are uploaded to Cloudinary's CDN with built-in image transformations.
 **Dependencies**:
 
 ```bash
+# Already a dependency in this template — no install needed.
+# For a project that has removed it:
 pnpm add cloudinary
 ```
 

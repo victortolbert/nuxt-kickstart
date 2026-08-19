@@ -10,7 +10,8 @@ Vue 3 Composition API functions, auto-imported with the `use-` prefix.
 
 ## Representative Composables
 
-There are ~27 composables here; a sample of the most central ones:
+There are 23 composable files here (28 exported `use*` functions); a sample of
+the most central ones:
 
 | Composable               | Purpose                                        |
 | ------------------------ | ---------------------------------------------- |

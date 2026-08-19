@@ -89,11 +89,17 @@ See the [Authentication](/guides/authentication) and [File Storage](/guides/file
 
 1. Push your code to GitHub
 2. Import project at [app.netlify.com](https://app.netlify.com)
-3. Configure build settings:
+3. Build settings are already committed in `netlify.toml` — leave the UI fields
+   empty so they are not overridden:
    - Build command: `pnpm run build`
-   - Publish directory: `.output/public`
+   - Publish directory: `dist`
 4. Add environment variables in Site settings → Environment variables
 5. Deploy
+
+> Publish `dist`, not `.output/public`. This is an SSR app, and Nitro's Netlify
+> preset emits the server handler plus static assets into `dist/`. Pointing
+> Netlify at `.output/public` publishes the static half only and every
+> server-rendered route 404s.
 
 ## OAuth Callback URLs
 
@@ -133,6 +139,26 @@ turso db tokens create kickstart
 TURSO_DATABASE_URL=libsql://your-db-name.turso.io
 TURSO_AUTH_TOKEN=your_token_here
 ```
+
+### Create the tables — do not skip this
+
+Setting the two variables does **not** create any tables. `pnpm install`'s
+postinstall already ran `db:init`, but it ran before `TURSO_*` existed, so it
+created tables in the local `file:.data/auth.db` only. The remote database is
+still empty, and the first sign-in fails against it.
+
+Run the initializer once against the remote database, from your machine:
+
+```bash
+TURSO_DATABASE_URL=libsql://your-db-name.turso.io \
+TURSO_AUTH_TOKEN=your_token_here \
+pnpm run db:init
+```
+
+`scripts/init-better-auth-db.ts` reads both variables and falls back to
+`file:.data/auth.db` when they are absent — which is exactly why they must be
+present in the same command. Column-adding migrations (`scripts/add-*-columns.ts`)
+are run the same way.
 
 **Automatic Fallback**: If Turso connection fails (certificate errors, corporate proxy), the app automatically falls back to local SQLite with a warning message.
 

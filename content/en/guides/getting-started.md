@@ -44,7 +44,22 @@ cp .env.example .env
 
 # 5. Start development
 pnpm dev
+
+# 6. Optional: install the Playwright browser before your first e2e run
+pnpm exec playwright install chromium
 ```
+
+A few things worth knowing about that order:
+
+- `pnpm install` runs `nuxt prepare && pnpm run db:init` for you. `nuxt prepare`
+  has to go first — it creates the gitignored `.data/` directory that `db:init`
+  writes `auth.db` into. Running `pnpm run db:init` on its own in a fresh clone
+  fails with `Unable to open connection to local database .data/auth.db`.
+- Because step 2 runs before step 4, the database is created against the local
+  SQLite default. If you later point the app at Turso, re-run `db:init` with the
+  `TURSO_*` variables set — see the [Deployment guide](/guides/deployment).
+- `pnpm install` does **not** download Playwright browsers, so step 6 is
+  required before `pnpm run test:e2e` will run.
 
 Visit `http://localhost:3000`.
 
