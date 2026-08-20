@@ -65,7 +65,7 @@ export function getStorageAdapter(): StorageAdapter {
     default:
       return createLocalAdapter({
         provider: 'local',
-        localDir: config.localStorageDir || 'public/img',
+        localDir: config.localStorageDir || 'public',
         localPublicUrl: config.public.siteUrl || 'http://localhost:3000',
       })
   }

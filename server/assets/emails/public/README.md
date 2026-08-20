@@ -12,8 +12,8 @@ Static files served at the root URL. Not processed by the bundler.
 | `audio/`            | Sample episode audio (podcast example)           |
 
 Loose files in `img/`: `avatar.png` (default user avatar) and the garden-status
-art `seed.png` / `sprout.png` / `evergeen.png` / `wilted.png` — note the
-misspelled `evergeen.png`, which is the filename the code actually references.
+art `seed.png` / `sprout.png` / `evergreen.png` / `wilted.png`. Nothing in the
+app references these four yet — they are here for status badges or email art.
 
 Root files: `favicon.svg` / `favicon-dark.svg` (referenced in `nuxt.config.ts`)
 and `_robots.txt`.

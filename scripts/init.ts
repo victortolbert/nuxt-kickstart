@@ -6,13 +6,17 @@
  *
  * Prompts for your project's names and rewrites the template tokens
  * (`nuxt-kickstart`, `Kickstart`, `kickstart-*` storage keys, the
- * placeholder domain) across the repo. Idempotent: re-running after a
- * rename simply finds zero occurrences and changes nothing.
+ * placeholder domain) across the repo, then replaces the template author's
+ * identity: the package.json author block, the repository/bugs/homepage URLs
+ * and .github/FUNDING.yml, none of which a generated project should inherit.
+ * Idempotent: re-running after a rename simply finds zero occurrences and
+ * changes nothing.
  */
 import { execSync } from 'node:child_process'
-import { readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import process from 'node:process'
 import { createInterface } from 'node:readline'
+import { pathToFileURL } from 'node:url'
 
 // Note: svg is intentionally NOT here — SVGs are text and may carry the
 // display name (placeholder screenshots, favicon title)
@@ -40,6 +44,76 @@ function toTitleCase(value: string): string {
     .filter(Boolean)
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
+}
+
+const FUNDING_FILE = '.github/FUNDING.yml'
+const GITHUB_REMOTE_RE = /github\.com[:/]([^/]+)\/([^/]+?)(?:\.git)?$/
+
+/**
+ * Run a git command for a default value, returning '' if git has nothing to
+ * say (no config set, no remote, not a repo). Never throws: every caller
+ * falls back to prompting.
+ */
+function gitOutput(command: string): string {
+  try {
+    return execSync(command, { encoding: 'utf-8', stdio: ['ignore', 'pipe', 'ignore'] }).trim()
+  }
+  catch {
+    return ''
+  }
+}
+
+/**
+ * Extract `owner/name` from a GitHub remote URL, in either the https or the
+ * ssh form. Returns '' for anything not recognisably a GitHub remote, so the
+ * caller can fall back to prompting.
+ */
+export function parseGitHubSlug(remoteUrl: string): string {
+  const match = GITHUB_REMOTE_RE.exec(remoteUrl.trim().replace(/\/+$/, ''))
+  return match ? `${match[1]}/${match[2]}` : ''
+}
+
+export interface ProjectIdentity {
+  authorName: string
+  authorEmail: string
+  authorUrl: string
+  repoSlug: string
+}
+
+/**
+ * Replace the template author's identity in a parsed package.json.
+ *
+ * The token pass rewrites names, not identity, so without this a generated
+ * project would ship the template author's name, email, sponsor links and
+ * repository URLs. Anything left blank is removed rather than inherited —
+ * an absent author is correct, someone else's author is not.
+ */
+export function applyIdentity(pkg: Record<string, unknown>, identity: ProjectIdentity): Record<string, unknown> {
+  const author: Record<string, string> = {}
+  if (identity.authorName)
+    author.name = identity.authorName
+  if (identity.authorEmail)
+    author.email = identity.authorEmail
+  if (identity.authorUrl)
+    author.url = identity.authorUrl
+
+  if (Object.keys(author).length > 0)
+    pkg.author = author
+  else
+    delete pkg.author
+
+  if (identity.repoSlug) {
+    pkg.repository = { type: 'git', url: `git+https://github.com/${identity.repoSlug}.git` }
+    pkg.bugs = { url: `https://github.com/${identity.repoSlug}/issues` }
+    pkg.homepage = `https://github.com/${identity.repoSlug}#readme`
+  }
+  else {
+    delete pkg.repository
+    delete pkg.bugs
+    delete pkg.homepage
+  }
+
+  return pkg
 }
 
 /**
@@ -114,6 +188,17 @@ async function main() {
 
   const packageName = (await prompter.ask(`npm package name [${kebabName}]: `)).trim() || kebabName
 
+  const defaultAuthorName = gitOutput('git config --get user.name')
+  const authorName = (await prompter.ask(`Author name${defaultAuthorName ? ` [${defaultAuthorName}]` : ''}: `)).trim() || defaultAuthorName
+
+  const defaultAuthorEmail = gitOutput('git config --get user.email')
+  const authorEmail = (await prompter.ask(`Author email${defaultAuthorEmail ? ` [${defaultAuthorEmail}]` : ''}: `)).trim() || defaultAuthorEmail
+
+  const authorUrl = (await prompter.ask('Author URL (optional): ')).trim()
+
+  const defaultSlug = parseGitHubSlug(gitOutput('git remote get-url origin'))
+  const repoSlug = (await prompter.ask(`GitHub repo owner/name${defaultSlug ? ` [${defaultSlug}]` : ''}: `)).trim() || defaultSlug
+
   prompter.close()
 
   const siteHost = siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')
@@ -167,6 +252,18 @@ async function main() {
 
   console.log(`\n${changedFiles} files updated (${totalReplacements} replacements).`)
 
+  // The token pass rewrites names; identity is deliberately separate. Read
+  // package.json back off disk so this builds on the rename above.
+  const pkg = JSON.parse(readFileSync('package.json', 'utf-8')) as Record<string, unknown>
+  const identity: ProjectIdentity = { authorName, authorEmail, authorUrl, repoSlug }
+  writeFileSync('package.json', `${JSON.stringify(applyIdentity(pkg, identity), null, 2)}\n`)
+  console.log('  ✓ package.json (author, repository, bugs, homepage)')
+
+  if (existsSync(FUNDING_FILE)) {
+    rmSync(FUNDING_FILE)
+    console.log(`  ✓ ${FUNDING_FILE} (removed — it sponsored the template author)`)
+  }
+
   if (changedFiles === 0) {
     console.log('Nothing to rename — the template tokens were not found (already initialized?).')
   }
@@ -174,16 +271,19 @@ async function main() {
     console.log(`
 Next steps:
   1. Review the diff:        git diff
-  2. Update package.json author and repository fields
-  3. Rewrite the README intro for ${displayName}
-  4. Rename public/img/screenshots/kickstart/ to match your project
-  5. Start developing:        pnpm dev
+  2. Rewrite the README intro for ${displayName}
+  3. Rename public/img/screenshots/kickstart/ to match your project
+  4. Start developing:        pnpm dev
      (the local database was already created by pnpm install)
 `)
   }
 }
 
-main().catch((error) => {
-  console.error(error)
-  process.exit(1)
-})
+// Only run when invoked directly (`pnpm run init`), so the helpers above can
+// be imported by tests without the prompt loop starting.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((error) => {
+    console.error(error)
+    process.exit(1)
+  })
+}

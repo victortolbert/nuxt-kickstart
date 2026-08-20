@@ -42,7 +42,7 @@ Files are written to the local filesystem in `public/img/`.
 
 ```bash
 NUXT_STORAGE_PROVIDER=local
-NUXT_LOCAL_STORAGE_DIR=public/img
+NUXT_LOCAL_STORAGE_DIR=public
 ```
 
 ### 2. AWS S3 (Recommended for Production)

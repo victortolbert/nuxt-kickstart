@@ -1,12 +1,23 @@
 {
   "name": "@victortolbert/nuxt-kickstart",
   "type": "module",
+  "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@11.5.3",
+  "description": "An opinionated, content-first enterprise starter on Nuxt 4 + Nuxt Content v3 — passwordless auth, admin suite, email, theming, design tokens, i18n.",
   "author": {
     "name": "Victor Tolbert",
     "email": "victor@tolbert.design",
     "url": "https://tolbert.design"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/victortolbert/nuxt-kickstart#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victortolbert/nuxt-kickstart.git"
+  },
+  "bugs": {
+    "url": "https://github.com/victortolbert/nuxt-kickstart/issues"
   },
   "scripts": {
     "up": "taze major -I",

@@ -41,20 +41,28 @@ El script (`scripts/init.ts`) pide el nombre kebab-case de tu proyecto, el nombr
 | `kickstart-theme`, `kickstart-locale`, … | `<tu-nombre>-theme`, … | claves de localStorage/cookies |
 | `Kickstart` | tu nombre para mostrar | textos de UI, plantillas de correo, títulos |
 
+Después reemplaza la identidad que el paso de tokens deja intacta a propósito:
+
+- el bloque `author` de `package.json`
+- las URLs `repository`, `bugs` y `homepage`, construidas a partir del `owner/name` de GitHub que indiques
+- `.github/FUNDING.yml`, que se elimina para que tu proyecto nunca solicite patrocinio para el autor de la plantilla
+
+Los valores por defecto salen de tu propio `git config user.name`, `user.email`
+y del remoto `origin`, así que pulsar enter cuatro veces suele bastar. Lo que
+dejes en blanco se elimina en lugar de heredarse: mejor ningún autor que el de
+otra persona.
+
 Es idempotente — al re-ejecutarlo después de un renombrado no encuentra ocurrencias y no cambia nada.
 
 ## Lista Manual (después de init)
 
-Esto es lo que `init` deliberadamente **no** toca: reescribe los tokens del
-nombre de la plantilla, no la identidad del autor de la plantilla.
+Esto es lo que `init` deliberadamente **no** toca: se encarga de los tokens del
+nombre y de la identidad del autor, pero no puede escribir tu proyecto por ti.
 
-- [ ] `package.json` — reemplaza el bloque `author` (nombre / email / url). Todavía no hay campo `repository`; añade uno que apunte a tu repositorio
-- [ ] `.github/FUNDING.yml` — apunta a los patrocinadores del autor de la plantilla; cámbialo o elimínalo
 - [ ] `README.md` — reescribe la introducción para tu proyecto
 - [ ] `app/components/app/app-logo.vue` — el nombre es un wordmark de texto (`pnpm run init` lo renombra); dale estilo o añade un logotipo aquí
 - [ ] `public/favicon.svg` / `favicon-dark.svg` — reemplaza los favicons
 - [ ] `public/img/screenshots/kickstart/` — renombra el directorio con el slug de tu proyecto y reemplaza los SVG de ejemplo (nada los referencia todavía, así que es cosmético)
-- [ ] `maizzle.config.ts.bak` — archivo de respaldo suelto en la plantilla; se puede eliminar
 - [ ] `.env.1password` — apunta las referencias `op://` a tu propia bóveda o elimina el archivo y usa `.env` plano
 - [ ] `content/en/posts/` — reemplaza las publicaciones de ejemplo
 - [ ] Textos de la página de inicio y enlaces sociales (`app/pages/index.vue`, `app/layouts/landing.vue`, `app/components/landing/contact-section.vue`)
@@ -63,12 +71,23 @@ nombre de la plantilla, no la identidad del autor de la plantilla.
 
 Todo lo opcional está diseñado para poder quitarse:
 
-- **Apps de ejemplo** (podcast, marcador) — elimina `app/pages/examples/`, los esquemas `examples/`, sus carpetas de contenido y las rutas `server/api/{examples,scoreboard}` relacionadas
+- **Apps de ejemplo** (podcast, marcador, broadsheet, optimizador LLM) — viven en `app/pages/labs/`, no en `app/pages/examples/`. Elimina las páginas `app/pages/labs/{podcasts,scoreboard,llm-vo}` y `app/pages/labs/broadsheet.vue`, sus componentes (`app/components/{podcasts,scoreboard,llm-optimizer}/`), los esquemas `examples/`, sus carpetas de contenido y las rutas `server/api/{podcasts,scoreboard,llm-optimizer}`. Elimina también las reglas de redirección `/examples/scoreboard-mvp` y `/examples/podcast-app` en `nuxt.config.ts`, que de lo contrario apuntarían a páginas eliminadas. La app de podcast tiene su propia base de datos aislada en `server/podcasts-db/` — elimina esa carpeta también (la base de datos principal y de autenticación en `server/db/` no se ve afectada)
+- **Demos de patrones** — `app/pages/examples/` es aparte: calendario, gráficos, mapas, tablas y el estudio de tokens de diseño. Eliminarlo no afecta a las apps de ejemplo anteriores
 - **Subsistema de correo** — elimina los esquemas `systems/email`, `content/email-*/`, `server/api/email/` y las páginas de administración de correo
 - **Herramienta de tokens de diseño** — elimina `app/components/tokens/`, `lib/style-dictionary/` y `server/api/tokens/`
 - **Un tema** — elimina su archivo CSS en `app/assets/css/themes/`, quítalo de `use-theme.ts` y de `shared/types/theme.ts`
 
-Después de cualquier eliminación, ejecuta la verificación: `pnpm run lint:fix && pnpm run typecheck && pnpm run test`.
+Después de cualquier eliminación, ejecuta la verificación: `pnpm run lint:fix && pnpm run typecheck && pnpm exec vitest run`.
+
+## Habilidades de Agente (Listo para Agentes)
+
+La plantilla incluye un conjunto curado de habilidades de agente en `.claude/skills/` (usadas por Claude Code; portables a otros agentes). Tres grupos:
+
+- **Habilidades del stack** — Nuxt, Vue, Nuxt UI, Tailwind, Drizzle, Zod, Better Auth, seguridad web, pruebas con Playwright. Se consultan automáticamente cuando un agente toca el código correspondiente.
+- **Flujo de trabajo agéntico** — `improve-codebase-architecture`, `grill-me` / `grill-with-docs` (poner a prueba planes manteniendo `CONTEXT.md` y `docs/adr/`), `tdd`, `diagnose`, `prd`, flujos de incidencias.
+- **Verbos de diseño** — `audit`, `harden`, `optimize`, `polish`, `animate` y compañía, para iterar sobre la calidad de la UI.
+
+El glosario del dominio vive en `CONTEXT.md` y las decisiones registradas en `docs/adr/` — mantén ambos vivos a medida que crece tu proyecto; las habilidades de flujo de trabajo los leen y actualizan. Las habilidades que no quieras son simples directorios: elimínalas.
 
 ## Secretos
 

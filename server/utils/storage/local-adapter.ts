@@ -4,7 +4,10 @@ import { access, constants, mkdir, rm, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 
 export function createLocalAdapter(config: StorageConfig): StorageAdapter {
-  const baseDir = join(process.cwd(), config.localDir || 'public/img')
+  // localDir is the public web root, not an image folder: the path handed to
+  // upload() is the same key the S3/Cloudinary adapters store verbatim
+  // (e.g. 'img/teams/logo.webp'), so it already carries its own prefix.
+  const baseDir = join(process.cwd(), config.localDir || 'public')
   const baseUrl = config.localPublicUrl || 'http://localhost:3000'
 
   return {

@@ -102,6 +102,27 @@ describe('local adapter', () => {
     expect(url).toBe(`/${rel}/team.webp`)
   })
 
+  it('serves an upload at the same key the cloud adapters use', async () => {
+    // Deliberately omits localDir so the shipped default is what is under
+    // test — every other case passes one explicitly, which is how the
+    // public/img/img/... regression reached main unnoticed.
+    const rel = `.test-teams-${Math.random().toString(36).slice(2)}`
+    const key = `img/${rel}/team-alpha.webp`
+    // Clean up whichever location the adapter picks, correct or not — but
+    // scope both to this test's unique dir so a regression can never make
+    // the suite delete committed assets.
+    tmpDirs.push(join(process.cwd(), 'public', 'img', rel))
+    tmpDirs.push(join(process.cwd(), 'public', 'img', 'img', rel))
+
+    const adapter = createLocalAdapter({ provider: 'local' })
+    const url = await adapter.upload(Buffer.from('logo'), key, 'image/webp')
+
+    // S3 stores this key verbatim and serves it at <base>/img/<rel>/...,
+    // so the local provider has to expose the same path.
+    expect(url).toBe(`/img/${rel}/team-alpha.webp`)
+    expect(readFileSync(join(process.cwd(), 'public', key), 'utf-8')).toBe('logo')
+  })
+
   it('reports exists=false for a missing file', async () => {
     const dir = makeTmpDir('kickstart-local-')
     const adapter = createLocalAdapter({ provider: 'local', localDir: dir })

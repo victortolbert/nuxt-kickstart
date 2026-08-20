@@ -39,20 +39,27 @@ The script (`scripts/init.ts`) prompts for your project's kebab-case name, displ
 | `kickstart-theme`, `kickstart-locale`, … | `<your-name>-theme`, … | localStorage/cookie keys |
 | `Kickstart` | your display name | UI copy, email templates, titles |
 
+It then replaces the identity the token pass deliberately leaves alone:
+
+- the `package.json` `author` block
+- the `repository`, `bugs` and `homepage` URLs, built from the GitHub `owner/name` you give it
+- `.github/FUNDING.yml`, which is deleted so your project never solicits sponsorship for the template author
+
+Defaults come from your own `git config user.name`, `user.email` and `origin`
+remote, so pressing enter four times is usually right. Anything you leave blank
+is removed rather than inherited — no author at all beats someone else's.
+
 It is idempotent — re-running after a rename finds zero occurrences and changes nothing.
 
 ## Manual Checklist (after init)
 
-These are the things `init` deliberately does **not** touch — it rewrites the
-template's name tokens, not the template author's identity.
+These are the things `init` deliberately does **not** touch — it handles the
+name tokens and the author identity, but it cannot write your project for you.
 
-- [ ] `package.json` — replace the `author` block (name / email / url). There is no `repository` field yet; add one pointing at your repo
-- [ ] `.github/FUNDING.yml` — points at the template author's GitHub sponsors; change or delete it
 - [ ] `README.md` — rewrite the intro for your project
 - [ ] `app/components/app/app-logo.vue` — the app name is a text wordmark (`pnpm run init` renames it); restyle it or add a logomark here
 - [ ] `public/favicon.svg` / `favicon-dark.svg` — replace favicons
 - [ ] `public/img/screenshots/kickstart/` — rename the directory to your project slug and replace the placeholder SVGs (nothing references them yet, so this is cosmetic)
-- [ ] `maizzle.config.ts.bak` — a stray backup file committed to the template; safe to delete
 - [ ] `.env.1password` — point the `op://` references at your own vault (see [Secrets](/guides/using-this-template#secrets)) or delete the file and use plain `.env`
 - [ ] `content/en/posts/` — replace the sample posts
 - [ ] Landing page copy and social links (`app/pages/index.vue`, `app/layouts/landing.vue`, `app/components/landing/contact-section.vue`)
@@ -61,7 +68,7 @@ template's name tokens, not the template author's identity.
 
 Everything optional is designed to be removable:
 
-- **Example apps** (podcast, scoreboard, broadsheet, LLM optimizer) — these live under `app/pages/labs/`, not `app/pages/examples/`. Delete the `app/pages/labs/{podcasts,scoreboard}` pages, their components (`app/components/{podcasts,scoreboard}/`), the `examples/` schemas, their content folders, and the `server/api/{podcasts,scoreboard}` routes. Also drop the `/examples/scoreboard-mvp` and `/examples/podcast-app` redirect rules in `nuxt.config.ts`, which would otherwise point at deleted pages. The podcast app has its own isolated database in `server/podcasts-db/` — delete that folder too (the core/auth DB in `server/db/` is unaffected)
+- **Example apps** (podcast, scoreboard, broadsheet, LLM optimizer) — these live under `app/pages/labs/`, not `app/pages/examples/`. Delete the `app/pages/labs/{podcasts,scoreboard,llm-vo}` pages and `app/pages/labs/broadsheet.vue`, their components (`app/components/{podcasts,scoreboard,llm-optimizer}/`), the `examples/` schemas, their content folders, and the `server/api/{podcasts,scoreboard,llm-optimizer}` routes. Also drop the `/examples/scoreboard-mvp` and `/examples/podcast-app` redirect rules in `nuxt.config.ts`, which would otherwise point at deleted pages. The podcast app has its own isolated database in `server/podcasts-db/` — delete that folder too (the core/auth DB in `server/db/` is unaffected)
 - **Pattern demos** — `app/pages/examples/` is separate: calendar, charts, maps, tables, and the design-tokens studio. Deleting it does not touch the example apps above
 - **Email subsystem** — delete the `systems/email` schemas, `content/email-*/`, `server/api/email/`, and the admin email pages
 - **Design tokens tool** — delete `app/components/tokens/`, `lib/style-dictionary/`, and `server/api/tokens/`

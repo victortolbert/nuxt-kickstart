@@ -174,7 +174,7 @@ export default defineNuxtConfig({
 
     // Storage configuration (file uploads)
     storageProvider: 'local', // 'local' | 's3' | 'cloudinary' - Set via NUXT_STORAGE_PROVIDER
-    localStorageDir: 'public/img', // Set via NUXT_LOCAL_STORAGE_DIR
+    localStorageDir: 'public', // Public web root; Set via NUXT_LOCAL_STORAGE_DIR
     // S3 configuration (production)
     s3Bucket: '', // Set via NUXT_S3_BUCKET
     s3Region: '', // Set via NUXT_S3_REGION
