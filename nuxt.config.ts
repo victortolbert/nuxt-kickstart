@@ -471,8 +471,11 @@ export default defineNuxtConfig({
 
   // Vitalizer: Performance optimizations
   vitalizer: {
-    // Keep stylesheets enabled to prevent FOUC
-    // disableStylesheets: 'entry', // Disabled - causes FOUC without inlineSSRStyles
+    // Keep stylesheets enabled to prevent FOUC. Note disableStylesheets is
+    // typed as a boolean in vitalizer v3 — the old 'entry' string value is no
+    // longer accepted — and it only takes effect when inline SSR styles are
+    // enabled, so turning it on without them reintroduces the FOUC.
+    // disableStylesheets: true,
     // Disable prefetch for dynamic imports (reduces unnecessary requests)
     disablePrefetchLinks: true,
   },
