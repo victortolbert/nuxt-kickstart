@@ -10,17 +10,22 @@ Refer to CLAUDE.md for full project context. Key points for agents below.
 | Dev | `pnpm dev` |
 | Build | `pnpm run build` |
 | Lint + fix | `pnpm run lint:fix` |
-| All tests | `pnpm run test` |
-| Unit tests | `pnpm run test:unit` |
-| Nuxt tests | `pnpm run test:nuxt` |
-| Single file | `pnpm run test test/unit/case.test.ts` |
-| Single name | `pnpm run test -t "converts kebab-case"` |
-| Watch | `pnpm run test:watch` |
+| All tests (one-shot) | `pnpm exec vitest run` |
+| Unit tests | `pnpm exec vitest run --project unit` |
+| Nuxt tests | `pnpm exec vitest run --project nuxt` |
+| Single file | `pnpm exec vitest run test/unit/case.test.ts` |
+| Single name | `pnpm exec vitest run -t "converts kebab-case"` |
+| Watch | `pnpm run test` (also `test:unit` / `test:nuxt` / `test:watch`) |
 | Coverage | `pnpm run test:coverage` |
 | E2E (Playwright) | `pnpm run test:e2e` |
 | Typecheck | `pnpm run typecheck` |
 | Template rename | `pnpm run init` |
 | Changelog preview | `pnpm run changelog` |
+
+`pnpm run test` and its `test:unit` / `test:nuxt` / `test:watch` siblings are bare
+`vitest` — they **watch and never exit**. Use `pnpm exec vitest run` for a one-shot
+pass. Playwright browsers are not installed by `pnpm install`; run
+`pnpm exec playwright install chromium` once before `test:e2e`.
 
 ## Project Structure
 

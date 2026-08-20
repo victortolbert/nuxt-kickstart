@@ -226,8 +226,19 @@ Two complementary systems, both sending via Resend (`server/utils/email.ts` → 
 - Don't skip pre-commit hook (`--no-verify`)
 - Don't ship UI without `frontend-design` + `web-design-guidelines` skills
 
-Before modifying code, evaluate each installed skill against the current task.
-For each skill, determine YES/NO relevance and invoke all YES skills before proceeding.
+## Agent skills
+
+### Issue tracker
+
+Issues live in GitHub Issues for `victortolbert/nuxt-kickstart`, via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The five canonical triage roles, each label string equal to its name. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context — `CONTEXT.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
 
 <!-- skilld -->
 Before modifying code, evaluate each installed skill against the current task.
