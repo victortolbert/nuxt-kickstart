@@ -11,10 +11,12 @@ type OnWarn = (warning: RollupLog, defaultHandler: LoggingFunction) => void
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 // Light/dark favicons via `media`. Hoisted to a const so TS's excess-property
-// check (which only fires on inline literals) doesn't reject `media`.
+// check (which only fires on inline literals) doesn't reject `media`, and
+// `rel` is `as const` so it stays the literal 'icon' — widened to `string` it
+// matches no member of Unhead's link union and the array fails to assign.
 const faviconLinks = [
-  { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg', media: '(prefers-color-scheme: light)' },
-  { rel: 'icon', type: 'image/svg+xml', href: '/favicon-dark.svg', media: '(prefers-color-scheme: dark)' },
+  { rel: 'icon' as const, type: 'image/svg+xml', href: '/favicon.svg', media: '(prefers-color-scheme: light)' },
+  { rel: 'icon' as const, type: 'image/svg+xml', href: '/favicon-dark.svg', media: '(prefers-color-scheme: dark)' },
 ]
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
