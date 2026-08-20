@@ -221,29 +221,6 @@ const filteredMainNav = computed(() => {
 const catalogOpen = ref(false)
 const siteMapOpen = ref(false)
 const appearanceOpen = ref(false)
-const trashCount = ref(0)
-const isDev = import.meta.dev
-
-// Fetch trash count if in development mode
-async function fetchTrashCount() {
-  if (!isDev)
-    return
-  try {
-    const items = await $fetch('/api/content/trash')
-    trashCount.value = Array.isArray(items) ? items.length : 0
-  }
-  catch {
-    trashCount.value = 0
-  }
-}
-
-// Fetch trash count on mount
-if (isDev) {
-  onMounted(() => {
-    fetchTrashCount()
-  })
-}
-
 async function logout() {
   await authClient.signOut()
   await navigateTo('/')
@@ -451,17 +428,11 @@ const footerMenuItems = computed<DropdownMenuItem[]>(() =>
       label: group.label,
       icon: group.icon,
       children: [
-        flat.map((item) => {
-          const isTrash = typeof item.to === 'string' && item.to.endsWith('/app/admin/trash')
-          return {
-            label: item.label,
-            icon: item.icon,
-            to: item.to,
-            badge: isDev && isTrash && trashCount.value > 0
-              ? trashCount.value.toString()
-              : undefined,
-          }
-        }),
+        flat.map(item => ({
+          label: item.label,
+          icon: item.icon,
+          to: item.to,
+        })),
       ],
     } as DropdownMenuItem
   }),
@@ -540,8 +511,6 @@ const userMenuItems = computed<DropdownMenuItem[][]>(() => {
         : []),
     ],
   ]
-
-  // (Trash lives in the Admin submenu above, with its dev badge.)
 
   // Add sign in or sign out based on auth state
   if (loggedIn.value) {

@@ -14,16 +14,10 @@ const REQUIRED_NAMESPACES = {
     // Admin navigation
     'adminDashboard',
     'users',
-    'emailCompose',
-    'emailDrafts',
-    'emailLists',
-    'emailAnalytics',
-    'trash',
     // User menu items
     'appearance',
     'siteMap',
     'componentCatalog',
-    'designTokens',
   ],
   common: ['loading', 'error', 'save', 'cancel', 'delete', 'edit', 'close'],
   search: [

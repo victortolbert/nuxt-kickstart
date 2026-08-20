@@ -15,7 +15,6 @@ Better Auth handler and WebSocket endpoints.
 | File                      | Purpose                                                      |
 | ------------------------- | ----------------------------------------------------------- |
 | `api/auth/[...all].ts`    | Better Auth catch-all — handles all `/api/auth/*` requests   |
-| `_ws/scoreboard.ts`       | WebSocket endpoint streaming live scoreboard updates         |
 
 ## Better Auth Handler
 

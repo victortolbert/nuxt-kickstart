@@ -21,37 +21,3 @@ items:
     label: Users
     icon: users
     path: /app/admin/users
-
-  - slug: email
-    label: Email
-    icon: mail
-    children:
-      - slug: email-compose
-        label: Compose
-        icon: mailForward
-        path: /app/admin/email/compose
-
-      - slug: email-drafts
-        label: Drafts
-        icon: fileText
-        path: /app/admin/email/drafts
-
-      - slug: email-lists
-        label: Lists
-        icon: users
-        path: /app/admin/email/lists
-
-      - slug: email-analytics
-        label: Analytics
-        icon: chartBar
-        path: /app/admin/email/analytics
-
-      - slug: email-templates
-        label: Templates
-        icon: code
-        path: /app/admin/email/templates
-
-  - slug: trash
-    label: Trash
-    icon: trash
-    path: /app/admin/trash

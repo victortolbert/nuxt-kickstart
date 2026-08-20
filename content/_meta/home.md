@@ -13,4 +13,3 @@ Start here:
 - [Guides](/guides)
 - [Posts](/posts)
 - [Tech](/tech)
-- [Examples](/examples)

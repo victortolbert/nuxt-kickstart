@@ -41,11 +41,9 @@ items:
     comment: "Nitro server (alias #server)"
     children:
   - label: api/
-        comment: REST endpoints (content, email, examples, tokens)
-  - label: routes/_ws/
-        comment: WebSocket handlers (scoreboard)
-  - label: db/ + podcasts-db/
-        comment: Core auth schema + the podcast example's isolated DB
+        comment: REST endpoints (admin, health, navigation)
+  - label: db/
+        comment: Core auth schema
   - label: utils/
         comment: Email, storage adapters, upload
 - label: shared/
@@ -57,8 +55,6 @@ items:
         comment: Pure utilities (case, abilities, glossary)
 - label: i18n/locales/
     comment: en.json, es.json
-- label: lib/style-dictionary/
-    comment: Design tokens pipeline
 - label: test/
     comment: "unit/ + nuxt/ (vitest), e2e/ (Playwright)"
 
@@ -76,8 +72,6 @@ Schemas live in `schemas/`, grouped by area, and are registered in `schemas/inde
 | `tech` | `content/tech/` | Technology registry (slug-reference pattern) |
 | `apps`, `blocks` | `content/en/apps/`, `content/en/blocks/` | App blocks showcase (blocks grouped by parent app) |
 | `meta` | `content/_meta/` | Landing/system pages |
-| `emailLists`, `emailDrafts`, `emailAnalytics` | `content/email-*/` | Email subsystem |
-| `examplesPodcasts`, `examplesEpisodes` | `content/examples/` | Example apps |
 
 **Base schema** shared by all collections: `title`, `description?`, `tags[]`, `status` (seed → sprout → evergreen → wilted), `visibility` (private → internal → public), `created?`, `updated?`. Dev mode bypasses visibility checks.
 

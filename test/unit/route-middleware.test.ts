@@ -177,8 +177,6 @@ describe('app-auth global middleware', () => {
     '/admin',
     '/settings',
     '/labs',
-    '/labs/llm-vo',
-    '/labs/podcasts',
   ])('guards protected prefix %s', async (path) => {
     $fetch.mockResolvedValue(null)
     const mw = await loadMiddleware('../../app/middleware/app-auth.global')
@@ -193,10 +191,8 @@ describe('app-auth global middleware', () => {
   })
 
   it.each([
-    '/labs/scoreboard',
-    '/labs/scoreboard/judge/abc123',
-    '/labs/scoreboard/settings',
-  ])('exempts the public scoreboard demo %s from the login gate', async (path) => {
+    '/labs/broadsheet',
+  ])('exempts the public broadsheet reference %s from the login gate', async (path) => {
     const mw = await loadMiddleware('../../app/middleware/app-auth.global')
 
     const result = await mw(route(path))

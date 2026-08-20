@@ -33,9 +33,6 @@ docs, and commits; sharpen them here when they drift.
   (`app/composables/use-session-state.ts`); route middleware awaits
   `fetchSessionIdentity()` (`app/utils/session-identity.ts`). Nothing else
   re-derives these from the raw session.
-- **Scoreboard Admin** — the demo-grade PIN gate for scoreboard admin
-  endpoints (`server/utils/scoreboard-auth.ts`). One seam to replace with
-  real role-based auth.
 
 ## Presentation
 
@@ -63,20 +60,11 @@ docs, and commits; sharpen them here when they drift.
 
 - **Email Transport** — the single module that talks to Resend
   (`server/utils/email.ts`, `sendEmail`). Templates are rendered separately
-  in `server/utils/email-templates.ts`; callers (auth flows, campaign
-  routes) render then send. No other module creates a Resend client. A
-  provider-agnostic transport (Resend + SMTP/Nodemailer for local capture) is
-  specced in `docs/email-transport-plan.md` but not yet built — the term means
-  Resend-only today.
+  in `server/utils/email-templates.ts`; the auth flows render then send. No
+  other module creates a Resend client. The term means Resend-only today.
 - **Storage Adapter** — a backend (`local`, `s3`, `cloudinary`) satisfying
   the 3-method upload interface in `server/utils/storage/`. The reference
   deep seam in this codebase.
-- **Token Generator** — a `(tokens, options) => { ext, content }` function
-  for one design-token export format, in `server/utils/token-generators/`
-  (one module per format family, shared helpers in `shared.ts`, registry +
-  `transformTokens` in `index.ts`). Helium-unwrap, the combined-section
-  builder, and DTCG value formatting are shared, not per-generator. The
-  `/api/tokens/transform` route is a thin adapter over the registry.
 - **Navigation group** — a YAML file in `content/navigation/` served by
   `/api/navigation`; `useNavigationConfig()` translates labels by slug
   convention and localizes paths. Each group declares its sidebar

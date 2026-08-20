@@ -8,7 +8,6 @@ Nuxt plugins for app initialization and global setup.
 | -------------------------- | ---------------------------------------------------------- |
 | `appearance.client.ts`     | Applies persisted theme/appearance before paint (no FOUC)  |
 | `authorization.ts`         | Wires up `nuxt-authorization` for permission checks        |
-| `google-maps.client.ts`    | Google Maps API initialization (browser-only)              |
 | `suppress-build-errors.ts` | Dev utility to suppress specific noisy warnings            |
 
 ## Naming

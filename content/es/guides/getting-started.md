@@ -53,7 +53,7 @@ Consulta [Usar Esta Plantilla](/es/guides/using-this-template) para ver qué ren
 
 ## Qué Está Funcionando
 
-- **Sitio público** — página de inicio, [Guías](/es/guides), [Blog](/es/posts), [Registro de tecnología](/es/tech) y [Ejemplos](/es/examples)
+- **Sitio público** — página de inicio, [Guías](/es/guides), [Blog](/es/posts) y el [Registro de tecnología](/es/tech)
 - **Área de la app** (`/app`) — panel autenticado
 - **Panel de administración** (`/app/admin`) — gestión de usuarios, editor de contenido, sistema de correo, papelera
 

@@ -1,5 +1,11 @@
 # Maizzle's compiled email HTML is committed, and not linted
 
+> **Superseded.** The Maizzle email templates were removed when the template was
+> stripped back to documentation plus one lab (#18), taking `app/emails/`,
+> `server/assets/emails/` and the `@maizzle/nuxt` module with them. The decision
+> below is kept as the record of why the build output was committed while the
+> subsystem existed; the ESLint ignore it describes is no longer needed.
+
 `pnpm run build` compiles the Vue email templates in `app/emails/` to inlined
 HTML in `server/assets/emails/`, and that output is committed rather than
 gitignored. The reason is that `renderMaizzleTemplate()` calls Maizzle's

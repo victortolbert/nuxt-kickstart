@@ -11,12 +11,6 @@ also importable via `#shared/utils/*`.
 | `glossary.ts`            | Acronym detection + term lookup               |
 | `abilities.ts`           | `nuxt-authorization` ability definitions      |
 | `content-source.ts`      | Content source/path helpers                   |
-| `email-validation.ts`    | Email validation                              |
-| `token-detector.ts`      | Detect design-token formats                   |
-| `token-parser.ts`        | Parse token files                             |
-| `token-normalizer.ts`    | Normalize tokens to a common shape            |
-| `token-name-converter.ts`| Convert token naming conventions              |
-| `token-validator.ts`     | Validate token structures                     |
 
 ## Case Utilities
 

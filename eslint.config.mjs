@@ -1,5 +1,4 @@
 import antfu from '@antfu/eslint-config'
-import * as figmaPlugin from '@figma/eslint-plugin-figma-plugins'
 import preflightVueA11y from '@victortolbert/preflight/vue-a11y'
 import pluginCasePolice from 'eslint-plugin-case-police'
 
@@ -135,14 +134,6 @@ export default withNuxt(
         'scripts/**',
         // Ignore all markdown files (code blocks were being linted as TS)
         '**/*.md',
-        // Figma plugins - separate project with different conventions
-        'figma-plugins/**',
-        // Maizzle build output. `pnpm run build` compiles app/emails/*.vue to
-        // this directory (see app/emails/README.md), so the inlined HTML here is
-        // generated, not authored — formatting it by hand is undone by the next
-        // build. Edit the .vue sources instead. Why it is committed at all:
-        // docs/adr/0004-commit-maizzle-build-output.md
-        'server/assets/emails/**',
       ],
     },
     {
@@ -221,22 +212,6 @@ export default withNuxt(
     },
   },
 
-  // Figma plugins config - scoped to figma plugin files with type-aware linting
-  {
-    files: ['**/figma-plugins/**/*.ts', '**/figma/**/*.ts'],
-    languageOptions: {
-      parserOptions: {
-        project: './figma-plugins/tsconfig.json',
-      },
-    },
-    plugins: {
-      '@figma/figma-plugins': figmaPlugin,
-    },
-    rules: {
-      ...figmaPlugin.flatConfigs.recommended.rules,
-    },
-  },
-
   // jQuery global configuration for JavaScript files
   {
     files: ['**/*.js'],
@@ -245,24 +220,6 @@ export default withNuxt(
         $: 'readonly',
         jQuery: 'readonly',
       },
-    },
-  },
-
-  // Maizzle email templates (app/emails/, own tsconfig). These compile to HTML
-  // rather than running as Nuxt components, and use single-word PascalCase
-  // component names (<Layout>, <Container>, <Heading>, …) — so override the
-  // global kebab-case rule to PascalCase here.
-  {
-    files: ['app/emails/**/*.vue'],
-    rules: {
-      'vue/component-name-in-template-casing': ['error', 'PascalCase', {
-        registeredComponentsOnly: false,
-      }],
-      // Maizzle templates lead with the <script setup> config block, then the
-      // <template> — the reverse of the app-wide order.
-      'vue/block-order': ['error', {
-        order: ['script', 'template', 'style'],
-      }],
     },
   },
 )

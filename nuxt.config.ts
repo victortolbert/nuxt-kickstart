@@ -11,8 +11,7 @@ type OnWarn = (warning: RollupLog, defaultHandler: LoggingFunction) => void
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 // Light/dark favicons via `media`. Hoisted to a const so TS's excess-property
-// check (which only fires on inline literals) doesn't reject `media` — it's
-// valid HTML for responsive icons but omitted from Unhead's icon-link type.
+// check (which only fires on inline literals) doesn't reject `media`.
 const faviconLinks = [
   { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg', media: '(prefers-color-scheme: light)' },
   { rel: 'icon', type: 'image/svg+xml', href: '/favicon-dark.svg', media: '(prefers-color-scheme: dark)' },
@@ -39,7 +38,6 @@ export default defineNuxtConfig({
     'nuxt-authorization',
     'nuxt-vitalizer', // Eliminates render-blocking CSS (FOUC prevention)
     'nuxt-fathom',
-    '@maizzle/nuxt',
     // 'nuxt-charts', // Disabled - using @unovis/vue instead (see app/components/charts/)
     // '@nuxtjs/html-validator',
     // '@nuxt/scripts',
@@ -73,10 +71,9 @@ export default defineNuxtConfig({
           tagPosition: 'head',
         },
       ],
-      // @ts-expect-error Unhead's icon-link type omits `media`, which is valid HTML for responsive (light/dark) favicons.
       link: faviconLinks,
       meta: [
-        { name: 'description', content: 'An opinionated, content-first Nuxt 4 starter with auth, email, i18n, and theming built in' },
+        { name: 'description', content: 'An opinionated, content-first Nuxt 4 starter with auth, i18n, and theming built in' },
         { name: 'theme-color', content: '#ffffff', media: '(prefers-color-scheme: light)' },
         { name: 'theme-color', content: '#0f172a', media: '(prefers-color-scheme: dark)' },
       ],
@@ -170,7 +167,6 @@ export default defineNuxtConfig({
     contentAuthToken: '', // Set via NUXT_CONTENT_AUTH_TOKEN env var (GitHub PAT for private repos)
     contentBranch: 'main', // Set via NUXT_CONTENT_BRANCH env var
     contentRequireExternal: false, // Set via NUXT_CONTENT_REQUIRE_EXTERNAL env var
-    scoreboardWebsocketEnabled: true, // Nitro experimental WebSocket is enabled
 
     // Storage configuration (file uploads)
     storageProvider: 'local', // 'local' | 's3' | 'cloudinary' - Set via NUXT_STORAGE_PROVIDER
@@ -186,45 +182,11 @@ export default defineNuxtConfig({
     cloudinaryApiKey: '', // Set via NUXT_CLOUDINARY_API_KEY
     cloudinaryApiSecret: '', // Set via NUXT_CLOUDINARY_API_SECRET
 
-    // LLM provider for AI insights (server-side only). Works inside and outside
-    // the enterprise: 'anthropic' (direct) or 'proxy'.
-    llmProvider: 'anthropic', // 'anthropic' | 'proxy' — Set via NUXT_LLM_PROVIDER
-    llmModel: 'claude-sonnet-4-6', // Set via NUXT_LLM_MODEL
-    anthropicApiKey: '', // Set via NUXT_ANTHROPIC_API_KEY (provider=anthropic)
-    proxyBaseUrl: '', // Set via NUXT_LLM_PROXY_BASE_URL (provider=proxy)
-    proxyApiKey: '', // Set via NUXT_LLM_PROXY_API_KEY (provider=proxy)
-
-    // Brand Mention multi-provider coverage (server-only). All OPTIONAL — each
-    // provider is skipped when its key is blank. The Claude row reuses the
-    // anthropic/proxy config above.
-    openaiApiKey: '', // Set via NUXT_OPENAI_API_KEY (ChatGPT)
-    openaiModel: 'gpt-4o-mini', // Set via NUXT_OPENAI_MODEL
-    googleApiKey: '', // Set via NUXT_GOOGLE_API_KEY (Gemini)
-    googleModel: 'gemini-flash-latest', // Set via NUXT_GOOGLE_MODEL (alias tracks current flash; 1.5 is retired)
-    xaiApiKey: '', // Set via NUXT_XAI_API_KEY (Grok)
-    xaiModel: 'grok-2-latest', // Set via NUXT_XAI_MODEL
-
-    // Headless-render JS detection (Playwright, server-only). Falls back to the
-    // static heuristic when off or when chromium is unavailable (serverless/CI).
-    llmRenderEnabled: true, // Set via NUXT_LLM_RENDER_ENABLED ('false' to disable)
-    llmRenderTimeoutMs: 15000, // Set via NUXT_LLM_RENDER_TIMEOUT_MS
-
     public: {
-      googleMapsKey: '', // Set via NUXT_PUBLIC_GOOGLE_MAPS_KEY env var
       siteUrl: '', // Set via NUXT_PUBLIC_SITE_URL env var (e.g., http://localhost:3000 or https://nuxt-kickstart.example.com)
       // Content local collections list (exposed for client-side edit link logic)
       contentLocalCollections: '', // Set via NUXT_PUBLIC_CONTENT_LOCAL_COLLECTIONS env var
-      scoreboard: {
-        transport: 'auto', // 'auto' | 'websocket' | 'sse' | 'polling'
-        pollInterval: 5000, // ms — client polling interval
-        ssePollInterval: 2000, // ms — SSE endpoint internal DB polling (serverless fallback)
-      },
     },
-  },
-
-  // Transpile @fawmi/vue-google-maps for SSR compatibility
-  build: {
-    transpile: ['@fawmi/vue-google-maps'],
   },
 
   // Redirect old /admin/* paths to /app/admin/* for bookmark compatibility
@@ -236,14 +198,6 @@ export default defineNuxtConfig({
     // reads any more — `routeRules` is applied by Nitro on every preset, so the
     // policy now survives a change of host. See ADR-0012 in the Preflight repo.
     ...preflightSecurityHeaders,
-    '/admin/email/**': { redirect: '/app/admin/email/**' },
-    '/admin/trash': { redirect: '/app/admin/trash' },
-    '/admin/content/**': { redirect: '/app/admin/content/**' },
-    // Labs relocation (apps moved out of /examples) — keep old links working.
-    '/examples/scoreboard-mvp': { redirect: '/labs/scoreboard' },
-    '/examples/scoreboard-mvp/**': { redirect: '/labs/scoreboard/**' },
-    '/examples/podcast-app': { redirect: '/labs/podcasts' },
-    '/examples/podcast-app/**': { redirect: '/labs/podcasts/**' },
     // NOTE: ISR/SWR caching was evaluated and is intentionally NOT used here.
     // Two blockers: (1) content routes (/guides, /posts, /blocks, /tech) render
     // per-session via the visibility filter / access checks, so a shared cache
@@ -295,20 +249,11 @@ export default defineNuxtConfig({
     // Reduce memory pressure during dev
     optimizeDeps: {
       include: [
-        '@fullcalendar/daygrid',
-        '@fullcalendar/interaction',
-        '@fullcalendar/list',
-        '@fullcalendar/timegrid',
-        '@fullcalendar/vue3',
         '@internationalized/date',
         '@unhead/schema-org/vue',
-        '@unovis/vue',
         'better-auth/client/plugins',
         'better-auth/vue',
         'mermaid',
-        'slot-text',
-        'slot-text/vue',
-        'vue3-emoji-picker',
       ],
     },
   },
@@ -442,12 +387,6 @@ export default defineNuxtConfig({
   //    and these routes are never prerendered
   linkChecker: {
     excludeLinks: ['/login', '/app/**'],
-  },
-
-  // Only treat .vue files as email templates (so app/emails/README.md isn't
-  // compiled as an email). Add '*.md' here if you author Markdown emails.
-  maizzle: {
-    content: ['app/emails/**/*.vue'],
   },
 
   // OG Image configuration

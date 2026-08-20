@@ -67,7 +67,7 @@ See [Using This Template](/guides/using-this-template) for what `pnpm run init` 
 
 ## What's Running
 
-- **Public site** — landing page, [Guides](/guides), [Blog](/posts), [Tech registry](/tech), and [Examples](/examples)
+- **Public site** — landing page, [Guides](/guides), [Blog](/posts), and the [Tech registry](/tech)
 - **App area** (`/app`) — authenticated dashboard
 - **Admin suite** (`/app/admin`) — user management, content editor, email system, trash
 

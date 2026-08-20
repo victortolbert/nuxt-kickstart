@@ -2,7 +2,6 @@
   <div>
     <landing-hero-section></landing-hero-section>
     <landing-features-section></landing-features-section>
-    <landing-examples-section></landing-examples-section>
     <landing-tech-stack-section></landing-tech-stack-section>
     <landing-newsletter-section></landing-newsletter-section>
     <landing-contact-section></landing-contact-section>

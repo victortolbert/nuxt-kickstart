@@ -17,10 +17,6 @@ REST endpoints via Nitro's file-based routing.
 | `content/`       | Content CRUD (dev-only)                        |
 | `email/`         | Email campaigns, drafts, tracking              |
 | `health/`        | Health/status checks                           |
-| `llm-optimizer/` | LLM Visibility Optimizer (`/labs/llm-vo`)      |
-| `podcasts/`      | Podcast example app (isolated DB)              |
-| `scoreboard/`    | Scoreboard data (paired with `/_ws` stream); judges live at `scoreboard/judges/` |
-| `tokens/`        | Design-token endpoints                         |
 
 Root-level endpoints: `user.get.ts`, `navigation.get.ts` (backs
 `useNavigationConfig()`), `protected.get.ts`, `auth-test.get.ts`, and

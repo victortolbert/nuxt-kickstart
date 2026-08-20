@@ -49,12 +49,6 @@
         @click="openSearch"
       ></u-button>
       <u-button
-        :icon="resolveIcon('apps')"
-        :label="t('nav.examples')"
-        variant="soft"
-        to="/examples"
-      ></u-button>
-      <u-button
         :icon="resolveIcon('components')"
         :label="t('nav.blocks')"
         variant="soft"

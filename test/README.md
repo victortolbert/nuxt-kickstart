@@ -16,16 +16,18 @@ Vitest test suites plus Playwright end-to-end tests.
 ## Running Tests
 
 ```bash
-pnpm run test          # All vitest projects (unit + nuxt)
-pnpm run test:unit     # unit project (node env) only
-pnpm run test:nuxt     # nuxt project only
-pnpm run test:watch    # watch mode (unit)
-pnpm run test:coverage # coverage report
-pnpm run test:e2e      # Playwright e2e (also :ui, :debug)
+pnpm exec vitest run                   # all projects, one-shot
+pnpm exec vitest run --project unit    # unit project (node env) only
+pnpm exec vitest run --project nuxt    # nuxt project only
+pnpm run test:coverage                 # coverage report (already one-shot)
+pnpm run test:e2e                      # Playwright e2e (also :ui, :debug)
 
-pnpm run test test/unit/case.test.ts   # single file
-pnpm run test -t "converts kebab-case" # by test name
+pnpm exec vitest run test/unit/case.test.ts   # single file
+pnpm exec vitest run -t "converts kebab-case" # by test name
 ```
+
+`pnpm run test` and its `test:unit` / `test:nuxt` / `test:watch` siblings are
+bare `vitest` — they watch and never exit. Use them when you want watch mode.
 
 ## Unit Tests
 

@@ -66,13 +66,17 @@ name tokens and the author identity, but it cannot write your project for you.
 
 ## What to Trim
 
-Everything optional is designed to be removable:
+This template is deliberately small, so there is not much left to remove. What
+there is:
 
-- **Example apps** (podcast, scoreboard, broadsheet, LLM optimizer) — these live under `app/pages/labs/`, not `app/pages/examples/`. Delete the `app/pages/labs/{podcasts,scoreboard,llm-vo}` pages and `app/pages/labs/broadsheet.vue`, their components (`app/components/{podcasts,scoreboard,llm-optimizer}/`), the `examples/` schemas, their content folders, and the `server/api/{podcasts,scoreboard,llm-optimizer}` routes. Also drop the `/examples/scoreboard-mvp` and `/examples/podcast-app` redirect rules in `nuxt.config.ts`, which would otherwise point at deleted pages. The podcast app has its own isolated database in `server/podcasts-db/` — delete that folder too (the core/auth DB in `server/db/` is unaffected)
-- **Pattern demos** — `app/pages/examples/` is separate: calendar, charts, maps, tables, and the design-tokens studio. Deleting it does not touch the example apps above
-- **Email subsystem** — delete the `systems/email` schemas, `content/email-*/`, `server/api/email/`, and the admin email pages
-- **Design tokens tool** — delete `app/components/tokens/`, `lib/style-dictionary/`, and `server/api/tokens/`
+- **The broadsheet lab** — delete `app/pages/labs/`, its entry in `content/navigation/03.labs.yml`, and the `/labs/broadsheet` exception in `app/middleware/app-auth.global.ts`
+- **The tech registry** — delete `content/tech/`, `app/components/tech-badge.vue`, `app/utils/tech-config.ts` and `app/pages/tech/`. It is referenced by the default layout and by three guides, so grep before you commit
 - **A theme** — delete its CSS file in `app/assets/css/themes/`, remove it from `use-theme.ts` and `shared/types/theme.ts`
+- **A locale** — delete `i18n/locales/<code>.json` and its `content/<code>/` folder, then drop it from the `i18n` block in `nuxt.config.ts`
+
+**Do not delete `server/utils/email.ts` or `email-templates.ts`.** Password auth
+is disabled, so magic-link and OTP sign-in depend on them — removing them makes
+signing in impossible.
 
 After any trim, run the gate: `pnpm run lint:fix && pnpm run typecheck && pnpm exec vitest run`.
 

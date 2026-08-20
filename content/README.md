@@ -15,7 +15,6 @@ Nuxt Content v3 markdown collections.
 | `tech/`          | Technology registry (non-localized)                  |
 | `navigation/`    | Sidebar navigation groups (YAML, served by `/api/navigation`) |
 | `_meta/`         | Landing/system pages                                 |
-| `examples/`      | Example-app content (podcasts, episodes)             |
 | `email-*/`       | Email subsystem (lists, drafts, analytics)           |
 
 ## Collections (by area, see `schemas/`)
@@ -24,7 +23,6 @@ Nuxt Content v3 markdown collections.
 | ---------- | ---------------------------------------------------- |
 | Publishing | `guides` (docs), `posts` (blog pattern), `meta`      |
 | Registries | `tech`, `apps`, `blocks`                             |
-| Examples   | `podcasts`, `episodes`                               |
 | Systems    | email (`lists`, `drafts`, `analytics`)               |
 
 ## Base Schema

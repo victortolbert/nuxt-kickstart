@@ -20,19 +20,17 @@ The root `[...slug].vue` renders arbitrary Nuxt Content documents by path.
 | `guides/`        | Guides collection (docs)                 |
 | `posts/`         | Posts index                              |
 | `tech/`          | Tech registry                            |
-| `examples/`      | Pattern demos (calendar, charts, maps, tables, design tokens) |
-| `labs/`          | Example apps — scoreboard, podcasts, broadsheet, llm-vo |
+| `labs/`          | Example apps — currently the broadsheet layout reference |
 | `blocks/`        | App blocks showcase                      |
 | `app/`           | Authenticated dashboard + admin suite (admin screens live at `app/admin/`) |
 | `login.vue`      | Auth entry (magic link / OTP / GitHub)   |
 | `settings.vue`, `appearance.vue` | User preferences         |
 | `about.vue`, `contact.vue` | Marketing pages                |
 | `privacy.vue`, `terms.vue` | Legal pages                    |
-| `unsubscribe.vue` | Email unsubscribe landing               |
 | `[...slug].vue`  | Catch-all content renderer               |
 
 There is no top-level `admin/` route — the admin suite is nested under
-`app/admin/`. Legacy `/admin/**` and `/examples/scoreboard-mvp` URLs are kept
+`app/admin/`. Legacy `/admin/**` URLs are kept
 alive by redirect rules in `nuxt.config.ts`.
 
 ## Page Titles & SEO

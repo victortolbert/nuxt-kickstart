@@ -16,7 +16,6 @@ Nuxt 4 client application root. Contains all Vue components, pages, layouts, and
 | `lib/`         | Client library code (e.g. `auth-client.ts`)          |
 | `types/`       | TypeScript declarations                              |
 | `assets/`      | CSS/themes, processed by the bundler                 |
-| `emails/`      | Maizzle email templates (Vue SFCs, own conventions — see its README) |
 
 Entry points: `app.vue` (root component), `error.vue` (error boundary), and
 `app.config.ts` (runtime app config).

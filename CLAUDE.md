@@ -39,7 +39,7 @@ Run `pnpm nuxi prepare` after clone to generate `.nuxt/`. Run `pnpm run db:init`
 - **ESLint**: `@antfu/eslint-config` — 2-space indent, no semicolons, single quotes
 - **File naming**: kebab-case everywhere (enforced). `tech-badge.vue`, `use-theme.ts`, `tech-config.ts`. Exception: `[param].vue` routes
 - **Vue blocks**: `<script setup lang="ts">` → `<template>` → `<style>`
-- **Component casing in templates**: kebab-case (enforced). Exception: `app/emails/**` (Maizzle templates) use **PascalCase** (`<Layout>`, `<Container>`) and `<script>`-first block order — scoped override in `eslint.config.mjs`
+- **Component casing in templates**: kebab-case (enforced)
 - **TypeScript**: `interface` over `type` for objects. Strict mode. Avoid `any`
 - **Pre-commit**: `nano-staged` via `simple-git-hooks`
 
@@ -48,7 +48,7 @@ Run `pnpm nuxi prepare` after clone to generate `.nuxt/`. Run `pnpm run db:init`
 | Alias | Resolves To | Note |
 | --- | --- | --- |
 | `~` / `@` | `app/` | `~/components/foo.vue` |
-| `~~` / `@@` | project root | `~~/shared/data/daily-quotes.ts` |
+| `~~` / `@@` | project root | `~~/lib/env.ts` |
 | `#shared` | `shared/` | **Preferred** for shared/ imports |
 | `#server` | `server/` | Server-only code |
 
@@ -77,7 +77,6 @@ Collections:
 - **publishing**: `guides` (documentation, `content/{en,es}/guides/` in one locale-aware collection with English fallback), `posts` (blog pattern, `content/en/posts/`), `meta` (landing/system pages, `content/_meta/`)
 - **registries**: `tech` (technology registry, `content/tech/`), `apps` + `blocks` (back the `/blocks` showcase — app blocks grouped by parent app, `content/en/apps/`, `content/en/blocks/`)
 - **email subsystem**: `emailLists`, `emailDrafts`, `emailAnalytics` (`content/email-*/`)
-- **examples**: `examplesPodcasts`, `examplesEpisodes` (`content/examples/`)
 
 Localized content lives under per-locale folders (`content/en/`, `content/es/`). Navigation groups are YAML files in `content/navigation/*.yml`, served by `/api/navigation` and consumed by `useNavigationConfig()`.
 
@@ -86,7 +85,7 @@ Localized content lives under per-locale folders (`content/en/`, `content/es/`).
 ### Key Conventions
 
 - **Visibility**: private (default) → internal → public. Dev mode bypasses visibility checks
-- **Status**: seed → sprout → evergreen → wilted. Color/icon per status come from `app/utils/garden-status.ts` (single source of truth — used by badges, filters, charts)
+- **Status**: seed → sprout → evergreen → wilted. Color/icon per status come from `app/utils/garden-status.ts` (single source of truth — used by badges and filters)
 - **Registries** use stable `slug` IDs, referenced by slug arrays
 - **Case**: kebab-case for storage/slugs. Title Case for display via `formatLabel()`/`formatTag()`
 - Case utilities auto-imported from `shared/utils/case.ts`
@@ -129,8 +128,6 @@ Using v2 patterns causes empty modals, empty selects, accessibility warnings, an
 ## Key Components
 
 - **TechBadge**: `slug`, `mode`, `size`, `link` props. Config: `app/utils/tech-config.ts`
-- **Charts** (Unovis): `ChartsLineChart`/`ChartsBarChart`/`ChartsDonutChart` — `.client.vue`/`.server.vue` pairs
-- **Design tokens**: `tokens/` components + Style Dictionary pipeline (`lib/style-dictionary/`, `/api/tokens/*`)
 - **Screenshots**: `public/img/screenshots/{project-slug}/`
 
 ## Auth & Authorization
@@ -143,10 +140,7 @@ Using v2 patterns causes empty modals, empty selects, accessibility warnings, an
 
 ## Database
 
-Two separate databases — don't confuse them:
-
 - **Core DB** (`server/db/` schema + `server/utils/db.ts` client) — the canonical app/auth database. **ORM**: `drizzle-orm` over **libSQL / Turso** (SQLite). Schema: `server/db/schema.ts` (the only schema drizzle-kit migrates — `drizzle.config.ts`). Better Auth and app code share this one connection (see note in `server/auth.ts`). Dev: `file:.data/auth.db`; prod: Turso via `TURSO_DATABASE_URL` + `TURSO_AUTH_TOKEN`. `pnpm run db:init` (`scripts/init-better-auth-db.ts`) creates local tables; column-adding migrations are `scripts/add-*-columns.ts`.
-- **Podcasts DB** (`server/podcasts-db/`) — the **podcast example app's** isolated database (own connection + `podcast-app.db`, in-memory in dev, raw `CREATE TABLE IF NOT EXISTS` — not drizzle-kit managed). Self-contained so the example can be deleted as one folder. See `server/podcasts-db/README.md`.
 
 ## i18n
 
@@ -212,10 +206,10 @@ See the File Storage guide (`/guides/file-storage`) for detailed setup instructi
 
 ## Email
 
-Two complementary systems, both sending via Resend (`server/utils/email.ts` → `sendEmail`):
-
-- **Markdown campaigns** — admin compose/send/track at `/app/admin/email/*`; filesystem-backed collections in `content/email-*`, schemas in `schemas/systems/email/`. See the Email Campaigns guide.
-- **Maizzle templates** — designed/transactional emails authored as Vue SFCs in `app/emails/*.vue` (Tailwind → inlined HTML via `@maizzle/framework`). Rendered by `server/utils/maizzle.ts`; admin-only Server API: `GET /api/email/maizzle` (list), `GET /api/email/maizzle/{name}` (render/preview), `POST /api/email/maizzle/send` (per-recipient personalization via `{{ config.* }}`). See `app/emails/README.md`.
+Transactional only, sending via Resend (`server/utils/email.ts` → `sendEmail`).
+`server/utils/email-templates.ts` renders the two Better Auth emails —
+`renderMagicLinkEmail` and `renderOtpEmail` — and `server/auth.ts` is their only
+caller. Password auth is disabled, so this path is what makes sign-in work.
 
 ## Don'ts
 

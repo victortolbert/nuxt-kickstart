@@ -1,6 +1,6 @@
 # nuxt-kickstart
 
-An opinionated, kitchen-sink **enterprise Nuxt boilerplate** — Nuxt 4 + Nuxt Content v3 with passwordless auth, an admin suite, an email subsystem, real-time examples, design tokens tooling, 7 themes, and i18n already wired up.
+An opinionated, content-first **Nuxt starter** — Nuxt 4 + Nuxt Content v3 with passwordless auth, an admin panel, 7 themes, and i18n already wired up. Deliberately minimal: documentation, the core platform, and one example lab.
 
 Start new projects with the foundations decided: use this repo as a GitHub template, rename the `nuxt-kickstart` / `Kickstart` / `kickstart-*` tokens to your project name, and build.
 
@@ -53,15 +53,12 @@ Visit `http://localhost:3000`. Auth features (magic link, OAuth) require additio
 - 🔐 **Passwordless auth** — magic link, email OTP, phone OTP, and GitHub OAuth via Better Auth
 - 🛡️ **Role-based access** — viewer, editor, and admin roles with content visibility levels
 - 📝 **Markdown-first content** — docs, posts, and registry collections powered by Nuxt Content v3
-- 🏆 **Real-time scoreboard** — WebSocket, SSE, and polling with automatic transport negotiation
 - 🎨 **7 switchable themes** — Lyra, Nord, Dracula, Catppuccin, Carnival, Broadsheet, and System defaults
 - 🌍 **i18n ready** — English + Spanish wired up with `prefix_except_default` routing; add locales in one config block
-- 🧩 **60+ Vue components** — charts, editors, landing pages, and content renderers
+- 🧩 **Reusable Vue components** — landing sections, content renderers, and app shell
 - ⌘ **Command palette** — fuzzy search across pages, actions, and settings
 - 🌙 **Dark mode** — every theme supports light and dark with zero flash (FOUC-free)
 - 🎯 **Nuxt UI v4** — latest components, Tailwind CSS v4, and OKLCH color space
-- 📊 **Interactive charts** — line, bar, and donut visualizations powered by Unovis
-- 🪙 **Design tokens tool** — transform JSON tokens to CSS, SCSS, iOS, Android, JS/TS, or Tailwind
 - 👤 **Admin panel** — user search, role editing, session management, and ban controls
 - 🐳 **Dev container ready** — one-click setup for VS Code or GitHub Codespaces
 - 🧪 **Vitest + Playwright** — unit, component, and e2e smoke testing with coverage
@@ -71,14 +68,11 @@ Visit `http://localhost:3000`. Auth features (magic link, OAuth) require additio
 |----------|---------|---------|
 | **Auth** | Better Auth with 4 sign-in methods | No passwords to manage, users pick their preferred method |
 | **Content** | Docs, posts, and registry collections | Markdown-first content that scales with your team |
-| **Real-time** | Auto-negotiating transport (WS/SSE/poll) | Works on any hosting — serverless to dedicated |
 | **Theming** | 7 CSS Zen Garden themes, OKLCH colors | Ship a polished product, let users choose their vibe |
 | **i18n** | en + es with prefix routing | Reach a global audience without rearchitecting |
 | **Admin** | User management with role assignment | Control access without touching the database |
 | **DX** | Dev container with pnpm + Node | Clone and run — zero local setup for contributors |
 | **Testing** | Vitest unit + component, Playwright E2E | Confidence on every commit across the full stack |
-| **Charts** | Unovis with SSR-safe rendering | Data visualizations that work with server-side rendering |
-| **Tokens** | Multi-format design token transformer | Bridge design and engineering with one tool |
 
 ---
 
@@ -213,28 +207,6 @@ definePageMeta({ middleware: ['auth'] })
 
 ---
 
-## Scoreboard MVP
-
-Real-time scoring app at `/labs/scoreboard` with auto-negotiating transport. (The
-old `/examples/scoreboard-mvp` URL still works via a redirect in `nuxt.config.ts`.)
-
-| Transport | Path | Fallback Order |
-|-----------|------|---------------|
-| WebSocket | `/_ws/scoreboard` | 1st (preferred) |
-| SSE | `/api/scoreboard/stream` | 2nd |
-| Polling | `/api/scoreboard/event` | 3rd (always available) |
-
-**Config** (`.env`):
-
-```bash
-NUXT_PUBLIC_SCOREBOARD_TRANSPORT=auto     # auto | websocket | sse | polling
-NUXT_PUBLIC_SCOREBOARD_POLL_INTERVAL=5000
-```
-
-Features: judge token generation, team identity modes (emoji/logo), logo upload with sharp image processing, connection status indicator.
-
----
-
 ## Theme System
 
 7 themes via CSS Zen Garden approach with OKLCH color space.
@@ -258,25 +230,22 @@ Use `useTheme()` composable. Persists to `localStorage['kickstart-theme']`. Bloc
 ```
 app/
   assets/css/themes/  # Theme CSS files
-  components/         # Vue components (charts/, content/, landing/, etc.)
-  composables/        # 23 composables (useTheme, useScoreboardStream, etc.)
-  emails/             # Maizzle email templates (Vue SFCs)
+  components/         # Vue components (app/, content/, landing/, og-image/)
+  composables/        # 15 composables (useTheme, useAppearance, etc.)
   layouts/            # Page layouts
   middleware/         # Route guards (admin, auth, guest)
   pages/              # Routes
-    app/admin/        #   Admin panel (user management, email)
-    examples/         #   Calendar, charts, maps, tables demos
-    labs/             #   Scoreboard, podcasts, broadsheet, llm-vo
+    app/admin/        #   Admin panel (user management)
+    labs/             #   Broadsheet layout reference
   utils/              # Client utilities (tech-config, etc.)
 content/              # Markdown content (docs, posts, registries, i18n)
 i18n/locales/         # en, es
 server/
-  api/                # API routes (admin/, scoreboard/, podcasts/, llm-optimizer/, auth)
+  api/                # API routes (admin/, health/, navigation, auth)
   db/                 # Drizzle schema (drizzle-kit has generated no migrations yet)
   routes/
-    _ws/              # WebSocket handlers
     api/auth/         # Better Auth handler
-  utils/              # Server utilities (db, email, event bus)
+  utils/              # Server utilities (db, email, storage adapter)
 shared/
   types/              # Shared TypeScript types
   utils/              # Abilities, case utils, schemas
@@ -296,8 +265,6 @@ test/
 | `content/en/apps/`, `content/en/blocks/` | App blocks showcase (blocks grouped by parent app) |
 | `content/_meta/` | Landing/system pages |
 | `content/navigation/` | Sidebar navigation groups (YAML, served by `/api/navigation`) |
-| `content/examples/` | Example-app content (podcast) |
-| `content/email-*/` | Email subsystem (lists, drafts, analytics) |
 
 Collection schemas live in `schemas/`, grouped by area, registered in `schemas/index.ts`. All collections share the base conventions: `status` (seed → sprout → evergreen → wilted) and `visibility` (private → internal → public).
 

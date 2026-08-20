@@ -11,15 +11,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
     '/labs',
   ]
 
-  // Public exceptions inside an otherwise-protected prefix. The Scoreboard demo
-  // (under /labs) is public-facing with its own access model — a public board,
-  // token-based judge links, and a PIN-gated admin — so it must not sit behind
-  // the app login gate.
-  // The Broadsheet reference (under /labs) is design documentation: a static
-  // page with no data access and no API calls, and it is more useful to the
-  // kit's audience unauthenticated than gated.
+  // Public exceptions inside an otherwise-protected prefix. The Broadsheet
+  // reference (under /labs) is design documentation: a static page with no data
+  // access and no API calls, and it is more useful to the kit's audience
+  // unauthenticated than gated.
   const publicExceptions = [
-    '/labs/scoreboard',
     '/labs/broadsheet',
   ]
   const isPublicException = publicExceptions.some(

@@ -10,7 +10,7 @@ Vue 3 Composition API functions, auto-imported with the `use-` prefix.
 
 ## Representative Composables
 
-There are 23 composable files here (28 exported `use*` functions); a sample of
+There are 15 composable files here (20 exported `use*` functions); a sample of
 the most central ones:
 
 | Composable               | Purpose                                        |
@@ -20,7 +20,6 @@ the most central ones:
 | `useCollectionFilters()` | Filter state synced to URL query params        |
 | `useVisibilityFilter()`  | Visibility-based content filtering             |
 | `useContentAccess()`     | Gate content by auth/visibility                |
-| `useContentEditor()`     | In-app content editing                         |
 | `useLocalizedEntries()`  | Localized Collection lists (locale → en fallback) |
 | `useSessionState()`      | Session Identity: loggedIn / user / role / isAdmin |
 

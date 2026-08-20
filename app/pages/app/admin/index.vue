@@ -434,29 +434,5 @@ const quickLinks = computed(() => [
     icon: resolveIcon('users'),
     to: '/app/admin/users',
   },
-  {
-    label: 'Email Compose',
-    description: 'Draft and send emails',
-    icon: resolveIcon('mailForward'),
-    to: '/app/admin/email/compose',
-  },
-  {
-    label: 'Email Lists',
-    description: 'Manage mailing lists',
-    icon: resolveIcon('list'),
-    to: '/app/admin/email/lists',
-  },
-  {
-    label: 'Email Analytics',
-    description: 'View email engagement stats',
-    icon: resolveIcon('chartBar'),
-    to: '/app/admin/email/analytics',
-  },
-  {
-    label: 'Trash',
-    description: 'Restore or permanently delete items',
-    icon: resolveIcon('trash'),
-    to: '/app/admin/trash',
-  },
 ])
 </script>

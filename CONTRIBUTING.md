@@ -101,7 +101,6 @@ runs once when it detects a non-TTY.
 
 Use `useRuntimeConfig()` — never read `process.env` directly in app/server code.
 
-- `NUXT_PUBLIC_GOOGLE_MAPS_KEY` — Google Maps API key (`/examples/maps` degrades silently without it)
 - `NUXT_PUBLIC_SITE_URL` — production site URL
 
 Secrets resolve from 1Password at runtime via `pnpm dev:op` (see the Secrets

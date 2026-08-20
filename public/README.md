@@ -6,17 +6,11 @@ Static files served at the root URL. Not processed by the bundler.
 
 | Folder              | Purpose                                          |
 | ------------------- | ------------------------------------------------ |
-| `img/podcasts/`     | Podcast cover art (example app)                  |
-| `img/teams/`        | Team logo uploads (scoreboard example, `local` storage provider) |
 | `img/screenshots/`  | Project screenshots organized by slug            |
-| `audio/`            | Sample episode audio (podcast example)           |
-
-Loose files in `img/`: `avatar.png` (default user avatar) and the garden-status
-art `seed.png` / `sprout.png` / `evergreen.png` / `wilted.png`. Nothing in the
-app references these four yet — they are here for status badges or email art.
 
 Root files: `favicon.svg` / `favicon-dark.svg` (referenced in `nuxt.config.ts`)
-and `_robots.txt`.
+and `_robots.txt`. `img/` holds only the screenshot placeholders until the
+`local` storage provider writes an upload there.
 
 Fonts are **not** self-hosted here — they come from npm via
 `app/assets/css/fonts/index.css`, which imports the `@fontsource` packages

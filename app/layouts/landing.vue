@@ -191,7 +191,6 @@ async function logout() {
 // Navigation links for landing header
 const navLinks = computed<NavigationMenuItem[]>(() => [
   { label: t('nav.features'), to: '/#features' },
-  { label: t('nav.examples'), to: '/#examples' },
   { label: t('nav.tech'), to: '/#tech' },
 ])
 
@@ -229,12 +228,10 @@ const userMenuItems = computed<DropdownMenuItem[][]>(() => [
 const footerLinks = computed(() => ({
   product: [
     { label: t('nav.features'), to: '/#features' },
-    { label: t('nav.examples'), to: '/#examples' },
     { label: t('nav.techStack'), to: '/#tech' },
   ],
   resources: [
     { label: t('nav.guides'), to: '/guides' },
-    { label: t('nav.examples'), to: '/examples' },
   ],
   company: [
     { label: t('nav.about'), to: '/about' },

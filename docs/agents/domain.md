@@ -22,7 +22,7 @@ This repo (single-context). Note it is a Nuxt 4 app — the code lives in `app/`
 │   ├── 0001-no-querycollection-facade.md
 │   ├── 0002-curated-agent-skills.md
 │   ├── 0003-strict-pnpm-node-modules.md
-│   └── 0004-commit-maizzle-build-output.md
+│   └── 0004-commit-maizzle-build-output.md   (superseded — Maizzle removed)
 ├── app/          ← pages, components, composables, utils, middleware
 ├── server/       ← API routes, db, auth, server utils
 ├── shared/       ← code shared between app/ and server/ (import via `#shared`)

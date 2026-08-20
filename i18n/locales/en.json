@@ -6,26 +6,12 @@
     "tech": "Tech",
     "adminDashboard": "Admin Dashboard",
     "users": "Users",
-    "emailCompose": "Email Compose",
-    "emailDrafts": "Email Drafts",
-    "emailLists": "Email Lists",
-    "emailAnalytics": "Email Analytics",
-    "trash": "Trash",
     "appearance": "Appearance",
     "siteMap": "Site Map",
     "componentCatalog": "Component Catalog",
-    "designTokens": "Design Tokens",
     "guides": "Guides",
     "posts": "Posts",
-    "examples": "Examples",
     "dashboard": "Dashboard",
-    "scoreboard": "Scoreboard",
-    "podcastApp": "Podcast App",
-    "charts": "Charts",
-    "tables": "Tables",
-    "calendar": "Calendar",
-    "maps": "Maps",
-    "email": "Email",
     "features": "Features",
     "techStack": "Tech Stack",
     "product": "Product",
@@ -60,7 +46,6 @@
     "blocks": "Blocks",
     "overview": "Overview",
     "profile": "Profile",
-    "llmOptimizer": "LLM Visibility Optimizer",
     "broadsheetLayout": "Broadsheet layout"
   },
   "common": {
@@ -313,16 +298,11 @@
           "blog": "posts"
         }
       },
-      "email": {
-        "title": "Email & Real-time",
-        "description": "Campaign drafts, lists, and analytics via Resend, plus WebSocket/SSE/polling patterns with auto-negotiation"
-      },
       "theming": {
         "title": "Theming & i18n",
-        "description": "{themes} with FOUC-free switching, {tokens}, and en/es localization ready to extend",
+        "description": "{themes} with FOUC-free switching, and en/es localization ready to extend",
         "links": {
-          "themes": "Seven OKLCH themes",
-          "tokens": "design tokens tooling"
+          "themes": "Seven OKLCH themes"
         }
       }
     },
@@ -470,332 +450,10 @@
       "listView": "List view"
     },
     "toc": "On this page",
-    "examples": {
-      "subtitle": "Example dashboard with tables and widgets",
-      "totalProjects": "Total Projects",
-      "active": "Active",
-      "completed": "Completed",
-      "upcomingEvents": "Upcoming Events",
-      "activityOverview": "Activity Overview",
-      "totalActivity": "Total Activity",
-      "contentStatus": "Content Status",
-      "recentProjects": "Recent Projects",
-      "viewAll": "View all",
-      "openCalendar": "Open calendar",
-      "allDay": "All Day",
-      "noUpcomingEvents": "No upcoming events this week",
-      "componentExamples": "Component Examples",
-      "project": "Project",
-      "status": "Status",
-      "progress": "Progress",
-      "tablesTagline": "Filter, Sort, Paginate",
-      "chartsTagline": "Line, Bar, Donut",
-      "calendarTagline": "FullCalendar + UCalendar",
-      "mapsTagline": "Google Maps Integration",
-      "tablesDemo": {
-        "title": "Table Examples",
-        "description": "Simple and advanced table patterns with Nuxt UI's UTable component.",
-        "simpleTable": {
-          "title": "Simple Table",
-          "description": "Basic table with minimal configuration"
-        },
-        "advancedTable": {
-          "title": "Advanced Table",
-          "description": "Filtering, sorting, and pagination"
-        },
-        "rowSelection": {
-          "title": "Row Selection",
-          "description": "Table with selectable rows for bulk actions"
-        },
-        "filters": {
-          "searchPlaceholder": "Filter projects, owners, tech...",
-          "allStatuses": "All statuses",
-          "allDomains": "All domains",
-          "clear": "Clear Filters"
-        },
-        "columns": {
-          "domain": "Domain",
-          "tech": "Tech Stack",
-          "priority": "Priority",
-          "owner": "Owner",
-          "lastUpdated": "Last Updated"
-        },
-        "status": {
-          "seed": "Seed",
-          "sprout": "Sprout",
-          "evergreen": "Evergreen",
-          "wilted": "Wilted"
-        },
-        "priority": {
-          "low": "Low",
-          "medium": "Medium",
-          "high": "High"
-        },
-        "domains": {
-          "all": "All Domains",
-          "healthcare": "Healthcare",
-          "biopharma": "Biopharma",
-          "insurtech": "Insurtech",
-          "proptech": "PropTech",
-          "nonprofit": "Nonprofit",
-          "other": "Other"
-        },
-        "selectedCount": "{count} selected | {count} selected",
-        "showingResults": "Showing {shown} of {total} results",
-        "rowsPerPage": "Rows per page:",
-        "pageOf": "Page {page} of {total}",
-        "sort": {
-          "sortBy": "Sort by {column}",
-          "sortedAscending": "{column}, sorted ascending",
-          "sortedDescending": "{column}, sorted descending"
-        },
-        "bulk": {
-          "archive": "Archive",
-          "export": "Export",
-          "clearSelection": "Clear selection",
-          "toastTitle": "{action} {count} item | {action} {count} items",
-          "toastDescription": "Selected: {names}"
-        },
-        "aria": {
-          "selectAllRows": "Select all rows",
-          "selectRow": "Select {name}",
-          "rowActions": "Row actions"
-        }
-      }
-    },
-    "llmOptimizer": {
-      "eyebrow": "Lab · LLM Visibility Optimizer",
-      "heroTitle": "How legible is your site to the machines that read it?",
-      "heroLead": "Score any page on the seven signals that decide whether LLMs can find, parse, and trust it — structured data, crawlability, semantic clarity, and more — distilled into a single 0–100 Visibility Score.",
-      "whatGetsMeasured": "What gets measured",
-      "readout": "Visibility Readout",
-      "scannedOn": "Scanned {date}",
-      "categoryBreakdown": "Category breakdown",
-      "weightHint": "Bar width = composite weight · fill = score",
-      "findings": "Findings",
-      "filterAll": "All",
-      "noFindings": "No findings — nothing to fix here.",
-      "noFindingsSeverity": "No {severity} findings — nothing to fix here.",
-      "recommendations": "Recommendations",
-      "pointsGain": "+{points} pts",
-      "codeExample": "Code example",
-      "recentScans": "Recent scans",
-      "trendSubtitle": "Visibility trend · {count} scans",
-      "breadcrumb": "LLM Optimizer",
-      "scanCrumb": "Scan",
-      "savedScanCrumb": "Saved scan",
-      "analyzing": "Analyzing {url}…",
-      "loadingSaved": "Loading saved scan…",
-      "scanErrorTitle": "Couldn’t scan that page",
-      "scanErrorFallback": "Something went wrong while fetching the page. Check the URL and try again.",
-      "notFoundTitle": "Scan not found",
-      "notFoundDesc": "This saved scan doesn’t exist or has expired.",
-      "tryAnother": "Try another URL",
-      "runNew": "Run a new scan",
-      "scanAnother": "Scan another site",
-      "permalink": "Permalink",
-      "form": {
-        "urlLabel": "Site URL",
-        "run": "Run scan",
-        "note": "Enter any public URL to run a live scan, or explore a sample below.",
-        "exploreSample": "Explore a sample"
-      },
-      "severity": {
-        "critical": "Critical",
-        "high": "High",
-        "medium": "Medium",
-        "low": "Low",
-        "info": "Info"
-      },
-      "aiInsight": {
-        "title": "AI insight",
-        "unavailable": "AI insights aren’t configured for this environment.",
-        "prompt": "Generate a narrative analysis of this scorecard.",
-        "generate": "Generate AI insight",
-        "retry": "Retry",
-        "failed": "Couldn’t generate an insight. Try again.",
-        "summary": "Summary",
-        "actionPlan": "Action plan",
-        "moreDetail": "More detail",
-        "industryContext": "Industry context",
-        "technicalDetails": "Technical details"
-      },
-      "progress": {
-        "fetching": "Fetching page…",
-        "rendering": "Rendering (headless)…",
-        "analyzing": "Analyzing signals…",
-        "scoring": "Scoring…",
-        "saving": "Saving…",
-        "done": "Done"
-      },
-      "sites": {
-        "title": "Sites",
-        "subtitle": "Group scans by domain to track a property over time.",
-        "nameLabel": "Name",
-        "namePlaceholder": "My blog",
-        "urlLabel": "Base URL",
-        "add": "Add site",
-        "empty": "No sites yet — add one above.",
-        "scanCount": "{count} scans",
-        "notScanned": "Not scanned",
-        "scanThis": "Scan this site",
-        "deleteTitle": "Delete site?",
-        "deleteDesc": "This removes the saved property. Existing scans are not deleted.",
-        "crumb": "Sites",
-        "notFound": "Site not found",
-        "history": "Scan history",
-        "noScans": "No scans for this site yet.",
-        "formError": "Enter a name and a valid http(s) URL."
-      },
-      "dashboard": {
-        "crumb": "Dashboard",
-        "title": "Visibility Dashboard",
-        "subtitle": "Portfolio analytics across every scan.",
-        "totalScans": "Total Scans",
-        "averageScore": "Average Score",
-        "latestGrade": "Latest Grade",
-        "distribution": "Score Distribution",
-        "distributionSubtitle": "Scans by score band",
-        "topIssues": "Top Issues",
-        "issueCount": "{count} scans",
-        "empty": "No scans yet — run one to populate the dashboard.",
-        "viewAll": "View all scans"
-      },
-      "compare": {
-        "crumb": "Compare",
-        "title": "Competitor Comparison",
-        "subtitle": "Side-by-side analysis of {count} scans.",
-        "run": "Run Comparison",
-        "running": "Scanning…",
-        "runningHint": "Scanning the site and each competitor — this can take a moment.",
-        "competitors": "Competitors",
-        "empty": "No competitors yet — add one below to compare.",
-        "nameLabel": "Name",
-        "namePlaceholder": "Competitor",
-        "urlLabel": "URL",
-        "add": "Add Competitor",
-        "formError": "Enter a name and a valid http(s) URL.",
-        "scoreOverlay": "Score Overlay",
-        "detailedScores": "Detailed Scores",
-        "category": "Category",
-        "composite": "Composite Score",
-        "grade": "Grade",
-        "notScanned": "Not scanned",
-        "deleteTitle": "Remove competitor?",
-        "deleteDesc": "This stops tracking it in this comparison. Existing scans are not deleted."
-      },
-      "inspect": {
-        "crumb": "URL Inspector",
-        "title": "URL Inspector",
-        "subtitle": "Visibility scores for individual pages discovered during scanning.",
-        "run": "Run Inspection",
-        "running": "Crawling…",
-        "runningHint": "Crawling internal links and scoring each page — this can take a moment.",
-        "errorTitle": "Couldn't inspect this site",
-        "error": "The inspection failed. Try again, or check that the site is reachable.",
-        "empty": "Run an inspection to crawl this site's internal pages.",
-        "pagesDiscovered": "Pages Discovered",
-        "avgScore": "Avg Visibility Score",
-        "highestScore": "Highest Score",
-        "lowestScore": "Lowest Score",
-        "sortBy": "Sort by:",
-        "sortScore": "Visibility Score",
-        "sortIssues": "Issue Count",
-        "sortUrl": "URL",
-        "pageLevel": "Page-Level Visibility",
-        "pageLevelHint": "Each page discovered from internal links was analyzed independently across all 7 dimensions.",
-        "pageUrl": "Page URL",
-        "score": "Score",
-        "grade": "Grade",
-        "issues": "Issues"
-      },
-      "brand": {
-        "crumb": "Brand Mention",
-        "title": "Brand Mention Test",
-        "runningTitle": "Running Brand Mention Test…",
-        "subtitle": "Ask each AI platform whether it recognizes your brand.",
-        "run": "Run Test",
-        "running": "Running…",
-        "notConfigured": "No AI provider configured. Add an API key (Anthropic, OpenAI, Google, or xAI) to run the test.",
-        "statusIdle": "Ready",
-        "statusPending": "Pending",
-        "statusRunning": "Querying…",
-        "statusError": "Error",
-        "recognized": "Recognized",
-        "notRecognized": "Not recognized",
-        "sentiment": {
-          "positive": "Positive",
-          "neutral": "Neutral",
-          "negative": "Negative"
-        }
-      },
-      "traffic": {
-        "crumb": "Traffic Intelligence",
-        "title": "Traffic Intelligence",
-        "demoData": "Demo Data",
-        "subtitle": "AI bot activity across all configured properties.",
-        "refresh": "Refresh",
-        "range7": "Last 7 days",
-        "range14": "Last 14 days",
-        "range30": "Last 30 days",
-        "totalInteractions": "Total Agentic Interactions",
-        "acrossProperties": "Across all configured properties",
-        "successRate": "Success Rate",
-        "hitWeighted": "Hit-weighted across all rows",
-        "agenticVsHuman": "Agentic vs Human Traffic",
-        "agenticVsHumanHint": "Portfolio-wide — share of (AI + human) traffic over the selected window.",
-        "aiBot": "AI Bot",
-        "human": "Human",
-        "share": "share",
-        "otherBots": "Other bots",
-        "internal": "Internal",
-        "totalEvents": "Total events",
-        "trend": "Traffic Trend",
-        "agentDistribution": "Agent Type Distribution",
-        "interactionDistribution": "Interaction Distribution",
-        "interactionDistributionHint": "Portfolio-wide breakdown of agentic vs other-bot traffic.",
-        "records": "Traffic Records",
-        "recordsHint": "{count} agentic interactions across all rows — the sum of the Hits column.",
-        "colDomain": "Domain",
-        "colUri": "URI",
-        "colAgent": "Agent",
-        "colMarket": "Market",
-        "colCategory": "Category",
-        "colStatus": "Status",
-        "colHits": "Hits",
-        "colSuccess": "Success %"
-      },
-      "admin": {
-        "crumb": "Admin",
-        "title": "Lab Admin",
-        "subtitle": "Operational stats across every property in the lab.",
-        "totalScans": "Total Scans",
-        "totalSites": "Total Sites",
-        "totalCompetitors": "Total Competitors",
-        "system": "System",
-        "aiProviders": "AI Providers",
-        "renderEngine": "Render Engine",
-        "enabled": "Enabled",
-        "disabled": "Disabled",
-        "none": "None configured",
-        "userManagement": "User Management",
-        "userManagementHint": "Roles, sessions, and accounts are managed in the shared admin suite.",
-        "openUsers": "Open User Management"
-      }
-    },
     "labs": {
       "title": "Labs",
       "subtitle": "AI-assisted apps and experiments built on UXLab.",
       "open": "Open",
-      "llmVo": {
-        "desc": "Score any page’s visibility to the LLMs that read it — structured data, crawlability, rendering, and more."
-      },
-      "scoreboard": {
-        "desc": "A live event judging and scoreboard app with token-based judges and a public board."
-      },
-      "podcasts": {
-        "desc": "A podcast player demo — episodes, playback progress, and subscriptions."
-      },
       "broadsheet": {
         "desc": "Live reference for the technical broadsheet document layout — masthead, rail, hairline panels."
       }
@@ -971,7 +629,6 @@
     "actions": {
       "copyLink": "Copy link",
       "emailPage": "Email this page",
-      "shareViaEmail": "Share via Email",
       "printPage": "Print this page",
       "editPage": "Edit this page",
       "subjectPrefix": "Check out",

@@ -17,15 +17,13 @@ Code that:
 | `basic.ts`                  | Basic/example utility functions                  |
 | `env.ts`                    | Typed environment helpers                        |
 | `try-parse-env.ts`          | Safe env parsing (no throw on missing keys)      |
-| `jira-markup-serializer.ts` | Serialize content to Jira markup                 |
-| `style-dictionary/`         | Standalone Style Dictionary token-build example  |
 
 ## Testing
 
 Tests live in `test/unit/` and run without a Nuxt environment:
 
 ```bash
-pnpm run test:unit
+pnpm exec vitest run --project unit
 ```
 
 Coverage includes `lib/**/*.ts` (see `vitest.config.ts`).

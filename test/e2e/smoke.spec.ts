@@ -46,7 +46,7 @@ test.describe('smoke', () => {
   })
 
   test('every page archetype renders exactly one h1', async ({ page }) => {
-    for (const path of ['/', '/guides', '/guides/architecture', '/posts', '/tech', '/examples', '/login']) {
+    for (const path of ['/', '/guides', '/guides/architecture', '/posts', '/tech', '/login']) {
       await page.goto(path)
       await page.waitForLoadState('networkidle')
       await expect(page.locator('h1'), `expected exactly one h1 on ${path}`).toHaveCount(1)

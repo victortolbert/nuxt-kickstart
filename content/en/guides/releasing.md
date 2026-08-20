@@ -31,10 +31,13 @@ main (stable, tagged releases)
 1. Make sure `develop` is clean and ready:
 
 ```bash
-pnpm run test
+pnpm exec vitest run
 pnpm run typecheck
 pnpm run lint
 ```
+
+`pnpm exec vitest run`, not `pnpm run test` — the latter is bare `vitest`, which
+watches and never exits, so it would stall the release.
 
 1. Merge `develop` into `main`:
 

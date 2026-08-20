@@ -5,9 +5,6 @@ Auth** tables (`user`, `session`, `account`, `verification`) and their
 relations. This is the schema `drizzle-kit` migrates (`drizzle.config.ts` →
 `schema: './server/db/schema.ts'`).
 
-Not to be confused with `server/podcasts-db/`, which is the **podcast example
-app's** isolated, deletable database.
-
 ## Files
 
 | File        | Purpose                                              |

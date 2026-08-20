@@ -28,12 +28,10 @@
 const { t } = useI18n()
 const { resolveIcon } = useAppearance()
 
-const labs = [
-  { slug: 'llm-vo', icon: 'robot', to: '/labs/llm-vo', titleKey: 'nav.llmOptimizer', descKey: 'pages.labs.llmVo.desc' },
-  { slug: 'scoreboard', icon: 'trophy', to: '/labs/scoreboard', titleKey: 'nav.scoreboard', descKey: 'pages.labs.scoreboard.desc' },
-  { slug: 'podcasts', icon: 'microphone', to: '/labs/podcasts', titleKey: 'nav.podcastApp', descKey: 'pages.labs.podcasts.desc' },
+// Wrapped in computed() so the icons follow the user's icon-collection setting.
+const labs = computed(() => [
   { slug: 'broadsheet', icon: 'news', to: '/labs/broadsheet', titleKey: 'nav.broadsheetLayout', descKey: 'pages.labs.broadsheet.desc' },
-]
+])
 
 useSeoMeta({
   title: () => t('pages.labs.title'),

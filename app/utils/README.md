@@ -11,12 +11,9 @@ Pure utility functions, auto-imported globally.
 | `garden-status.ts`        | Source of truth for content lifecycle statuses (seed/sprout/evergreen/wilted): color, icon, CSS-var per status — used by badges, filters, charts |
 | `localized-collection.ts` | Locale-preferred content entries + URLs (pure)   |
 | `session-identity.ts`     | Awaitable Session Identity for route middleware  |
-| `map-styles.ts`           | Google Maps style definitions                    |
 | `navigate.ts`             | Navigation helpers                               |
 | `ui-locale.ts`            | Maps app locales to Nuxt UI locale messages      |
 | `tech-taxonomy.ts`        | `TECH_BUCKETS` + `techBucket()` — groups registry entries |
-| `write-request.ts`        | `WRITE_TIMEOUT_MS` + `isTimeoutError()` for write calls |
-| `llm-optimizer-grade.ts`  | Grade/severity display metadata for `/labs/llm-vo` |
 
 ## Tech Config
 

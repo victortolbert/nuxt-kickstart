@@ -87,17 +87,11 @@ const services = computed(() => [
     },
   },
   {
-    icon: resolveIcon('mailForward'),
-    title: t('landing.features.email.title'),
-    description: t('landing.features.email.description'),
-  },
-  {
     icon: resolveIcon('palette'),
     title: t('landing.features.theming.title'),
     keypath: 'landing.features.theming.description',
     links: {
       themes: { to: '/appearance', label: t('landing.features.theming.links.themes') },
-      tokens: { to: '/examples/design-tokens', label: t('landing.features.theming.links.tokens') },
     },
   },
 ])

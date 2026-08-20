@@ -69,13 +69,17 @@ nombre y de la identidad del autor, pero no puede escribir tu proyecto por ti.
 
 ## Qué Eliminar
 
-Todo lo opcional está diseñado para poder quitarse:
+Esta plantilla es deliberadamente pequeña, así que queda poco por quitar. Lo que
+hay:
 
-- **Apps de ejemplo** (podcast, marcador, broadsheet, optimizador LLM) — viven en `app/pages/labs/`, no en `app/pages/examples/`. Elimina las páginas `app/pages/labs/{podcasts,scoreboard,llm-vo}` y `app/pages/labs/broadsheet.vue`, sus componentes (`app/components/{podcasts,scoreboard,llm-optimizer}/`), los esquemas `examples/`, sus carpetas de contenido y las rutas `server/api/{podcasts,scoreboard,llm-optimizer}`. Elimina también las reglas de redirección `/examples/scoreboard-mvp` y `/examples/podcast-app` en `nuxt.config.ts`, que de lo contrario apuntarían a páginas eliminadas. La app de podcast tiene su propia base de datos aislada en `server/podcasts-db/` — elimina esa carpeta también (la base de datos principal y de autenticación en `server/db/` no se ve afectada)
-- **Demos de patrones** — `app/pages/examples/` es aparte: calendario, gráficos, mapas, tablas y el estudio de tokens de diseño. Eliminarlo no afecta a las apps de ejemplo anteriores
-- **Subsistema de correo** — elimina los esquemas `systems/email`, `content/email-*/`, `server/api/email/` y las páginas de administración de correo
-- **Herramienta de tokens de diseño** — elimina `app/components/tokens/`, `lib/style-dictionary/` y `server/api/tokens/`
+- **El lab broadsheet** — elimina `app/pages/labs/`, su entrada en `content/navigation/03.labs.yml` y la excepción `/labs/broadsheet` en `app/middleware/app-auth.global.ts`
+- **El registro de tecnología** — elimina `content/tech/`, `app/components/tech-badge.vue`, `app/utils/tech-config.ts` y `app/pages/tech/`. Lo referencian el layout por defecto y tres guías, así que revisa con grep antes de hacer commit
 - **Un tema** — elimina su archivo CSS en `app/assets/css/themes/`, quítalo de `use-theme.ts` y de `shared/types/theme.ts`
+- **Un idioma** — elimina `i18n/locales/<código>.json` y su carpeta `content/<código>/`, y quítalo del bloque `i18n` en `nuxt.config.ts`
+
+**No elimines `server/utils/email.ts` ni `email-templates.ts`.** La autenticación
+por contraseña está desactivada, así que el enlace mágico y el OTP dependen de
+ellos: quitarlos haría imposible iniciar sesión.
 
 Después de cualquier eliminación, ejecuta la verificación: `pnpm run lint:fix && pnpm run typecheck && pnpm exec vitest run`.
 

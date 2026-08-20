@@ -20,15 +20,6 @@
         <u-icon :name="resolveIcon('mail')" class="size-5"></u-icon>
       </nuxt-link>
     </u-tooltip>
-    <u-tooltip :text="t('content.actions.shareViaEmail')">
-      <nuxt-link
-        :to="shareViaEmailHref"
-        class="flex size-10 items-center justify-center rounded-md text-[var(--ui-text-muted)] transition-colors hover:bg-[var(--ui-bg-elevated)] hover:text-[var(--ui-text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary-500)]"
-        :aria-label="t('content.actions.shareViaEmail')"
-      >
-        <u-icon :name="resolveIcon('send')" class="size-5"></u-icon>
-      </nuxt-link>
-    </u-tooltip>
     <u-tooltip :text="t('content.actions.printPage')">
       <button
         type="button"
@@ -69,15 +60,6 @@ const emailHref = computed(() => {
     `${props.description ? `${props.description}\n\n` : ''}${pageUrl.value}`,
   )
   return `mailto:?subject=${subject}&body=${body}`
-})
-
-const shareViaEmailHref = computed(() => {
-  if (!pageUrl.value)
-    return '/app/admin/email/compose'
-  const subject = encodeURIComponent(`${subjectPrefix.value}: ${props.title}`)
-  const bodyText = `${props.description || ''}\n\n${pageUrl.value}`
-  const body = encodeURIComponent(bodyText)
-  return `/app/admin/email/compose?subject=${subject}&body=${body}`
 })
 
 async function copyLink() {

@@ -235,16 +235,6 @@ const appSections = computed<AppSection[]>(() => [
     ],
   },
   {
-    label: 'Examples',
-    icon: resolveIcon('apps'),
-    pages: [
-      { label: 'Dashboard', to: '/examples', icon: resolveIcon('layoutDashboard'), description: 'Example dashboard hub' },
-      { label: 'Tables', to: '/examples/tables', icon: resolveIcon('table'), description: 'Table patterns and filtering' },
-      { label: 'Calendar', to: '/examples/calendar', icon: resolveIcon('calendar'), description: 'FullCalendar integration' },
-      { label: 'Maps', to: '/examples/maps', icon: resolveIcon('map'), description: 'Google Maps integration' },
-    ],
-  },
-  {
     label: 'System',
     icon: resolveIcon('adjustments'),
     pages: [

@@ -16,22 +16,7 @@ items:
     icon: layoutDashboard
     path: /labs
 
-  - slug: design-tokens
-    label: Design Tokens
-    icon: palette
-    path: /examples/design-tokens
-
-  - slug: podcast-app
-    label: Podcast App
-    icon: microphone
-    path: /labs/podcasts
-
-  - slug: scoreboard
-    label: Scoreboard
-    icon: trophy
-    path: /labs/scoreboard
-
-  - slug: llm-optimizer
-    label: LLM Optimizer
-    icon: robot
-    path: /labs/llm-vo
+  - slug: broadsheet
+    label: Broadsheet Layout
+    icon: news
+    path: /labs/broadsheet

@@ -184,7 +184,7 @@ const categories = computed<ComponentCategory[]>(() => [
     label: 'Data Display',
     icon: resolveIcon('table'),
     items: [
-      { name: 'UTable', description: 'Data table', to: '/examples/tables' },
+      { name: 'UTable', description: 'Data table' },
       { name: 'UBadge', description: 'Status badge' },
       { name: 'UAvatar', description: 'User avatar' },
       { name: 'UIcon', description: 'Icon display' },

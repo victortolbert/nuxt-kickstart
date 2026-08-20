@@ -9,7 +9,7 @@ declarations at the moment.
 ## Where Types Live
 
 - **Auth types**: inferred from Better Auth in `server/auth.ts`; the client uses `app/lib/auth-client.ts`. There is no `#auth-utils` module augmentation.
-- **Database types**: inferred from the Drizzle schemas in `server/db/` (core/auth) and `server/podcasts-db/` (podcast example).
+- **Database types**: inferred from the Drizzle schemas in `server/db/`.
 - **Shared types** (client + server): `shared/types/`, imported via `#shared/types/*`.
 
 Add a `*.d.ts` here only for ambient types that must be visible exclusively to
