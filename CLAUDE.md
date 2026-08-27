@@ -92,9 +92,14 @@ Localized content lives under per-locale folders (`content/en/`, `content/es/`).
 
 ## Nuxt UI v4 (CRITICAL)
 
-This project uses **Nuxt UI v4** (`@nuxt/ui` 4.x) with breaking changes from v2. **Always consult `nuxt-ui-remote` MCP before writing Nuxt UI code.**
+This project uses **Nuxt UI v4** (`@nuxt/ui` 4.x) with breaking changes from v2. **Always confirm a component's v4 API before writing Nuxt UI code** — v2 patterns break silently rather than erroring.
 
-Call `mcp__nuxt-ui-remote__get-component({ componentName: "X", sections: ["usage", "api"] })` before using any `U*` component.
+Two repo-local sources, in order:
+
+1. The **`nuxt-ui` skill** (`.claude/skills/nuxt-ui/`) — component tables, composables, theming, and layout recipes.
+2. The **generated theme file** for the exact installed version — `.nuxt/ui/<component>.ts` (e.g. `.nuxt/ui/modal.ts`), which lists that component's real slots and variants. Run `pnpm nuxi prepare` if `.nuxt/` is missing.
+
+Prefer the generated file when the two disagree: it is produced from the installed `@nuxt/ui` and cannot drift.
 
 Key changes vs. legacy v2 patterns:
 

@@ -71,6 +71,13 @@ Create visual rhythm through varied spacing—not the same padding everywhere. E
 **DON'T**: Use rounded rectangles with generic drop shadows—safe, forgettable, could be any AI output
 **DON'T**: Use modals unless there's truly no better alternative—modals are lazy
 
+### Surfaces & Icons
+→ *Consult [surfaces & icons reference](reference/surfaces-and-icons.md) for concentric radius, optical alignment, shadow-as-border, image outlines, and exact icon-animation/stroke-weight values.*
+
+**DO**: Calculate nested radii concentrically (`outer = inner + padding`) and adjust icon-in-button padding optically
+**DON'T**: Use the same border radius on closely nested parent/child surfaces
+**DON'T**: Tint image outlines toward the surface color — pure black/white at 10% opacity only
+
 ### Motion
 → *Consult [motion reference](reference/motion-design.md) for timing, easing, and reduced motion.*
 

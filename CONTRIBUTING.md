@@ -85,7 +85,7 @@ runs once when it detects a non-TTY.
 - **Imports**: `#shared` (not `~/shared/`), `#server` for server code.
 - **No hardcoded colors** — CSS variables only (`--ui-*`, `--color-*`); every change must work across all themes and light/dark.
 - **No hardcoded icons** — use `resolveIcon('semanticName')` from `useAppearance()` (see `CLAUDE.md` → Icons).
-- **Nuxt UI v4** — consult the `nuxt-ui-remote` MCP before using a `U*` component; v2 patterns break silently.
+- **Nuxt UI v4** — confirm a `U*` component's API before using it (the `nuxt-ui` skill, or `.nuxt/ui/<component>.ts` for the installed version's real slots); v2 patterns break silently.
 - **i18n** — user-visible strings go through `t()`; keep `en`/`es` at parity.
 - **Zod** at boundaries (API input, content frontmatter); descriptive errors, no silent `return null`.
 - **TDD** where it fits: failing test → implement → verify. Test files mirror sources (`shared/utils/case.ts` → `test/unit/case.test.ts`).

@@ -50,7 +50,7 @@ test/
 1. **Package manager**: pnpm only (not npm/yarn/bun)
 2. **File naming**: kebab-case everywhere (enforced by ESLint)
 3. **Imports**: `#shared` for shared/, not `~/shared/`
-4. **Nuxt UI v4**: Always call `mcp__nuxt-ui-remote__get-component` before using any `U*` component — v2 patterns break silently
+4. **Nuxt UI v4**: Confirm any `U*` component's API before using it — the `nuxt-ui` skill, or `.nuxt/ui/<component>.ts` for the installed version's real slots; v2 patterns break silently
 5. **No hardcoded colors**: Use CSS variables (`--ui-*`, `--color-*`)
 6. **No hardcoded icons**: Use `resolveIcon('semanticName')` from `useAppearance()` — never literal `i-tabler-*` in app UI (see CLAUDE.md Icons for the exempt list); `resolveIcon` throws on unknown names
 7. **Error handling**: Zod for validation, descriptive errors, no silent `return null`
