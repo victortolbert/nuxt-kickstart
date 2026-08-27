@@ -45,6 +45,20 @@ test.describe('smoke', () => {
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'nord')
   })
 
+  // Regression guard for #21. @nuxt/icon 2.5.0 set Iconify's fetch to
+  // `useRequestFetch().native`, which is undefined on the server (Nitro's
+  // `event.$fetch` is a plain function), so every SSR icon load aborted and the
+  // server-rendered HTML shipped without icon CSS. Assert on the CSS mask data,
+  // NOT on `<svg>` — @nuxt/icon runs in CSS mode here and legitimately never
+  // emits inline SVG, so an `<svg>` check goes red on healthy pages.
+  test('server-rendered html ships icon css without hitting the client', async ({ request }) => {
+    const html = await (await request.get('/')).text()
+    expect(html, 'expected SSR html to inline icon mask data').toContain('data:image/svg+xml')
+    // tabler:menu-2 — the hamburger glyph's path data, proving a real icon
+    // resolved from the local collection during SSR rather than a placeholder
+    expect(html.replace(/%20/g, ' ')).toContain('M4 6h16M4 12h16M4 18h16')
+  })
+
   test('every page archetype renders exactly one h1', async ({ page }) => {
     for (const path of ['/', '/guides', '/guides/architecture', '/posts', '/tech', '/login']) {
       await page.goto(path)

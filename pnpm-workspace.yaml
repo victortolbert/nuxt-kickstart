@@ -9,6 +9,17 @@ strictPeerDependencies: false
 
 overrides:
   serialize-javascript: ^7.0.5
+  # @nuxt/icon arrives transitively via @nuxt/ui (which asks for ^2.3.1) and
+  # resolved to 2.5.0, whose Nuxt plugin does `_api.setFetch($fetch.native)`.
+  # On the server `useRequestFetch()` returns Nitro's `event.$fetch`, a plain
+  # arrow function with no `.native`, so Iconify's fetch was set to undefined
+  # and every SSR/prerender icon load aborted (424) before making a request —
+  # ~652 `[Icon] failed to load icon` warnings per build. 2.5.1 falls back to
+  # `globalThis.$fetch.native` (Nitro's localFetch), which resolves the
+  # relative /api/_nuxt_icon URL in-process against the local collections.
+  # Pinned here rather than as a direct dependency so every transitive copy
+  # gets the fix. Drop once @nuxt/ui requires >=2.5.1 itself. See issue #21.
+  '@nuxt/icon': ^2.5.1
 
 allowBuilds:
   '@google/genai': true
