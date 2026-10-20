@@ -8,7 +8,7 @@ autoInstallPeers: true
 strictPeerDependencies: false
 
 overrides:
-  serialize-javascript: ^7.0.5
+  serialize-javascript: ^7.1.2
   # @nuxt/icon arrives transitively via @nuxt/ui (which asks for ^2.3.1) and
   # resolved to 2.5.0, whose Nuxt plugin does `_api.setFetch($fetch.native)`.
   # On the server `useRequestFetch()` returns Nitro's `event.$fetch`, a plain
