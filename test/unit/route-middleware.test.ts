@@ -202,6 +202,18 @@ describe('app-auth global middleware', () => {
     expect(result).toBeUndefined()
   })
 
+  it('guards a protected prefix behind a non-default locale (/es/settings)', async () => {
+    $fetch.mockResolvedValue(null)
+    const mw = await loadMiddleware('../../app/middleware/app-auth.global')
+
+    await mw(route('/es/settings'))
+
+    expect(navigateTo).toHaveBeenCalledWith({
+      path: '/login',
+      query: { redirect: '/es/settings' },
+    })
+  })
+
   it('lets authenticated users reach protected routes', async () => {
     $fetch.mockResolvedValue({ user: { id: '1' } })
     const mw = await loadMiddleware('../../app/middleware/app-auth.global')

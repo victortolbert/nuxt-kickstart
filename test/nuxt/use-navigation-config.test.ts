@@ -1,8 +1,7 @@
-import type { NavItem } from '../../shared/types/navigation'
 import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { itemVisible, sectionOf } from '../../app/composables/use-navigation-config'
+import { sectionOf } from '../../app/composables/use-navigation-config'
 
 // Behavioral tests for the pure placement rule, plus light structural checks
 // on the composable file. Full reactive integration is covered by the e2e
@@ -30,38 +29,9 @@ describe('useNavigationConfig', () => {
     })
   })
 
-  describe('itemVisible — item visibility rule', () => {
-    const guest = { loggedIn: false, isAdmin: false, isDev: false }
-    const member = { loggedIn: true, isAdmin: false, isDev: false }
-    const admin = { loggedIn: true, isAdmin: true, isDev: false }
-    const item = (over: Partial<NavItem> = {}): NavItem => ({ slug: 's', label: 'L', ...over })
-
-    it('shows items with no visibility to everyone', () => {
-      expect(itemVisible(item(), guest)).toBe(true)
-      expect(itemVisible(item({ visibility: 'public' }), guest)).toBe(true)
-    })
-
-    it('hides internal items from guests but shows them to logged-in users', () => {
-      expect(itemVisible(item({ visibility: 'internal' }), guest)).toBe(false)
-      expect(itemVisible(item({ visibility: 'internal' }), member)).toBe(true)
-      expect(itemVisible(item({ visibility: 'internal' }), admin)).toBe(true)
-    })
-
-    it('hides private items from everyone except admins', () => {
-      expect(itemVisible(item({ visibility: 'private' }), guest)).toBe(false)
-      expect(itemVisible(item({ visibility: 'private' }), member)).toBe(false)
-      expect(itemVisible(item({ visibility: 'private' }), admin)).toBe(true)
-    })
-
-    it('always hides hidden items, even for admins', () => {
-      expect(itemVisible(item({ hidden: true }), admin)).toBe(false)
-    })
-
-    it('shows devOnly items only in dev', () => {
-      expect(itemVisible(item({ devOnly: true }), guest)).toBe(false)
-      expect(itemVisible(item({ devOnly: true }), { ...guest, isDev: true })).toBe(true)
-    })
-  })
+  // The item and group visibility rules moved to
+  // shared/utils/navigation-visibility.ts and are covered, per tier, in
+  // test/unit/navigation-visibility.test.ts.
 
   describe('file structure', () => {
     const content = readFileSync(COMPOSABLE_PATH, 'utf-8')
@@ -89,6 +59,11 @@ describe('useNavigationConfig', () => {
     it('shares one visibility predicate between sidebar, palette, and isGroupVisible', () => {
       expect(content).toContain('function groupVisible')
       expect(content).toContain('return group ? groupVisible(group) : false')
+    })
+
+    it('reads the shared navigation rules rather than its own copy', () => {
+      expect(content).toContain('#shared/utils/navigation-visibility')
+      expect(content).not.toContain('function itemVisible')
     })
 
     it('resolves icons through the Appearance seam', () => {

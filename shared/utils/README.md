@@ -11,6 +11,9 @@ also importable via `#shared/utils/*`.
 | `glossary.ts`            | Acronym detection + term lookup               |
 | `abilities.ts`           | `nuxt-authorization` ability definitions      |
 | `content-source.ts`      | Content source/path helpers                   |
+| `content-visibility.ts`  | Visibility rules: `canViewContent`, wilted, review gate, sitemap entry |
+| `navigation-visibility.ts` | Navigation rules over the same viewer       |
+| `protected-paths.ts`     | Gated routes: middleware, sitemap, robots     |
 
 ## Case Utilities
 

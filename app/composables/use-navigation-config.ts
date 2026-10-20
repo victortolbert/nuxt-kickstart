@@ -1,6 +1,7 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 import type { NavGroup, NavItem, NavSection } from '~~/shared/types/navigation'
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
+import { canViewNavGroup, filterNavItems } from '#shared/utils/navigation-visibility'
 
 /**
  * The sidebar section a group renders in. Pure and exported so the placement
@@ -12,31 +13,6 @@ export function sectionOf(group: Pick<NavGroup, 'section'>): NavSection {
   return group.section === 'footer' ? 'footer' : 'main'
 }
 
-/** Viewer access context for item-visibility decisions. */
-export interface NavItemAccess {
-  loggedIn: boolean
-  isAdmin: boolean
-  isDev: boolean
-}
-
-/**
- * Whether a nav item should render for the current viewer. Pure and exported so
- * the rule is testable through its interface. Mirrors useContentAccess: an
- * `internal` item needs login, a `private` item needs admin; omitted visibility
- * is public. `hidden` always wins; `devOnly` items only show in dev.
- */
-export function itemVisible(item: NavItem, access: NavItemAccess): boolean {
-  if (item.hidden)
-    return false
-  if (item.devOnly && !access.isDev)
-    return false
-  if (item.visibility === 'internal' && !access.loggedIn)
-    return false
-  if (item.visibility === 'private' && !access.isAdmin)
-    return false
-  return true
-}
-
 /**
  * Composable to load and process navigation configuration from YAML files
  *
@@ -44,8 +20,15 @@ export function itemVisible(item: NavItem, access: NavItemAccess): boolean {
  * Each file defines a group with its items, visibility, and ordering
  */
 export function useNavigationConfig() {
-  const { loggedIn, userRole } = useSessionState()
-  const isDev = import.meta.dev
+  const { loggedIn, userRole, isAdmin } = useSessionState()
+  const environment = { isDev: import.meta.dev }
+
+  /**
+   * The session reduced to the descriptor the visibility rules take — the same
+   * shape `getRequestViewer()` builds for `/api/navigation`, so both passes
+   * ask the shared rules the identical question.
+   */
+  const viewer = computed(() => ({ loggedIn: loggedIn.value, isAdmin: isAdmin.value }))
 
   // Use appearance composable for dynamic icon resolution
   // eslint-disable-next-line ts/ban-ts-comment
@@ -85,52 +68,42 @@ export function useNavigationConfig() {
     return locale.value === 'en' ? path : `/${locale.value}${path}`
   }
 
-  // Fetch navigation config from API
+  // Fetch navigation config from API. The response is already filtered for
+  // the requesting session — this is what the browser is *allowed* to know,
+  // not the whole tree.
   // eslint-disable-next-line ts/ban-ts-comment
   // @ts-ignore - useFetch is auto-imported by Nuxt
-  const { data: navGroups, status } = useFetch<NavGroup[]>('/api/navigation', {
+  const { data: navGroups, status, refresh } = useFetch<NavGroup[]>('/api/navigation', {
     key: 'navigation-config',
     default: (): NavGroup[] => [],
+  })
+
+  /**
+   * A session-scoped response stops being right the moment the tier changes,
+   * and signing in or out is a client-side navigation — no reload refetches
+   * it. The client filter can only remove groups, never restore ones the
+   * server withheld, so refetch. Keyed on the tier rather than the session
+   * object so a token refresh does not refetch.
+   */
+  const viewerTier = computed(() => (viewer.value.isAdmin ? 'owner' : viewer.value.loggedIn ? 'member' : 'visitor'))
+  watch(viewerTier, () => {
+    refresh()
   })
 
   /**
    * Filter items based on visibility rules (recursive for nested children)
    */
   function filterItems(items: NavItem[]): NavItem[] {
-    const access: NavItemAccess = {
-      loggedIn: loggedIn.value,
-      isAdmin: userRole.value === 'admin',
-      isDev,
-    }
-    return items
-      .filter(item => itemVisible(item, access))
-      .map((item) => {
-        if (item.children) {
-          return { ...item, children: filterItems(item.children) }
-        }
-        return item
-      })
+    return filterNavItems(items, viewer.value, environment)
   }
 
   /**
-   * Single visibility predicate for a group — the one place auth/role/hidden
-   * rules live, so the sidebar, palette, and `isGroupVisible(id)` can never
-   * disagree about whether a group should show.
+   * Single visibility predicate for a group, shared with `/api/navigation`
+   * through `canViewNavGroup`, so the sidebar, palette, `isGroupVisible(id)`
+   * and the server can never disagree about whether a group should show.
    */
   function groupVisible(group: NavGroup): boolean {
-    // Hidden groups never show
-    if (group.hidden)
-      return false
-    // Non-public groups require login
-    if (!loggedIn.value && group.public === false)
-      return false
-    // Auth-required groups require login
-    if (group.requiresAuth && !loggedIn.value)
-      return false
-    // Role-restricted groups require the matching role
-    if (group.requiresRole && userRole.value !== group.requiresRole)
-      return false
-    return true
+    return canViewNavGroup(group, viewer.value)
   }
 
   /**

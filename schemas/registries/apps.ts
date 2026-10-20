@@ -11,7 +11,9 @@ export const apps = defineCollection({
     include: 'en/apps/**/*.md',
     prefix: '/apps',
   },
-  schema: base.extend({
+  // No route renders an app on its own (they are read by /blocks pages), so
+  // the collection stays out of the sitemap: listing one would be a 404.
+  schema: base.omit({ sitemap: true }).extend({
     kind: z.literal('app').default('app'),
     slug: z.string(),
     vendor,

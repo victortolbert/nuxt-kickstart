@@ -1,4 +1,5 @@
 import type { H3Event } from 'h3'
+import type { VisibilityViewer } from '#shared/utils/content-visibility'
 import { auth } from '#server/auth'
 
 /**
@@ -67,4 +68,26 @@ export async function requireUserSession(event: H3Event): Promise<UserSession> {
   }
 
   return result as UserSession
+}
+
+/**
+ * The request's session, reduced to the descriptor the visibility rules take
+ * (`#shared/utils/content-visibility`, `#shared/utils/navigation-visibility`)
+ * — the same shape the client builds from `useSessionState()`, so a server
+ * route and a composable ask the rules the identical question.
+ *
+ * A failed lookup (locked database, network fault) reads as a visitor: it must
+ * deny rather than grant. It is logged, because otherwise a signed-in person
+ * silently seeing less than they should is the only symptom.
+ */
+export async function getRequestViewer(event: H3Event): Promise<VisibilityViewer> {
+  const { user } = await getUserSession(event).catch((error): { user: null } => {
+    console.error('[session] lookup failed; treating this request as a visitor:', error)
+    return { user: null }
+  })
+
+  if (!user)
+    return { loggedIn: false, isAdmin: false }
+
+  return { loggedIn: true, isAdmin: user.role === 'admin' }
 }

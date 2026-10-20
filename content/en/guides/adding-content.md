@@ -73,14 +73,17 @@ Dev mode (`?dev=true`) bypasses visibility checks so you can preview everything 
 
 ### How visibility is enforced — and its limits
 
-Visibility is applied in three independent layers:
+Every layer calls the same rules, `canViewContent` in `shared/utils/content-visibility.ts`:
 
 - **Listings** — `useVisibilityFilter` drops entries a viewer can't access from index pages (e.g. `/guides`, `/blocks`).
 - **Detail pages** — `useContentAccess` guards each content route: `internal` redirects guests to `/login`; `private` returns a 404 for non-admins.
-- **Navigation** — set `visibility` on the matching item in `content/navigation/*.yml` so the sidebar and command palette hide links a viewer can't follow. (This is declarative — keep it in sync with the content's `visibility`.)
+- **Navigation** — set `visibility` on the matching item in `content/navigation/*.yml` so the sidebar and command palette hide links a viewer can't follow. `/api/navigation` filters on the server, so a visitor's browser never receives the hidden links. (This is declarative — keep it in sync with the content's `visibility`.)
+- **Sitemap** — only effectively public documents are listed.
+
+A `public` page with `status: wilted` is treated as `internal`: it leaves a visitor's listings and the sitemap but stays at its URL for signed-in readers. To make a collection's `public` pages wait for a review, add its path prefix to `REVIEW_GATED_PREFIXES`; a page there is held as `internal` until it carries `reviewed: YYYY-MM-DD`.
 
 ::warning
-These layers control the **UI and navigation experience** — they keep non-public content out of lists, pages, and menus, which is the right default for a content site. They are **not** a hard confidentiality boundary. On client-side navigation the content body is fetched *before* the page guard redirects, and Nuxt Content's query API isn't auth-gated on its own. For genuinely secret material, enforce access on the server (a custom server route that checks the session before returning content) or simply don't build it into the shipped content database.
+These layers control the **UI and navigation experience** — they keep non-public content out of lists, pages, and menus, which is the right default for a content site. They are **not** a hard confidentiality boundary. On client-side navigation the content body is fetched *before* the page guard redirects, and Nuxt Content's query API isn't auth-gated on its own — a production build serves every row of every collection in `/__nuxt_content/<collection>/sql_dump.txt`. For genuinely secret material, enforce access on the server (a custom server route that checks the session before returning content) or simply don't build it into the shipped content database.
 ::
 
 ## Collection-Specific Fields

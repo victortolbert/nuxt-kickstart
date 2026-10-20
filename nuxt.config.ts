@@ -1,6 +1,8 @@
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import preflightSecurityHeaders from '@victortolbert/preflight/security-headers'
+import { contentSitemapEntry } from './shared/utils/content-visibility'
+import { noindexRouteRules, sitemapExcludePatterns } from './shared/utils/protected-paths'
 
 // Minimal local shapes for Rollup's warning handler — `rollup` isn't a hoisted
 // direct dependency, so we avoid importing its types.
@@ -200,6 +202,10 @@ export default defineNuxtConfig({
     // reads any more — `routeRules` is applied by Nitro on every preset, so the
     // policy now survives a change of host. See ADR-0012 in the Preflight repo.
     ...preflightSecurityHeaders,
+    // Gated and sign-in routes carry `robots: false`; the public exceptions
+    // inside a gated prefix (/labs/broadsheet) are re-opened. One list, three
+    // surfaces — middleware, sitemap, these rules: shared/utils/protected-paths.ts.
+    ...noindexRouteRules(),
     // NOTE: ISR/SWR caching was evaluated and is intentionally NOT used here.
     // Two blockers: (1) content routes (/guides, /posts, /blocks, /tech) render
     // per-session via the visibility filter / access checks, so a shared cache
@@ -261,6 +267,20 @@ export default defineNuxtConfig({
   },
 
   hooks: {
+    // The sitemap is a surface of the visibility rules too: a document that is
+    // not effectively public (internal, private, wilted, or held by the review
+    // gate) gets `sitemap: false` before @nuxtjs/sitemap reads it, and a public
+    // one is listed at the route that renders it. The hook sees frontmatter as
+    // written, before Zod defaults, so an unset `visibility` is read from the
+    // collection's JSON-schema default — the value the row will hold.
+    // Nuxt Content caches parses in `.data/content/contents.sqlite`; delete it
+    // to see a change to this hook.
+    'content:file:afterParse': (ctx) => {
+      const doc = ctx.content as { visibility?: string, path?: string, reviewed?: string | null, status?: string | null, sitemap?: unknown }
+      const schema = ctx.collection.extendedSchema as { definitions?: { __SCHEMA__?: { properties?: { visibility?: { default?: string } } } } }
+      const entry = contentSitemapEntry(doc, schema.definitions?.__SCHEMA__?.properties?.visibility?.default)
+      doc.sitemap = entry && { ...(typeof doc.sitemap === 'object' ? doc.sitemap : {}), ...entry }
+    },
     // Several transform-only plugins (@tailwindcss/vite, nuxt:vue-async-context,
     // nuxt:module-preload-polyfill, …) don't return a sourcemap, so Rollup logs a
     // SOURCEMAP_BROKEN warning per processed file. Output sourcemaps are disabled,
@@ -405,8 +425,12 @@ export default defineNuxtConfig({
   sitemap: {
     // Sitemaps generated at build time only
     zeroRuntime: true,
-    // Automatically exclude pages with noindex robots meta
-    // Non-public content (private/internal) gets noindex via server plugin
+    // Gated app routes, plus their locale forms (/es/settings), which the
+    // unprefixed `robots: false` route rules alone would miss.
+    exclude: sitemapExcludePatterns(),
+    // Content URLs come from the collections that declare `sitemap` on their
+    // schema (every one built on schemas/shared/base.ts); which documents make
+    // it is decided in the `content:file:afterParse` hook above.
     discoverImages: false, // Disable image discovery for faster builds
   },
 

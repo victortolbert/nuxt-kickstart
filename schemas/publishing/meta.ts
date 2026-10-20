@@ -8,7 +8,9 @@ const metaKind = z.enum(['index', 'lens', 'portal', 'landing', 'other']).default
 export const meta = defineCollection({
   type: 'page',
   source: createCollectionSource('_meta/**/*.md', 'meta'),
-  schema: base.extend({
+  // Landing/system copy read by other pages, never a route of its own, so
+  // the collection stays out of the sitemap.
+  schema: base.omit({ sitemap: true }).extend({
     slug: z.string().optional(),
     metaKind,
   }),

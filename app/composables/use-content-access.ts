@@ -1,9 +1,6 @@
-import type { AuthUser } from '~~/shared/types/auth'
+import type { ContentWithVisibility, VisibilityViewer } from '#shared/utils/content-visibility'
 import { useRoute } from '#imports'
-
-interface ContentWithVisibility {
-  visibility?: 'public' | 'internal' | 'private'
-}
+import { canViewContent, effectiveVisibility } from '#shared/utils/content-visibility'
 
 interface ContentAccessResult {
   canAccess: boolean
@@ -36,6 +33,35 @@ function isDevBypassEnabled(): boolean {
 }
 
 /**
+ * What a detail page does with the visibility answer. Pure, so the decision is
+ * testable without a session; whether the viewer may see the item at all is
+ * `canViewContent`'s call, shared with the listings and the sitemap.
+ *
+ * - missing item → 404
+ * - visible → render
+ * - internal (as read by `effectiveVisibility`) + signed out → login, keeping the path
+ * - anything else → 404, so a private page is indistinguishable from no page
+ */
+export function resolveContentAccess(
+  item: ContentWithVisibility | null | undefined,
+  viewer: VisibilityViewer,
+  path: string,
+): ContentAccessResult {
+  if (!item)
+    return { canAccess: false, errorCode: 404 }
+
+  if (canViewContent(item, viewer))
+    return { canAccess: true }
+
+  // Internal content is not secret, just gated — send a visitor to log in
+  // rather than pretending the page does not exist.
+  if (effectiveVisibility(item) === 'internal' && !viewer.loggedIn)
+    return { canAccess: false, redirectTo: `/login?redirect=${path}` }
+
+  return { canAccess: false, errorCode: 404 }
+}
+
+/**
  * Composable to check access permissions for a single content item
  *
  * Returns appropriate access state for detail pages:
@@ -50,67 +76,15 @@ function isDevBypassEnabled(): boolean {
  * @returns Reactive object with canAccess, redirectTo, and errorCode
  */
 export function useContentAccess(item: ContentWithVisibility | null | undefined): ContentAccessResult {
-  const { loggedIn, user } = useSessionState()
+  const { loggedIn, isAdmin } = useSessionState()
   const route = useRoute()
 
-  if (!item) {
-    return {
-      canAccess: false,
-      errorCode: 404,
-    }
-  }
-
   // Dev bypass: only with ?dev=true query param
-  if (isDevBypassEnabled()) {
+  if (item && isDevBypassEnabled()) {
     return {
       canAccess: true,
     }
   }
 
-  // Treat null/undefined visibility as 'private' (secure by default)
-  const visibility = item.visibility ?? 'private'
-
-  // Public content is always accessible
-  if (visibility === 'public') {
-    return {
-      canAccess: true,
-    }
-  }
-
-  // Internal content requires authentication
-  if (visibility === 'internal') {
-    if (loggedIn.value) {
-      return {
-        canAccess: true,
-      }
-    }
-    else {
-      return {
-        canAccess: false,
-        redirectTo: `/login?redirect=${route.path}`,
-      }
-    }
-  }
-
-  // Private content requires admin role
-  if (visibility === 'private') {
-    const authUser = user.value as AuthUser | null
-    if (authUser?.role === 'admin') {
-      return {
-        canAccess: true,
-      }
-    }
-    else {
-      return {
-        canAccess: false,
-        errorCode: 404,
-      }
-    }
-  }
-
-  // Fallback: deny access for unknown visibility values
-  return {
-    canAccess: false,
-    errorCode: 404,
-  }
+  return resolveContentAccess(item, { loggedIn: loggedIn.value, isAdmin: isAdmin.value }, route.path)
 }

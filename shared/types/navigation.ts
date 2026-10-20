@@ -10,10 +10,11 @@ export interface NavItem {
   hidden?: boolean
   devOnly?: boolean
   /**
-   * Hide the item unless the viewer could access its linked content, mirroring
-   * the page-level rule in useContentAccess: `internal` needs login, `private`
-   * needs an admin role. Omitted = always shown (public). Keep in sync with the
-   * target content's `visibility` frontmatter.
+   * Hide the item unless the viewer could access its linked content. Judged by
+   * `canViewContent` (see shared/utils/navigation-visibility.ts), the same rule
+   * the page guard uses: `internal` needs login, `private` needs an admin role.
+   * Omitted = always shown (public). Keep in sync with the target content's
+   * `visibility` frontmatter.
    */
   visibility?: 'public' | 'internal' | 'private'
   badge?: string | number

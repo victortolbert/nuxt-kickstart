@@ -84,8 +84,11 @@ Localized content lives under per-locale folders (`content/en/`, `content/es/`).
 
 ### Key Conventions
 
-- **Visibility**: private (default) → internal → public. Dev mode bypasses visibility checks
-- **Status**: seed → sprout → evergreen → wilted. Color/icon per status come from `app/utils/garden-status.ts` (single source of truth — used by badges and filters)
+- **Visibility**: private (default) → internal → public. The rules are pure functions in `shared/utils/content-visibility.ts` (`canViewContent`, `effectiveVisibility`); `useVisibilityFilter`, `useContentAccess`, the navigation rules and the sitemap hook all call them — never re-implement the check. Visibility is editorial, not confidentiality (ADR-0005); tiers are ADR-0006. `?dev=true` bypasses or simulates a tier
+- **Status**: seed → sprout → evergreen → wilted. A `wilted` public page reads as `internal` (off a visitor's listings and the sitemap, still at its URL for a member). Color/icon per status come from `app/utils/garden-status.ts` (single source of truth — used by badges and filters)
+- **Review gate**: collections whose content-path prefix is in `REVIEW_GATED_PREFIXES` (`shared/utils/content-visibility.ts`, empty by default) hold a `visibility: public` page as `internal` until it carries `reviewed: YYYY-MM-DD`. Every `.select()` that names `visibility` must also select `path`, `reviewed` and `status` (`test/unit/content-visibility-selects.test.ts`)
+- **Sitemap**: the `content:file:afterParse` hook in `nuxt.config.ts` drops any document not effectively public. Collections opt in by the `sitemap` field on the base schema (`apps` and `meta` omit it — no route renders them). Nuxt Content caches parses in `.data/content/contents.sqlite`; delete it to see a hook change
+- **Protected paths**: `shared/utils/protected-paths.ts` is the one list the global middleware, the sitemap excludes and the `robots: false` route rules read; `test/unit/protected-paths.test.ts` fails on a page with `middleware: 'auth' | 'admin'` the list does not cover
 - **Registries** use stable `slug` IDs, referenced by slug arrays
 - **Case**: kebab-case for storage/slugs. Title Case for display via `formatLabel()`/`formatTag()`
 - Case utilities auto-imported from `shared/utils/case.ts`
@@ -140,7 +143,8 @@ Using v2 patterns causes empty modals, empty selects, accessibility warnings, an
 - **Auth**: `better-auth` (config in `server/auth.ts`, client in `app/lib/auth-client.ts`). Password auth is **disabled**; sign-in is via magic link + email OTP (Resend), phone OTP (Twilio SMS), and GitHub OAuth.
 - **Roles**: `admin` plugin. Admins are auto-assigned from the `ADMIN_EMAILS` env var (synced on every login via database hooks); default role is `viewer`.
 - **Authorization**: `nuxt-authorization` — abilities in `shared/utils/abilities.ts`
-- **Middleware** (`app/middleware/`): `auth` (require login), `guest` (redirect if logged in), `admin` (require admin role), `app-auth.global` (global), `dev-only`
+- **Middleware** (`app/middleware/`): `auth` (require login), `guest` (redirect if logged in), `admin` (require admin role), `app-auth.global` (global — gates `PROTECTED_PATH_PREFIXES` from `shared/utils/protected-paths.ts`, locale-aware), `dev-only`
+- **Navigation** is filtered on the server: `/api/navigation` resolves `getRequestViewer(event)` and returns `filterNavigation(...)` from `shared/utils/navigation-visibility.ts`; `useNavigationConfig()` re-filters with the same rules
 - **Rendering**: SSR enabled. `experimental.asyncContext` enabled for composables after `await`
 
 ## Database

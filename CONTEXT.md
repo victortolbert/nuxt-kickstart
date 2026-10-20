@@ -22,11 +22,30 @@ docs, and commits; sharpen them here when they drift.
 - **Trash** — soft-deleted content under `content/_trash/<collection>/`,
   indexed by the manifest (`content/_trash/.manifest.json`, keyed
   `collection/slug`).
-- **Visibility** — `private` (default) → `internal` → `public`. Dev mode
-  bypasses checks.
+- **Visibility** — `private` (default) → `internal` → `public`, read by the
+  pure rules in `shared/utils/content-visibility.ts` (`canViewContent`) for
+  listings, detail pages, navigation and the sitemap. Editorial, not a
+  confidentiality boundary (ADR-0005). `?dev=true` bypasses or simulates.
+- **Effective visibility** — the tier a document is actually read at
+  (`effectiveVisibility`): a `wilted` public page, or an unreviewed public page
+  in a review-gated collection, reads as `internal`.
+- **Review gate** — collections listed in `REVIEW_GATED_PREFIXES` hold a
+  `public` page as `internal` until it carries `reviewed: YYYY-MM-DD`. Empty in
+  the template.
 - **Status** — content lifecycle: `seed` → `sprout` → `evergreen` → `wilted`.
+  `wilted` is the archive verdict: off a visitor's listings and the sitemap.
 
 ## Identity & access
+
+- **Visitor / Member / Owner** — the three audience tiers (ADR-0006): no
+  session, signed in, `admin` role. Each sees `public`, `+internal`,
+  everything.
+- **Viewer** — `{ loggedIn, isAdmin }`, the descriptor every visibility rule
+  takes. Built from `useSessionState()` on the client and
+  `getRequestViewer(event)` on the server.
+- **Protected path** — a route prefix in `shared/utils/protected-paths.ts`. The
+  global middleware, the sitemap excludes and the `robots: false` route rules
+  read the one list.
 
 - **Session Identity** — the derived auth state (`loggedIn`, `user`,
   `userRole`, `isAdmin`). Client components use `useSessionState()`

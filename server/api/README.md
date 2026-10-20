@@ -19,8 +19,8 @@ REST endpoints via Nitro's file-based routing.
 | `health/`        | Health/status checks                           |
 
 Root-level endpoints: `user.get.ts`, `navigation.get.ts` (backs
-`useNavigationConfig()`), `protected.get.ts`, `auth-test.get.ts`, and
-`debug-navigation.get.ts` — the last two are diagnostic helpers.
+`useNavigationConfig()`, filtered per session by the shared navigation rules),
+`protected.get.ts`, and `auth-test.get.ts` — the last is a diagnostic helper.
 
 > Authentication endpoints are **not** here — they are served by the Better Auth catch-all at `server/routes/api/auth/[...all].ts`.
 

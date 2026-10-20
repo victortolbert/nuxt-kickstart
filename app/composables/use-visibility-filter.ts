@@ -1,9 +1,6 @@
-import type { AuthUser } from '~~/shared/types/auth'
+import type { ContentWithVisibility, VisibilityViewer } from '#shared/utils/content-visibility'
 import { computed, readonly, ref, useRoute } from '#imports'
-
-interface ContentWithVisibility {
-  visibility?: 'public' | 'internal' | 'private'
-}
+import { filterByVisibility } from '#shared/utils/content-visibility'
 
 export type DevVisibilityMode = 'bypass' | 'public' | 'internal' | 'admin'
 
@@ -100,6 +97,17 @@ export function useDevVisibility() {
 }
 
 /**
+ * The viewer each simulated dev mode stands in for. Simulation goes through
+ * the real rules, so a `public` preview hides wilted and unreviewed pages
+ * exactly as a visitor's listing does.
+ */
+const DEV_VIEWERS: Record<Exclude<DevVisibilityMode, 'bypass'>, VisibilityViewer> = {
+  public: { loggedIn: false, isAdmin: false },
+  internal: { loggedIn: true, isAdmin: false },
+  admin: { loggedIn: true, isAdmin: true },
+}
+
+/**
  * Composable to filter content arrays based on visibility rules and user authentication state
  *
  * Visibility rules:
@@ -117,58 +125,20 @@ export function useDevVisibility() {
  * @returns Filtered array based on current user's permissions
  */
 export function useVisibilityFilter<T extends ContentWithVisibility>(items: T[]): T[] {
-  const { loggedIn, user } = useSessionState()
+  const { loggedIn, isAdmin } = useSessionState()
 
-  // Dev mode with ?dev=true: check for visibility bypass/simulation
+  // Dev mode with ?dev=true: bypass, or simulate a tier through the same rules
   const devMode = getDevVisibilityMode()
-  if (devMode !== null) {
-    // Bypass mode: show everything
-    if (devMode === 'bypass') {
-      return items
-    }
+  if (devMode === 'bypass')
+    return items
+  if (devMode !== null)
+    return filterByVisibility(items, DEV_VIEWERS[devMode])
 
-    // Simulate different user roles
-    return items.filter((item) => {
-      const visibility = item.visibility ?? 'private'
-
-      if (devMode === 'public') {
-        return visibility === 'public'
-      }
-
-      if (devMode === 'internal') {
-        return visibility === 'public' || visibility === 'internal'
-      }
-
-      if (devMode === 'admin') {
-        return true // Admin sees everything
-      }
-
-      return false
-    })
-  }
-
-  // Normal visibility filtering (production and dev without ?dev=true)
-  return items.filter((item) => {
-    // Treat null/undefined visibility as 'private' (secure by default)
-    const visibility = item.visibility ?? 'private'
-
-    // Public content is always visible
-    if (visibility === 'public') {
-      return true
-    }
-
-    // Internal content requires authentication
-    if (visibility === 'internal') {
-      return loggedIn.value === true
-    }
-
-    // Private content requires admin role
-    if (visibility === 'private') {
-      const authUser = user.value as AuthUser | null
-      return authUser?.role === 'admin'
-    }
-
-    // Fallback: hide content with unknown visibility values
-    return false
+  // Normal visibility filtering (production and dev without ?dev=true).
+  // The rules live in `canViewContent` so this pass, the page guard and the
+  // sitemap cannot drift apart.
+  return filterByVisibility(items, {
+    loggedIn: loggedIn.value === true,
+    isAdmin: isAdmin.value,
   })
 }
