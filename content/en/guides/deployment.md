@@ -37,7 +37,8 @@ Add these in your platform's dashboard (only the ones for features you use):
 # Auth (required)
 BETTER_AUTH_SECRET=...            # openssl rand -base64 32
 BETTER_AUTH_URL=https://yourdomain.com
-ADMIN_EMAILS=you@yourdomain.com   # comma-separated auto-admins
+ADMIN_EMAILS=you@yourdomain.com   # Owners (admin role); setting it closes sign-up
+MEMBER_EMAILS=...                 # invited members; see the Authentication guide
 
 # Email: magic link + email OTP + campaigns (Resend)
 RESEND_API_KEY=re_...

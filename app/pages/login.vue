@@ -14,6 +14,17 @@
         </p>
       </div>
 
+      <!-- Why a redirected browser landed back here: a membership refusal -->
+      <u-alert
+        v-if="refusalMessage"
+        :description="refusalMessage"
+        :icon="resolveIcon('warning')"
+        color="error"
+        variant="subtle"
+        class="mb-6"
+        role="status"
+      ></u-alert>
+
       <!-- Main card -->
       <div class="border border-default p-6 space-y-6">
         <!-- Magic link confirmation -->
@@ -425,6 +436,27 @@ const digitOnlyRegex = /\D/g
 const route = useRoute()
 const { t } = useI18n()
 const { resolveIcon } = useAppearance()
+
+// The refusal a browser was *redirected* here carrying. The magic-link and
+// GitHub paths answer a navigation, so they cannot hand back a message the way
+// the OTP fetches do — they arrive as `?error=<code>` (see
+// server/utils/auth-refusal.ts). Keyed by code rather than by message so the
+// copy can be translated without breaking the match.
+const REFUSAL_MESSAGE_KEYS: Record<string, string> = {
+  MEMBERSHIP_BY_INVITATION_ONLY: 'auth.login.refusedByInvitation',
+  MEMBERSHIP_ADDRESS_NOT_VERIFIED: 'auth.login.refusedUnverifiedAddress',
+  MEMBERSHIP_REVOKED: 'auth.login.refusedRevoked',
+}
+
+const refusalMessage = computed(() => {
+  const code = route.query.error
+  if (typeof code !== 'string' || code === '')
+    return ''
+
+  // An unrecognized code still gets *something*: landing on a clean form with
+  // no explanation is the failure this exists to prevent.
+  return t(REFUSAL_MESSAGE_KEYS[code] ?? 'auth.login.refusedGeneric')
+})
 
 // Get redirect destination from query param (set by auth middleware)
 const redirectTo = computed(() => {

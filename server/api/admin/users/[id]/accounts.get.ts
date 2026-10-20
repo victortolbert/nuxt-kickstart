@@ -17,7 +17,7 @@ const db = drizzle(client, { schema })
 
 export default defineEventHandler(async (event) => {
   // Require admin role
-  await authorize(event, manageUsers)
+  await authorizeUser(event, manageUsers)
 
   // Get user ID from route params
   const userId = getRouterParam(event, 'id')

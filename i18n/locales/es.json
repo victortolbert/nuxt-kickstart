@@ -191,7 +191,11 @@
       "orContinueWith": "O continúa con",
       "continueWithGithub": "Continuar con GitHub",
       "signInWithGithub": "Iniciar sesión con GitHub",
-      "termsNotice": "Al iniciar sesión, aceptas nuestros términos de servicio y política de privacidad"
+      "termsNotice": "Al iniciar sesión, aceptas nuestros términos de servicio y política de privacidad",
+      "refusedByInvitation": "La membresía es por invitación. Pide al propietario que añada tu dirección.",
+      "refusedUnverifiedAddress": "Esa dirección no está verificada. Inicia sesión con el enlace enviado por correo.",
+      "refusedRevoked": "Tu membresía ha terminado. Pide al propietario que vuelva a añadir tu dirección.",
+      "refusedGeneric": "No se pudo completar ese inicio de sesión."
     },
     "user": "Usuario",
     "guest": "Invitado",
@@ -544,7 +548,8 @@
       },
       "tooltips": {
         "cannotChangeOwnRole": "No puedes cambiar tu propio rol",
-        "cannotChangeBannedRole": "No se puede cambiar el rol de un usuario suspendido"
+        "cannotChangeBannedRole": "No se puede cambiar el rol de un usuario suspendido",
+        "ownerRoleFromEnv": "El rol de propietario lo otorga ADMIN_EMAILS y no se puede cambiar aquí."
       },
       "pagination": {
         "page": "Página {page}"

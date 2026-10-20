@@ -47,14 +47,12 @@ A `.select()` that reads `visibility` must also read `path`, `reviewed` and
 
 ## What the middle tier means here
 
-The template ships with signup **open**. A first magic-link or OTP sign-in
-creates the account (`server/auth.ts`, `disableSignUp` unset), so `internal`
-means "anyone who can receive an email", not "someone who was let in". That is
-the right default for a starter, but `internal` is then not a trust boundary.
-A project that wants it to be one closes signup: either set `disableSignUp`, or
-add an allowlist check in the `user.create.before` database hook that every
-sign-in path converges on. Phone OTP has no email to match against an
-allowlist, and OAuth only asserts an address, so both need deciding explicitly.
+Amended by ADR-0007. While `MEMBER_EMAILS` and `ADMIN_EMAILS` are both unset,
+signup is open and `internal` means "signed in": anyone with a proven address
+can become a Member. Once either list is set, membership is by invitation and
+`internal` means "let in". ADR-0007 also settles the paths this record left
+open: OAuth must assert a verified address, phone OTP cannot create an
+account, and the admin create-user route admits nobody.
 
 ## The `admin` conflation, accepted knowingly
 

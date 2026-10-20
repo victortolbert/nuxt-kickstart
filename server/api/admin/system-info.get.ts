@@ -1,7 +1,7 @@
 import { isAdmin } from '#shared/utils/abilities'
 
 export default defineEventHandler(async (event) => {
-  await authorize(event, isAdmin)
+  await authorizeUser(event, isAdmin)
 
   return {
     nuxtVersion: '4.x',

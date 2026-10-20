@@ -14,7 +14,7 @@ order: 1
 prerequisites:
   - getting-started
 created: '2026-01-23'
-updated: '2026-02-06'
+updated: '2026-10-20'
 ---
 
 ## Overview
@@ -166,13 +166,52 @@ TWILIO_AUTH_TOKEN=xxxxx
 TWILIO_PHONE_NUMBER=+1234567890
 ```
 
-## Admin Role
+## Membership
 
-Users whose email appears in `ADMIN_EMAILS` are automatically assigned the `admin` role on sign-up:
+Two variables decide who may hold an account:
 
 ```bash
-ADMIN_EMAILS=victor@example.com,admin@example.com
+ADMIN_EMAILS=owner@example.com                 # Owners: admin role
+MEMBER_EMAILS=alice@example.com,bob@example.com # Members: viewer role
 ```
+
+| Configuration | Who can sign up | Who can sign in |
+| --- | --- | --- |
+| Both unset (**open**, the default) | Anyone with a verified email | Anyone with an account |
+| Either set (**closed**) | Only listed addresses | Only listed addresses |
+
+**Open** is how a fresh clone runs: you can sign in straight away. The server
+logs a warning at boot so a deployment doesn't stay open by accident.
+
+**Closed** is invitation-only. The lists are re-read at every sign-in, so
+removing an address ends that person's access the next time they sign in. Their
+account is kept, and adding the address back restores it. `ADMIN_EMAILS` counts
+as an invitation, so owners don't need to be repeated in `MEMBER_EMAILS`.
+
+> Switching a running deployment from open to closed refuses every existing
+> account that isn't listed. Add everyone who should keep access to
+> `MEMBER_EMAILS` before you set either variable.
+
+Rules that apply in both modes:
+
+- **GitHub** sign-up needs an email GitHub has verified. Otherwise the person is
+  asked to use the emailed link instead.
+- **Phone** sign-in can't create an account. It only works for a number already
+  linked to an existing account.
+- The admin plugin's create-user route doesn't admit anyone. Membership is
+  granted by the lists.
+
+A refused magic link or GitHub sign-in lands back on `/login` with a message
+explaining why. The URL carries a stable code, for example
+`?error=MEMBERSHIP_BY_INVITATION_ONLY`.
+
+## Admin Role
+
+`ADMIN_EMAILS` is the only way to grant the `admin` role, and it syncs both
+ways on every login. A listed address is promoted, and an `admin` whose address
+has been removed is demoted to `viewer`. Other roles, such as `editor`, are
+never touched. That's why the admin UI offers only `editor` and `viewer`: a
+grant of `admin` there would be undone at the next login.
 
 ## Protecting Routes
 
@@ -207,3 +246,15 @@ visibility: private   # Author or admin only
 ```
 
 See `shared/utils/abilities.ts` for available permission checks.
+
+In server routes, gate on an ability with `authorizeUser`, which answers `401`
+when nobody is signed in and `403` when someone is but the ability denies them:
+
+```ts
+import { isAdmin } from '#shared/utils/abilities'
+
+export default defineEventHandler(async (event) => {
+  await authorizeUser(event, isAdmin)
+  const body = await readBody(event) // safe: the session is read from headers only
+})
+```

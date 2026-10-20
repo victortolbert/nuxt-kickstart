@@ -260,12 +260,18 @@
         </div>
 
         <template v-else>
-          <!-- Edit Role -->
+          <!-- Edit Role. Owner is not assignable here: ADMIN_EMAILS grants it
+               and the login sync would revert a grant from this picker at the
+               next sign-in, so an Owner row says where the role comes from. -->
           <div class="border rounded p-4 space-y-3">
             <h3 class="text-sm font-medium">
               {{ t('admin.users.detail.editRole') }}
             </h3>
-            <div class="flex items-center gap-2">
+            <p v-if="user.role === OWNER_ROLE" class="text-sm text-muted flex items-center gap-2">
+              <u-icon :name="resolveIcon('info')" class="w-4 h-4 shrink-0"></u-icon>
+              {{ t('admin.users.tooltips.ownerRoleFromEnv') }}
+            </p>
+            <div v-else class="flex items-center gap-2">
               <u-select
                 v-model="editRole"
                 :items="roleEditItems"
@@ -443,6 +449,8 @@
 </template>
 
 <script setup lang="ts">
+import type { AssignableRole } from '#shared/utils/roles'
+import { ASSIGNABLE_ROLES, OWNER_ROLE } from '#shared/utils/roles'
 import { authClient } from '~/lib/auth-client'
 
 definePageMeta({
@@ -500,7 +508,7 @@ const revokeModalOpen = ref(false)
 const revoking = ref(false)
 
 // Actions state
-const editRole = ref<UserDetail['role']>('viewer')
+const editRole = ref<AssignableRole>('viewer')
 const savingRole = ref(false)
 const banModalOpen = ref(false)
 const banReason = ref('')
@@ -586,11 +594,10 @@ async function handleRevokeSessions() {
   revokeModalOpen.value = false
 }
 
-const roleEditItems = computed(() => [
-  { label: t('admin.users.roles.admin'), value: 'admin' },
-  { label: t('admin.users.roles.editor'), value: 'editor' },
-  { label: t('admin.users.roles.viewer'), value: 'viewer' },
-])
+const roleEditItems = computed(() => ASSIGNABLE_ROLES.map(role => ({
+  label: t(`admin.users.roles.${role}`),
+  value: role,
+})))
 
 async function handleSaveRole() {
   if (!user.value)
@@ -664,7 +671,8 @@ async function handleDeleteUser() {
 onMounted(async () => {
   await fetchUser()
   if (user.value) {
-    editRole.value = user.value.role
+    if (user.value.role !== OWNER_ROLE)
+      editRole.value = user.value.role
     fetchAccounts()
     fetchSessions()
   }

@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
 import { isAdmin } from '#shared/utils/abilities'
 
 export default defineEventHandler(async (event) => {
-  await authorize(event, isAdmin)
+  await authorizeUser(event, isAdmin)
   // Only admins reach here
 })
 ```

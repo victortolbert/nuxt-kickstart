@@ -191,7 +191,11 @@
       "orContinueWith": "Or continue with",
       "continueWithGithub": "Continue with GitHub",
       "signInWithGithub": "Sign in with GitHub",
-      "termsNotice": "By signing in, you agree to our terms of service and privacy policy"
+      "termsNotice": "By signing in, you agree to our terms of service and privacy policy",
+      "refusedByInvitation": "Membership is by invitation. Ask the owner to add your address.",
+      "refusedUnverifiedAddress": "That address is not verified. Sign in with the emailed link instead.",
+      "refusedRevoked": "Your membership has ended. Ask the owner to add your address again.",
+      "refusedGeneric": "That sign-in could not be completed."
     },
     "user": "User",
     "guest": "Guest",
@@ -544,7 +548,8 @@
       },
       "tooltips": {
         "cannotChangeOwnRole": "Cannot change your own role",
-        "cannotChangeBannedRole": "Cannot change role of banned user"
+        "cannotChangeBannedRole": "Cannot change role of banned user",
+        "ownerRoleFromEnv": "Owner is granted by ADMIN_EMAILS and cannot be changed here."
       },
       "pagination": {
         "page": "Page {page}"

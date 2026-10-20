@@ -24,7 +24,9 @@ This repo (single-context). Note it is a Nuxt 4 app — the code lives in `app/`
 │   ├── 0003-strict-pnpm-node-modules.md
 │   ├── 0004-commit-maizzle-build-output.md   (superseded — Maizzle removed)
 │   ├── 0005-confidentiality-is-enforced-by-location.md
-│   └── 0006-audience-is-three-tiers-of-trust.md
+│   ├── 0006-audience-is-three-tiers-of-trust.md
+│   ├── 0007-membership-is-by-invitation-once-configured.md   (amends 0006)
+│   └── 0008-anonymous-is-401-and-refused-is-403.md
 ├── app/          ← pages, components, composables, utils, middleware
 ├── server/       ← API routes, db, auth, server utils
 ├── shared/       ← code shared between app/ and server/ (import via `#shared`)

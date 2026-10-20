@@ -84,6 +84,7 @@
 <script setup lang="ts">
 import type { TableColumn } from '@nuxt/ui'
 import { h, resolveComponent } from 'vue'
+import { ASSIGNABLE_ROLES, OWNER_ROLE } from '#shared/utils/roles'
 import { authClient } from '~/lib/auth-client'
 
 const NuxtLink = resolveComponent('NuxtLink')
@@ -140,12 +141,13 @@ const roleFilterItems = computed(() => [
   { label: t('admin.users.roles.viewer'), value: 'viewer' },
 ])
 
-// Role edit options for inline editing
-const roleEditItems = computed(() => [
-  { label: t('admin.users.roles.admin'), value: 'admin' },
-  { label: t('admin.users.roles.editor'), value: 'editor' },
-  { label: t('admin.users.roles.viewer'), value: 'viewer' },
-])
+// Role edit options for inline editing. Owner is not among them: ADMIN_EMAILS
+// grants it, and the login sync would revert a grant from here at that
+// person's next sign-in (see #shared/utils/roles).
+const roleEditItems = computed(() => ASSIGNABLE_ROLES.map(role => ({
+  label: t(`admin.users.roles.${role}`),
+  value: role,
+})))
 
 async function fetchUsers() {
   loading.value = true
@@ -311,6 +313,17 @@ const columns = computed<TableColumn<User>[]>(() => [
     header: t('admin.users.table.role'),
     cell: ({ row }) => {
       const user = row.original
+
+      // A badge saying where the role comes from, in place of a control that
+      // would only appear to work.
+      if (user.role === OWNER_ROLE) {
+        return h(UTooltip, { text: t('admin.users.tooltips.ownerRoleFromEnv') }, () => h(
+          UBadge,
+          { variant: 'subtle', color: 'error' },
+          () => t('admin.users.roles.admin'),
+        ))
+      }
+
       const isSelf = user.id === currentUserId.value
       const isDisabled = isSelf || user.banned
       const tooltipText = isSelf

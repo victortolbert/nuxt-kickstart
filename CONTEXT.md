@@ -46,7 +46,15 @@ docs, and commits; sharpen them here when they drift.
 - **Protected path** — a route prefix in `shared/utils/protected-paths.ts`. The
   global middleware, the sitemap excludes and the `robots: false` route rules
   read the one list.
-
+- **Membership** — who may hold an account, and so who counts as a Member
+  (ADR-0007, amending ADR-0006). Decided by `MEMBER_EMAILS` and
+  `ADMIN_EMAILS` (`server/utils/membership.ts`). **Closed** when either list
+  is set: invitation only, re-checked at every sign-in, so `internal` means
+  "let in". **Open** when both are empty: anyone with a proven address may
+  join, so `internal` means "signed in". The Owner role is granted only by
+  `ADMIN_EMAILS`. A **Refusal** is the 403
+  a sign-in gets for a membership decision, carrying a stable
+  `MEMBERSHIP_*` code (`server/utils/auth-refusal.ts` presents it).
 - **Session Identity** — the derived auth state (`loggedIn`, `user`,
   `userRole`, `isAdmin`). Client components use `useSessionState()`
   (`app/composables/use-session-state.ts`); route middleware awaits

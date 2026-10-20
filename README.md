@@ -195,7 +195,7 @@ visibility: internal  # public | internal | private
 | `editor` | Create and edit content |
 | `admin` | Full access, user management |
 
-Auto-assign admin role by adding emails to `ADMIN_EMAILS` env var (comma-separated).
+`ADMIN_EMAILS` grants the admin role and is synced both ways on every login. Membership is open while `ADMIN_EMAILS` and `MEMBER_EMAILS` are both unset, and invitation-only once either is set. See the Authentication guide and `docs/adr/0007-membership-is-by-invitation-once-configured.md`.
 
 ### Protecting Routes
 
@@ -326,7 +326,8 @@ Then visit `http://localhost:3000`. With no database configured the container bo
 | `BETTER_AUTH_SECRET` | Session signing key (32+ chars — `openssl rand -base64 32`) |
 | `BETTER_AUTH_URL` / `NUXT_PUBLIC_SITE_URL` | Your public URL (auth callbacks, absolute links) |
 | `TURSO_DATABASE_URL` **and** `TURSO_AUTH_TOKEN` | Persistent database — **both** are required to use Turso; if either is missing the app falls back to the ephemeral local SQLite |
-| `ADMIN_EMAILS` | Comma-separated emails auto-assigned the admin role |
+| `ADMIN_EMAILS` | Comma-separated Owner emails (admin role). Setting it or `MEMBER_EMAILS` makes sign-up invitation-only; leaving both unset leaves it open |
+| `MEMBER_EMAILS` | Comma-separated invited Member emails (viewer role) |
 
 Optional, per feature: `RESEND_API_KEY` (magic link / email OTP), `NUXT_OAUTH_GITHUB_CLIENT_ID` + `NUXT_OAUTH_GITHUB_CLIENT_SECRET` (GitHub sign-in), `TWILIO_*` (phone OTP). See `.env.example` for the full list.
 

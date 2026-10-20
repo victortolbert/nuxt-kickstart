@@ -11,7 +11,7 @@ import { auth } from '#server/auth'
  * it waits for a body the wrapped Request already locked. Passing headers-only
  * avoids touching the body entirely, so POST handlers can read it normally.
  */
-function requestHeaders(event: H3Event): Headers {
+export function requestHeaders(event: H3Event): Headers {
   const headers = new Headers()
   for (const [key, value] of Object.entries(getRequestHeaders(event))) {
     if (typeof value === 'string')

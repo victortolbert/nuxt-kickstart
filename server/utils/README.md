@@ -8,6 +8,9 @@ Server-side utilities, auto-imported in the Nitro server context.
 | ---------------------- | ------------------------------------------------------ |
 | `db.ts`                | libSQL/Drizzle client + shared DB helpers              |
 | `session.ts`          | Better Auth session helpers for event handlers         |
+| `authorize-user.ts`    | `authorizeUser()`: ability gate, 401 anonymous / 403 denied |
+| `membership.ts`        | Pure membership rules: who may join, remain, be Owner  |
+| `auth-refusal.ts`      | Presents membership refusals (redirects, OAuth codes)  |
 | `email.ts`             | Email Transport: the single Resend client (`sendEmail`) |
 | `email-templates.ts`   | HTML email template rendering (magic link, OTP, …)     |
 | `upload.ts`            | `handleFileUpload()` entry point for uploads           |
