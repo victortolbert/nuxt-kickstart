@@ -40,6 +40,9 @@ export const session = sqliteTable(
       .notNull(),
     ipAddress: text('ip_address'),
     userAgent: text('user_agent'),
+    // Written by the admin plugin's impersonation routes. Better Auth 1.7
+    // validates the schema at runtime, so without it every sign-in fails.
+    impersonatedBy: text('impersonated_by'),
     userId: text('user_id')
       .notNull()
       .references(() => user.id, { onDelete: 'cascade' }),

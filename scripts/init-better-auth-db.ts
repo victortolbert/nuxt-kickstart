@@ -13,6 +13,12 @@ const client = createClient({
   authToken: process.env.TURSO_AUTH_TOKEN,
 })
 
+async function addColumnIfMissing(table: string, column: string, type: string) {
+  const { rows } = await client.execute(`PRAGMA table_info(${table})`)
+  if (!rows.some(row => row.name === column))
+    await client.execute(`ALTER TABLE ${table} ADD COLUMN ${column} ${type}`)
+}
+
 async function init() {
   console.log('Creating Better Auth tables...')
 
@@ -48,9 +54,13 @@ async function init() {
       updated_at INTEGER NOT NULL DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)),
       ip_address TEXT,
       user_agent TEXT,
+      impersonated_by TEXT,
       user_id TEXT NOT NULL REFERENCES user(id) ON DELETE CASCADE
     )
   `)
+  // CREATE TABLE IF NOT EXISTS leaves a database created before a column was
+  // added untouched, so add it to existing tables too.
+  await addColumnIfMissing('session', 'impersonated_by', 'TEXT')
   await client.execute('CREATE INDEX IF NOT EXISTS session_userId_idx ON session(user_id)')
   console.log('✓ session table created')
 
