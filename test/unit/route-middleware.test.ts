@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 // we can assert exactly where the guard sends an unauthenticated/unauthorized
 // request. `import.meta.server` is falsy in the node env, so the cookie-header
 // branch is skipped — these tests exercise the redirect logic, which is the
-// security-critical behaviour.
+// security-critical behavior.
 //
 // Middleware redirect via `navigateToPath` (a thin `navigateTo` wrapper with a
 // simplified signature — see app/utils/navigate.ts) to avoid the typed-routes

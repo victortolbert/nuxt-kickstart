@@ -16,7 +16,7 @@ type RedirectTarget = string | { path: string, query?: Record<string, string | u
  * enough to trip the "union type too complex to represent" limit (TS2590).
  * Routing redirects through this simplified signature keeps that union from
  * being instantiated in middleware while preserving typed routes everywhere
- * else. Runtime behaviour is identical — only the compile-time types differ.
+ * else. Runtime behavior is identical — only the compile-time types differ.
  */
 export const navigateToPath = navigateTo as unknown as (
   to: RedirectTarget,

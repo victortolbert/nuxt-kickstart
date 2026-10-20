@@ -48,7 +48,7 @@ export const themes: ThemeConfig[] = [
     id: 'broadsheet',
     label: 'Broadsheet',
     icon: 'i-tabler-news',
-    description: 'Newsprint greys with a single teal signal',
+    description: 'Newsprint grays with a single teal signal',
     radius: '0rem',
   },
 ]

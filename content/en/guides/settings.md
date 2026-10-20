@@ -44,7 +44,7 @@ of truth):
 | **Dracula** | Ghost | Dark purple/pink palette |
 | **Catppuccin** | Coffee | Warm pastels (Mocha variant) |
 | **Carnival** | Carousel | Warm, playful carnival colors |
-| **Broadsheet** | News | Newsprint greys with a single teal signal |
+| **Broadsheet** | News | Newsprint grays with a single teal signal |
 
 Click any theme card to apply it immediately. The active theme shows a highlighted border.
 

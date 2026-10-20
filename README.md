@@ -219,7 +219,7 @@ definePageMeta({ middleware: ['auth'] })
 | Dracula | `dracula` | Dark purple/pink |
 | Catppuccin | `catppuccin` | Warm pastel |
 | Carnival | `carnival` | Warm, playful |
-| Broadsheet | `broadsheet` | Newsprint greys, teal signal |
+| Broadsheet | `broadsheet` | Newsprint grays, teal signal |
 
 Use `useTheme()` composable. Persists to `localStorage['kickstart-theme']`. Blocking script prevents FOUC.
 

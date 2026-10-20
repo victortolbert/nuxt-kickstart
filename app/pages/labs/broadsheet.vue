@@ -40,7 +40,7 @@
             <code>--bs-sans</code> and <code>--bs-mono</code> do not follow
             <code>--theme-font-sans</code>. In this project that variable defaults to
             JetBrains Mono, so inheriting it would make body prose monospace and
-            collapse the distinction the layout depends on. Colours theme; the type
+            collapse the distinction the layout depends on. Colors theme; the type
             inversion does not.
           </p>
         </div>
@@ -187,7 +187,7 @@ border: <span class="add">1px solid var(--bs-rule)</span>;</pre>
 
       <p>
         Annotated terminal output. Use real values from the actual system — never
-        <code>foo</code> or <code>bar</code>. The point is that a reader recognises it.
+        <code>foo</code> or <code>bar</code>. The point is that a reader recognizes it.
       </p>
 
       <div class="bs-panel">
@@ -242,7 +242,7 @@ border: <span class="add">1px solid var(--bs-rule)</span>;</pre>
       <h3>Note</h3>
 
       <p>
-        A labelled box, not a left-stripe card. The inset accent stripe reads as
+        A labeled box, not a left-stripe card. The inset accent stripe reads as
         “active row” elsewhere in this design system, so the label takes its own
         header strip instead.
       </p>
@@ -264,7 +264,7 @@ border: <span class="add">1px solid var(--bs-rule)</span>;</pre>
         <li>
           <h4>Numbered because order matters</h4>
           <p>
-            Leading-zero counters in bordered squares, accent-coloured. If order does
+            Leading-zero counters in bordered squares, accent-colored. If order does
             not matter, use a plain list instead.
           </p>
         </li>
@@ -323,9 +323,9 @@ border: <span class="add">1px solid var(--bs-rule)</span>;</pre>
       </div>
 
       <p>
-        The colours here alias onto Nuxt UI's <code>--ui-*</code> variables, so this
-        page renders correctly under every theme and in both colour modes. Switch
-        themes and watch the signal colour, rules, and surfaces move together — the
+        The colors here alias onto Nuxt UI's <code>--ui-*</code> variables, so this
+        page renders correctly under every theme and in both color modes. Switch
+        themes and watch the signal color, rules, and surfaces move together — the
         structure never does.
       </p>
     </section>

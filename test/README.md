@@ -13,6 +13,24 @@ Vitest test suites plus Playwright end-to-end tests.
 
 `setup-storage.ts` (shared) and `nuxt/setup.ts` are loaded as setup files; see `vitest.config.ts`. Browser-driven end-to-end tests use Playwright and live in `test/e2e/` (run via `pnpm run test:e2e`, dev server on port 3210). The vitest projects deliberately glob only `test/unit/` and `test/nuxt/`, so the two runners never collide.
 
+## Content and repository integrity
+
+Five unit specs hold the tree to rules nothing else enforces. Each one starts
+with a `the check can still fail` block that proves the scan reads real files and
+can go red.
+
+| Spec | Fails when |
+| --- | --- |
+| `content-schema-validation` | a document under `content/` breaks its collection's Zod schema (Nuxt Content stores it anyway; ADR-0009) |
+| `content-collection-coverage` | a markdown file under `content/` matches no collection source |
+| `content-secrets` | a credential, real email address or phone number appears under `content/` |
+| `us-english` | a British spelling appears on the authored surface (`node scripts/us-english.mjs` fixes it) |
+| `employer-terms` | a tracked file names the author's employer, its products or internal systems |
+
+`test/helpers/` holds what they share: the content walk and glob matcher
+(`content-tree.ts`), the spelling list (`us-english.ts`) and the employer-term
+list (`employer-terms.ts`).
+
 ## Running Tests
 
 ```bash

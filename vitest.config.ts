@@ -76,7 +76,7 @@ export default defineConfig({
       provider: 'v8',
       // Measure the application's real logic surface — not just leaf utilities.
       // Composables, route middleware, and server code carry the bulk of the
-      // behaviour, so keeping them in scope makes the coverage number honest.
+      // behavior, so keeping them in scope makes the coverage number honest.
       include: [
         'shared/utils/**/*.ts',
         'app/utils/**/*.ts',

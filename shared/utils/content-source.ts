@@ -59,7 +59,7 @@ export function getLocalCollections(): string[] {
  * derives the ref by parsing the URL itself (`branch: ref || 'main'`), so a
  * plain `https://github.com/owner/repo` always resolves to `main`. The object
  * form is the only way `NUXT_CONTENT_BRANCH` reaches the module — and it also
- * avoids `authToken`, which `@nuxt/content` marks deprecated in favour of
+ * avoids `authToken`, which `@nuxt/content` marks deprecated in favor of
  * `repository.auth`.
  */
 interface CollectionSourceConfig {

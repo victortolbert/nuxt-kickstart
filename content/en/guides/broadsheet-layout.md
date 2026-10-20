@@ -108,7 +108,7 @@ Anything — a code fence, a table, a diagram.
 ::
 
 ::broadsheet-note{label="The key habit" caution}
-`caution` turns the label warn-coloured.
+`caution` turns the label warn-colored.
 ::
 
 ::broadsheet-status
@@ -147,7 +147,7 @@ themes plus light and dark automatically:
 | `--bs-signal` | `--ui-primary` |
 | `--bs-good` / `--bs-warn` / `--bs-bad` | `--ui-success`, `--ui-warning`, `--ui-error` |
 
-For the exact palette of the original design — newsprint greys with a single teal
+For the exact palette of the original design — newsprint grays with a single teal
 signal — select the **Broadsheet** theme. Its `--color-primary-*` ramp and neutral
 scale are preserved verbatim in `app/assets/css/themes/broadsheet.css`.
 
@@ -167,8 +167,8 @@ The reading length is designed, not incidental.
 - `border-radius: 0` everywhere
 - No `box-shadow`, no gradients, no blur
 - Separation is hairlines and surface shifts, never elevation
-- Callouts are labelled boxes, not left-stripe cards
-- No hardcoded colours — every value routes through a token
+- Callouts are labeled boxes, not left-stripe cards
+- No hardcoded colors — every value routes through a token
 
 ## Outside this project
 

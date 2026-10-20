@@ -41,8 +41,8 @@
      `--ui-primary`. `app.config.ts` sets `colors.primary: 'neutral'`, so
      `--ui-primary` resolves to the neutral ramp under every theme — the themes'
      own primary ramps never reach it. Reading the ramp directly gives each
-     theme its actual identity colour (Nord cyan, Dracula pink, Broadsheet teal)
-     while still honouring the deliberately-neutral default theme.
+     theme its actual identity color (Nord cyan, Dracula pink, Broadsheet teal)
+     while still honoring the deliberately-neutral default theme.
      The wash is mixed rather than hardcoded so it stays legible in both modes. */
   --bs-signal: var(--color-primary-500, var(--ui-primary));
   --bs-signal-wash: color-mix(in oklch, var(--bs-signal) 12%, var(--ui-bg));
@@ -368,7 +368,7 @@
   white-space: inherit;
 }
 
-/* Highlight only what the surrounding sentence is about. A fully coloured
+/* Highlight only what the surrounding sentence is about. A fully colored
    block says nothing. */
 .bs-panel pre .c { color: var(--bs-ink-faint); font-style: italic; }
 .bs-panel pre .k { color: var(--bs-signal); }
@@ -526,7 +526,7 @@
 .bs-table-wrap td.mono code { background: none; border: 0; padding: 0; font-size: 1em; }
 
 /* --------------------------------------------------------------------------
-   NOTE — a labelled box. Deliberately not a side-stripe card: the inset
+   NOTE — a labeled box. Deliberately not a side-stripe card: the inset
    accent stripe reads as “active row” elsewhere in this design system.
    -------------------------------------------------------------------------- */
 

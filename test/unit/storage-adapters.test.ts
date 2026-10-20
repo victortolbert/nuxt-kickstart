@@ -160,7 +160,7 @@ describe('s3 adapter', () => {
     })
   })
 
-  it('honours a custom public URL (e.g. CloudFront)', async () => {
+  it('honors a custom public URL (e.g. CloudFront)', async () => {
     s3.send.mockResolvedValue({})
     const adapter = createS3Adapter({ ...config, s3PublicUrl: 'https://cdn.example.com' })
 

@@ -36,6 +36,7 @@ Run `pnpm nuxi prepare` after clone to generate `.nuxt/`. Run `pnpm run db:init`
 
 ## Code Style
 
+- **United States English** in everything authored here: prose, UI strings, comments, identifiers (*color, license, catalog, behavior, gray*). `test/unit/us-english.test.ts` sweeps the authored surface for the British spellings listed in `test/helpers/us-english.ts`, and `node scripts/us-english.mjs` rewrites them. The vendored agent skills under `.claude/skills/` are left as written.
 - **ESLint**: `@antfu/eslint-config` — 2-space indent, no semicolons, single quotes
 - **File naming**: kebab-case everywhere (enforced). `tech-badge.vue`, `use-theme.ts`, `tech-config.ts`. Exception: `[param].vue` routes
 - **Vue blocks**: `<script setup lang="ts">` → `<template>` → `<style>`
@@ -81,6 +82,10 @@ Collections:
 Localized content lives under per-locale folders (`content/en/`, `content/es/`). Navigation groups are YAML files in `content/navigation/*.yml`, served by `/api/navigation` and consumed by `useNavigationConfig()`.
 
 **Base schema** (all collections): `title`, `description?`, `tags[]`, `status`, `visibility`, `created?`, `updated?`
+
+**Nuxt Content does not validate frontmatter against these schemas**: not enums, not `.refine()`, nothing (ADR-0009). `test/unit/content-schema-validation.test.ts` parses every document under `content/` with its collection's Zod schema, and that test is the only place a constraint bites. A document that fails it is a finding, so fix the document, not the schema. Its sibling `content-collection-coverage.test.ts` fails on any markdown file that no collection source matches (a new locale folder without a source entry renders nowhere), and `content-secrets.test.ts` fails on a credential, a real email address or a phone number anywhere under `content/`, because every collection ships in a public `sql_dump.txt` whatever its `visibility`.
+
+**Nothing from the author's employer belongs in this repository.** `test/unit/employer-terms.test.ts` fails on any tracked file naming the employer, its products or its internal systems; the list is in `test/helpers/employer-terms.ts`.
 
 ### Key Conventions
 

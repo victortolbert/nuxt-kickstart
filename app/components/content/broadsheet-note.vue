@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 /**
- * A labelled box — deliberately not a left-stripe card. The inset accent stripe
+ * A labeled box — deliberately not a left-stripe card. The inset accent stripe
  * reads as "active row" elsewhere in this design system, so the label gets its
  * own header strip instead.
  *
@@ -19,7 +19,7 @@
  */
 withDefaults(defineProps<{
   label?: string
-  /** Turns the label warn-coloured. For things that bite in production. */
+  /** Turns the label warn-colored. For things that bite in production. */
   caution?: boolean
 }>(), {
   label: 'Note',
