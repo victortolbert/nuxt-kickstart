@@ -13,13 +13,13 @@ Some are wired to package.json:
 | Command | Script | Purpose |
 | --- | --- | --- |
 | `pnpm run init` | `init.ts` | One-time template rename (project name, site URL, storage keys) |
-| `pnpm run db:init` | `init-better-auth-db.ts` | Create the local Better Auth SQLite tables |
+| `pnpm run db:migrate` | `migrate.ts` | Apply pending migrations (local file, or Turso via `TURSO_*`) |
 
 ## Other Scripts
 
 | Pattern / file       | Purpose                                             |
 | -------------------- | --------------------------------------------------- |
-| `add-*-columns.ts`   | Lightweight schema migrations (admin, role, phone…) |
+| `us-english.mjs`     | Rewrite British spellings on the authored surface   |
 
 ## Creating Scripts
 

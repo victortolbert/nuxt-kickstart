@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install dependencies first for better layer caching.
 # --ignore-scripts skips this repo's own lifecycle scripts (`postinstall` runs
-# `nuxt prepare` + the local `db:init`; `prepare` runs the dev-only `skilld`
+# `nuxt prepare` + the local `db:migrate`; `prepare` runs the dev-only `skilld`
 # CLI) — none of those can or should run before the sources are copied.
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 # A frozen-lockfile install is reproducible and already vetted in source
@@ -28,8 +28,8 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN printf '\nminimumReleaseAge: 0\n' >> pnpm-workspace.yaml
 RUN pnpm install --frozen-lockfile --ignore-scripts
 
-# Build. Production uses a remote Turso database, so `db:init` is intentionally
-# not run here (provision the schema against your Turso instance separately).
+# Build. Nothing touches a database here: the image migrates when it starts
+# (see CMD), against whatever TURSO_* the container is given.
 # Invoke the Nuxt binary directly instead of `pnpm run build`: pnpm 11 runs a
 # dependency-status check before scripts, which re-validates the lockfile
 # against the time-based release-age policy and fails for a build run within 24h
@@ -51,6 +51,13 @@ RUN for d in node_modules/.pnpm/@libsql+linux-*/node_modules/@libsql/*/; do \
       echo "bundled native binding: @libsql/$name"; \
     done
 
+# The migrator, bundled to plain ESM beside the server so the runtime image
+# needs no tsx. It resolves @libsql/client from the server bundle's own
+# node_modules, and reads the migration chain copied next to it.
+RUN node_modules/.bin/esbuild scripts/migrate.ts --bundle --platform=node --format=esm \
+      --external:@libsql/client --outfile=.output/server/migrate.mjs \
+    && cp -R server/db/migrations .output/server/migrations
+
 # --- Runtime: ship only the built server output ---
 FROM node:24-bookworm-slim AS runtime
 
@@ -64,11 +71,15 @@ COPY --from=build /app/.output .output
 
 # The DB layer falls back to a local SQLite file (file:.data/auth.db) when Turso
 # isn't configured. Create the directory so a bare `docker run` boots with an
-# ephemeral local database (tables are auto-created on first import). For
-# production set BOTH TURSO_DATABASE_URL and TURSO_AUTH_TOKEN to use a
-# persistent remote database instead.
+# ephemeral local database. For production set BOTH TURSO_DATABASE_URL and
+# TURSO_AUTH_TOKEN to use a persistent remote database instead.
 RUN mkdir -p .data
+
+ENV MIGRATIONS_DIR=/app/.output/server/migrations
 
 EXPOSE 3000
 
-CMD ["node", ".output/server/index.mjs"]
+# Migrate, then serve. A failed migration exits non-zero before the server
+# starts, so a half-migrated schema never takes traffic; a database already
+# current is a no-op, so every restart is safe.
+CMD ["sh", "-c", "node .output/server/migrate.mjs && exec node .output/server/index.mjs"]
