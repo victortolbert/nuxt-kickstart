@@ -1,8 +1,9 @@
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { redactSecret, scanContentForSecrets } from '../../shared/utils/content-secrets'
 import { contentDir, walk } from '../helpers/content-tree'
+import { layers } from '../helpers/layers'
 
 describe('scanContentForSecrets — credentials', () => {
   it('detects a Bitbucket access token', () => {
@@ -205,7 +206,14 @@ describe('redactSecret', () => {
 // above are the detector; this is the gate over the tree itself.
 describe('content/ carries no secrets', () => {
   const SCANNED_EXTENSIONS = ['.md', '.yml', '.yaml', '.json', '.csv']
-  const files = walk(contentDir).filter(file => SCANNED_EXTENSIONS.some(ext => file.endsWith(ext)))
+  const scanned = (dir: string, label: string) => walk(dir)
+    .filter(file => SCANNED_EXTENSIONS.some(ext => file.endsWith(ext)))
+    .map(file => ({ path: join(dir, file), label: `${label}/${file}` }))
+  // A layer's collections ship in the same public dump, so its content is scanned too.
+  const files = [
+    ...scanned(contentDir, 'content'),
+    ...layers().filter(layer => existsSync(layer.content)).flatMap(layer => scanned(layer.content, `layers/${layer.name}/content`)),
+  ]
 
   it('scans the content tree', () => {
     // A floor, not a count: catches the walk silently finding nothing.
@@ -214,8 +222,8 @@ describe('content/ carries no secrets', () => {
 
   it('finds no credential, real email address, or phone number', () => {
     const findings = files.flatMap(file =>
-      scanContentForSecrets(readFileSync(join(contentDir, file), 'utf-8'))
-        .map(f => `content/${file}:${f.line} [${f.rule}] ${f.match}`),
+      scanContentForSecrets(readFileSync(file.path, 'utf-8'))
+        .map(f => `${file.label}:${f.line} [${f.rule}] ${f.match}`),
     )
     expect(
       findings,

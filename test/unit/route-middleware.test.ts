@@ -21,6 +21,10 @@ vi.stubGlobal('navigateTo', navigateTo)
 vi.stubGlobal('navigateToPath', navigateTo)
 vi.stubGlobal('useRequestHeaders', useRequestHeaders)
 vi.stubGlobal('$fetch', $fetch)
+// The merged Protected path list (modules/layers.ts) reaches the global
+// middleware through public runtime config. Empty means "no layer added any".
+const publicConfig: { protectedPaths?: { protected: string[], public: string[], noindex: string[] } } = {}
+vi.stubGlobal('useRuntimeConfig', () => ({ public: publicConfig }))
 
 // Real Session Identity module (it reads $fetch/useRequestHeaders as globals
 // at call time, so the stubs above apply)
@@ -212,6 +216,26 @@ describe('app-auth global middleware', () => {
       path: '/login',
       query: { redirect: '/es/settings' },
     })
+  })
+
+  it('guards a prefix a layer contributed, read from runtime config', async () => {
+    const { resolveProtectedPaths } = await import('../../shared/utils/protected-paths')
+    const merged = resolveProtectedPaths([{ protected: ['/planner'] }])
+    publicConfig.protectedPaths = { protected: [...merged.protected], public: [...merged.public], noindex: [...merged.noindex] }
+    $fetch.mockResolvedValue(null)
+    const mw = await loadMiddleware('../../app/middleware/app-auth.global')
+
+    try {
+      await mw(route('/es/planner/today'))
+      expect(navigateTo).toHaveBeenCalledWith({ path: '/login', query: { redirect: '/es/planner/today' } })
+      // The base list still holds with the merged one in place.
+      navigateTo.mockClear()
+      await mw(route('/settings'))
+      expect(navigateTo).toHaveBeenCalled()
+    }
+    finally {
+      delete publicConfig.protectedPaths
+    }
   })
 
   it('lets authenticated users reach protected routes', async () => {

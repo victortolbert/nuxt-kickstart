@@ -1,7 +1,8 @@
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { contentDir, globToRegExp, walk } from '../helpers/content-tree'
+import { layers } from '../helpers/layers'
 
 // A markdown file under `content/` that no collection's source glob matches is
 // parsed, reported in the build's file count, and belongs to nothing: no route,
@@ -43,10 +44,10 @@ const EXPECTED_ORPHANS: Record<string, string> = {
  * uses: an inline `source: '<glob>'`, a `{ include: '<glob>' }` (alone or in a
  * source array), and `createCollectionSource('<glob>', '<name>')`.
  */
-function collectionGlobs(): string[] {
+function collectionGlobs(sources: string[]): string[] {
   const globs = new Set<string>()
-  for (const file of walk(schemasDir).filter(f => f.endsWith('.ts'))) {
-    const src = readFileSync(join(schemasDir, file), 'utf-8')
+  for (const file of sources) {
+    const src = readFileSync(file, 'utf-8')
     for (const [, glob] of src.matchAll(/include:\s*'([^']+)'/g))
       globs.add(glob!)
     for (const [, glob] of src.matchAll(/createCollectionSource\(\s*'([^']+)'/g))
@@ -57,9 +58,26 @@ function collectionGlobs(): string[] {
   return [...globs]
 }
 
-const globs = collectionGlobs()
+const globs = collectionGlobs(walk(schemasDir).filter(f => f.endsWith('.ts')).map(f => join(schemasDir, f)))
 const matchers = globs.map(globToRegExp)
 const isCollected = (path: string) => matchers.some(re => re.test(path))
+
+/**
+ * A layer's collections resolve their sources under the layer's own
+ * `content/`, so each layer is checked against the globs it declares — in its
+ * `content.config.ts` and anything beside it under `schemas/`.
+ */
+const layerTrees = layers()
+  .filter(layer => existsSync(layer.content))
+  .map((layer) => {
+    const schemaDir = join(layer.root, 'schemas')
+    const sources = [
+      ...(layer.contentConfig ? [layer.contentConfig] : []),
+      ...(existsSync(schemaDir) ? walk(schemaDir).filter(f => f.endsWith('.ts')).map(f => join(schemaDir, f)) : []),
+    ]
+    const res = collectionGlobs(sources).map(globToRegExp)
+    return { name: layer.name, content: layer.content, isCollected: (path: string) => res.some(re => re.test(path)) }
+  })
 
 describe('content collection coverage', () => {
   // Without these the suite passes when the extractor finds nothing and when the
@@ -103,6 +121,13 @@ describe('content collection coverage', () => {
       + 'and fail silently. Add a collection source that matches them, move them '
       + 'under one that already does, or record them in EXPECTED_ORPHANS with a reason.',
     ).toEqual([])
+  })
+
+  it('every markdown file under a layer\'s content/ belongs to one of its collections', () => {
+    const orphans = layerTrees.flatMap(tree => walk(tree.content)
+      .filter(file => file.endsWith('.md') && !tree.isCollected(file))
+      .map(file => `layers/${tree.name}/content/${file}`))
+    expect(orphans, 'A layer\'s content renders only through the collections the layer defines.').toEqual([])
   })
 
   it('every recorded exception still exists and is still an orphan', () => {

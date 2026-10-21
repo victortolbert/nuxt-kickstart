@@ -66,6 +66,75 @@ export const NOINDEX_PATH_PREFIXES: readonly string[] = [
 ]
 
 /**
+ * What a layer adds to the lists above, from its own `nuxt.config.ts` under the
+ * `protectedPaths` key — never by editing this file. Each field extends the
+ * matching base list: `protected` → `PROTECTED_PATH_PREFIXES`, `public` →
+ * `PUBLIC_PATH_EXCEPTIONS`, `pageGated` → `PAGE_GATED_PATH_PREFIXES`,
+ * `unindexed` → `UNINDEXED_PATH_PREFIXES`.
+ */
+export interface ProtectedPathsContribution {
+  protected?: readonly string[]
+  public?: readonly string[]
+  pageGated?: readonly string[]
+  unindexed?: readonly string[]
+}
+
+/** The base lists and every layer's contributions, merged. */
+export interface ProtectedPaths {
+  /** Gated by the global middleware. */
+  protected: readonly string[]
+  /** Open inside an otherwise-gated prefix. */
+  public: readonly string[]
+  /** Left out of the sitemap and marked noindex. */
+  noindex: readonly string[]
+}
+
+const ROUTE_PREFIX = /^(?:\/[\w.~-]+)+$/
+
+function checkedPrefixes(prefixes: readonly string[] | undefined): string[] {
+  for (const prefix of prefixes ?? []) {
+    // `/` would gate every route; a trailing slash or a missing leading one
+    // would gate none. Either is a typo that fails open or closed silently.
+    if (!ROUTE_PREFIX.test(prefix))
+      throw new Error(`protectedPaths: "${prefix}" is not a route prefix (expected a form like "/planner")`)
+  }
+  return [...(prefixes ?? [])]
+}
+
+const unique = (values: readonly string[]): string[] => [...new Set(values)]
+
+/**
+ * Merge the base lists with what each layer contributes. `nuxt.config.ts`
+ * calls this once with every layer's `protectedPaths`, and hands the result
+ * to the middleware (through runtime config), the sitemap and the route rules.
+ * A malformed prefix throws, so the build stops rather than shipping a gate
+ * that matches nothing.
+ */
+export function resolveProtectedPaths(contributions: readonly ProtectedPathsContribution[]): ProtectedPaths {
+  const extra = contributions.map(c => ({
+    protected: checkedPrefixes(c.protected),
+    public: checkedPrefixes(c.public),
+    pageGated: checkedPrefixes(c.pageGated),
+    unindexed: checkedPrefixes(c.unindexed),
+  }))
+  const protectedPrefixes = unique([...PROTECTED_PATH_PREFIXES, ...extra.flatMap(c => c.protected)])
+  return {
+    protected: protectedPrefixes,
+    public: unique([...PUBLIC_PATH_EXCEPTIONS, ...extra.flatMap(c => c.public)]),
+    noindex: unique([
+      ...protectedPrefixes,
+      ...PAGE_GATED_PATH_PREFIXES,
+      ...extra.flatMap(c => c.pageGated),
+      ...UNINDEXED_PATH_PREFIXES,
+      ...extra.flatMap(c => c.unindexed),
+    ]),
+  }
+}
+
+/** The base lists alone: what every surface reads when it is given no merged list. */
+const BASE_PATHS: ProtectedPaths = resolveProtectedPaths([])
+
+/**
  * Whether a route path is one of the prefixes or inside one, by whole
  * segment: `/app` covers `/app` and `/app/admin`, never `/appearance` or
  * `/apps`.
@@ -95,19 +164,27 @@ export function stripLocalePrefix(path: string, locales: readonly string[] = LOC
  * global middleware makes. It strips the locale before matching, because the
  * list is written unprefixed and `/es/settings` starts with none of it.
  */
-export function isProtectedPath(path: string, locales: readonly string[] = LOCALE_CODES): boolean {
+export function isProtectedPath(
+  path: string,
+  locales: readonly string[] = LOCALE_CODES,
+  paths: ProtectedPaths = BASE_PATHS,
+): boolean {
   const unlocalized = stripLocalePrefix(path, locales)
-  if (startsWithAnySegment(unlocalized, PUBLIC_PATH_EXCEPTIONS))
+  if (startsWithAnySegment(unlocalized, paths.public))
     return false
-  return startsWithAnySegment(unlocalized, PROTECTED_PATH_PREFIXES)
+  return startsWithAnySegment(unlocalized, paths.protected)
 }
 
 /** Whether a path is left out of the sitemap and marked noindex. */
-export function isNoindexPath(path: string, locales: readonly string[] = LOCALE_CODES): boolean {
+export function isNoindexPath(
+  path: string,
+  locales: readonly string[] = LOCALE_CODES,
+  paths: ProtectedPaths = BASE_PATHS,
+): boolean {
   const unlocalized = stripLocalePrefix(path, locales)
-  if (startsWithAnySegment(unlocalized, PUBLIC_PATH_EXCEPTIONS))
+  if (startsWithAnySegment(unlocalized, paths.public))
     return false
-  return startsWithAnySegment(unlocalized, NOINDEX_PATH_PREFIXES)
+  return startsWithAnySegment(unlocalized, paths.noindex)
 }
 
 function escapeRegExp(value: string): string {
@@ -123,10 +200,11 @@ function escapeRegExp(value: string): string {
 export function sitemapExcludePatterns(
   prefixes: readonly string[] = NOINDEX_PATH_PREFIXES,
   locales: readonly string[] = LOCALE_CODES,
+  exceptions: readonly string[] = PUBLIC_PATH_EXCEPTIONS,
 ): RegExp[] {
   const locale = `(?:/(?:${locales.map(escapeRegExp).join('|')}))?`
   return prefixes.map((prefix) => {
-    const carveOuts = PUBLIC_PATH_EXCEPTIONS
+    const carveOuts = exceptions
       .filter(exception => exception.startsWith(`${prefix}/`))
       .map(exception => `(?!${escapeRegExp(exception.slice(prefix.length))}(?:/|$))`)
       .join('')
@@ -143,13 +221,14 @@ export function sitemapExcludePatterns(
  */
 export function noindexRouteRules(
   prefixes: readonly string[] = NOINDEX_PATH_PREFIXES,
+  exceptions: readonly string[] = PUBLIC_PATH_EXCEPTIONS,
 ): Record<string, { robots: boolean }> {
   const rules: Record<string, { robots: boolean }> = {}
   for (const prefix of prefixes) {
     rules[prefix] = { robots: false }
     rules[`${prefix}/**`] = { robots: false }
   }
-  for (const exception of PUBLIC_PATH_EXCEPTIONS)
+  for (const exception of exceptions)
     rules[exception] = { robots: true }
   return rules
 }
