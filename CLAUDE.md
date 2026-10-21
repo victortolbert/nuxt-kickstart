@@ -9,8 +9,9 @@ Kickstart (`nuxt-kickstart`): an opinionated, content-first enterprise starter o
 ## Development Commands
 
 ```bash
-pnpm install           # Install deps (postinstall runs nuxt prepare + db:init)
-pnpm run db:init       # Initialize local SQLite auth DB (first-time setup)
+pnpm install           # Install deps (postinstall runs nuxt prepare + db:migrate)
+pnpm run db:migrate    # Apply pending migrations (local SQLite, or Turso via TURSO_*)
+pnpm run db:generate   # After a schema edit: write the migration, then commit it
 pnpm dev:op            # Dev server with secrets resolved from 1Password (preferred)
 pnpm dev               # Dev server without op (plaintext .env — no live secrets)
 pnpm run build         # Production build (8GB heap)
@@ -32,7 +33,7 @@ pnpm run test test/unit/case.test.ts        # one file
 pnpm run test -t "converts kebab-case"      # by test name
 ```
 
-Run `pnpm nuxi prepare` after clone to generate `.nuxt/`. Run `pnpm run db:init` to create the local database tables.
+Run `pnpm nuxi prepare` after clone to generate `.nuxt/`. Run `pnpm run db:migrate` to create or update the local database.
 
 ## Code Style
 
@@ -98,6 +99,22 @@ Localized content lives under per-locale folders (`content/en/`, `content/es/`).
 - **Case**: kebab-case for storage/slugs. Title Case for display via `formatLabel()`/`formatTag()`
 - Case utilities auto-imported from `shared/utils/case.ts`
 
+## Layers & Search
+
+An optional module is a Nuxt layer folder, `layers/<module>/`, auto-registered by Nuxt. It arrives as a folder and leaves by deleting it; **a layer never edits base files**. The full convention is the Layers guide (`content/en/guides/layers.md`, `/guides/layers`). A layer may contribute:
+
+- **Tables**: `layers/<module>/server/db/schema.ts` (see Database; migrations live in the base chain)
+- **Collections**: its own `content.config.ts`, sources under `layers/<module>/content/` — Nuxt Content merges them
+- **Search registrations**: `search.collections` in `layers/<module>/app/app.config.ts` — app config arrays concatenate across layers
+- **Locale messages**: `layers/<module>/i18n/locales/{en,es}.json`, declared in its `nuxt.config.ts` `i18n.locales`; parity enforced by `locale-messages.test.ts`; a machine-translated file carries `translation.machineTranslated: "true"`
+- **Protected paths**: `protectedPaths: { protected, public, pageGated, unindexed }` in its `nuxt.config.ts`; `modules/layers.ts` merges them into the middleware (via `runtimeConfig.public.protectedPaths`), the sitemap excludes and the noindex route rules
+- **Routes**, components, server routes — native layer merging
+- **Semantic icons** still go in `app/utils/icon-sets.ts` with all five collections
+
+The content-integrity specs (schema validation, collection coverage, secrets, US English) read every layer's content and messages too (`test/helpers/layers.ts`).
+
+**Search registry** (`shared/utils/search-registry.ts`): a collection is searchable when some app config registers it under `search.collections` with the `fields` to match and optional `roles` (`title`, `body`, `aliases`) and `localized`. The template registers guides, posts, tech and blocks in `app/app.config.ts`. There is **no other list of searchable collections** — `/api/search` (`server/api/search.get.ts`), the ⌘K palette, and later the AI and MCP layers all read this one. The route selects the visibility fields, filters through `canViewContent` for `getRequestViewer(event)`, drops what it cannot place, survives a failing collection, and returns locale-correct paths; `test/unit/search-route.test.ts` is the tier matrix.
+
 ## Nuxt UI v4 (CRITICAL)
 
 This project uses **Nuxt UI v4** (`@nuxt/ui` 4.x) with breaking changes from v2. **Always confirm a component's v4 API before writing Nuxt UI code** — v2 patterns break silently rather than erroring.
@@ -161,13 +178,15 @@ Using v2 patterns causes empty modals, empty selects, accessibility warnings, an
 
 ## Database
 
-- **Core DB** (`server/db/` schema + `server/utils/db.ts` client) — the canonical app/auth database. **ORM**: `drizzle-orm` over **libSQL / Turso** (SQLite). Schema: `server/db/schema.ts` (the only schema drizzle-kit migrates — `drizzle.config.ts`). Better Auth and app code share this one connection (see note in `server/auth.ts`). Dev: `file:.data/auth.db`; prod: Turso via `TURSO_DATABASE_URL` + `TURSO_AUTH_TOKEN`. `pnpm run db:init` (`scripts/init-better-auth-db.ts`) creates local tables; column-adding migrations are `scripts/add-*-columns.ts`.
+- **Core DB** (`server/db/` schema + `server/utils/db.ts` client) — the canonical app/auth database. **ORM**: `drizzle-orm` over **libSQL / Turso** (SQLite). Better Auth and app code share this one connection (see note in `server/auth.ts`). Dev: `file:.data/auth.db`; prod: Turso via `TURSO_DATABASE_URL` + `TURSO_AUTH_TOKEN`.
+- **Migrations are the only way the schema changes** (ADR-0010). Edit the schema, run `pnpm run db:generate`, commit the migration it writes to `server/db/migrations/` with the edit. `test/unit/db-schema-files.test.ts` fails when they disagree. `pnpm run db:migrate` (`scripts/migrate.ts` → `server/db/migrate.ts`) applies pending migrations in one batch, on install and before the Docker server starts; it adopts a database the retired `db:init` script made (no journal) by recording the migrations it already satisfies. Never hand-write DDL, `drizzle-kit push`, or add a table-creating script.
+- drizzle-kit reads `server/db/schema.ts` plus every `layers/*/server/db/schema.ts` (`server/db/schema-files.ts`), into the one chain. When a layer is deleted, do **not** commit the migration that drops its tables: they stay, inert.
 
 ## i18n
 
 Locales: en (default), es. Strategy: `prefix_except_default`. Message files: `i18n/locales/*.json`. Namespaces: `nav.*`, `common.*`, `search.*`, `theme.*`, `auth.*`, `locale.*`, `translation.*`, `appearance.*`.
 
-Localized collections: `guides` ships en + es sources in one collection (see `app/utils/localized-collection.ts` for locale-preferred selection and URLs); `posts` follows the same `en/` folder convention, ready for more locales. Mark auto-translated content with `machineTranslated: true`. Locale persistence key: `localStorage['kickstart-locale']`.
+Localized collections: `guides` ships en + es sources in one collection (see `shared/utils/localized-collection.ts` for locale-preferred selection and URLs); `posts` follows the same `en/` folder convention, ready for more locales. Mark auto-translated content with `machineTranslated: true`. Locale persistence key: `localStorage['kickstart-locale']`.
 
 ## UI Development Workflow
 

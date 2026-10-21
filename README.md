@@ -94,13 +94,13 @@ BETTER_AUTH_SECRET=your-secret-here  # openssl rand -base64 32
 BETTER_AUTH_URL=http://localhost:3000
 ```
 
-### 3. Initialize Database
+### 3. Migrate the Database
 
 ```bash
-pnpm run db:init
+pnpm run db:migrate
 ```
 
-This creates the Better Auth tables (user, session, account, verification) in `.data/auth.db`. Only needed on first setup or after deleting `.data/`.
+`pnpm install` already ran this. It applies the migrations in `server/db/migrations/` to `.data/auth.db`, creating it on first run. Run it again after pulling a schema change, or after deleting `.data/`. A database made by the old `db:init` script is adopted onto the migration chain the first time, with its rows kept.
 
 ### 4. Start Development
 
@@ -317,7 +317,7 @@ docker build -t kickstart .
 docker run -p 3000:3000 --env-file .env kickstart
 ```
 
-Then visit `http://localhost:3000`. With no database configured the container boots with an **ephemeral local SQLite** DB (tables auto-created on first request) — handy for a quick try, but it resets on restart. For production, configure Turso (below).
+Then visit `http://localhost:3000`. With no database configured the container boots with an **ephemeral local SQLite** DB (migrated on start) — handy for a quick try, but it resets on restart. For production, configure Turso (below).
 
 **Required env vars** (pass with `--env-file .env` or individual `-e` flags):
 
@@ -335,7 +335,7 @@ Optional, per feature: `RESEND_API_KEY` (magic link / email OTP), `NUXT_OAUTH_GI
 
 <!-- -->
 
-> **Database schema:** the image does not run `db:init`. The local fallback auto-creates its tables, but a Turso database must be provisioned separately before first boot — run `TURSO_DATABASE_URL=… TURSO_AUTH_TOKEN=… pnpm run db:init` from your machine (both variables in the same command; `scripts/init-better-auth-db.ts` falls back to local SQLite without them). Column-adding migrations are the `scripts/add-*-columns.ts` scripts, run the same way.
+> **Database schema:** the container runs `db:migrate` before it starts the server, against the `TURSO_*` database it is given (or the ephemeral local file). A failed migration stops the container before it serves anything; a database already current is a no-op, so restarts are safe. To migrate Turso from your machine instead, run `TURSO_DATABASE_URL=… TURSO_AUTH_TOKEN=… pnpm run db:migrate` (both variables in the same command, or it migrates the local file).
 
 <!-- -->
 

@@ -12,7 +12,7 @@ if [ ! -f .env ]; then
   echo "Created .env from .env.example (with generated BETTER_AUTH_SECRET)"
 fi
 
-# Install dependencies (postinstall runs `nuxt prepare` + local `db:init`)
+# Install dependencies (postinstall runs `nuxt prepare` + local `db:migrate`)
 pnpm install
 
 echo "Dev container ready. Run 'pnpm dev' to start."

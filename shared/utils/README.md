@@ -13,7 +13,9 @@ also importable via `#shared/utils/*`.
 | `content-source.ts`      | Content source/path helpers                   |
 | `content-visibility.ts`  | Visibility rules: `canViewContent`, wilted, review gate, sitemap entry |
 | `navigation-visibility.ts` | Navigation rules over the same viewer       |
-| `protected-paths.ts`     | Gated routes: middleware, sitemap, robots     |
+| `protected-paths.ts`     | Gated routes: middleware, sitemap, robots; merges layer contributions |
+| `search-registry.ts`     | Search registry: which collections search covers, matching, results |
+| `localized-collection.ts` | Locale-preferred content entries + URLs (pure) |
 
 ## Case Utilities
 

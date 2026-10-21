@@ -31,7 +31,7 @@ Kickstart (`nuxt-kickstart`) is an opinionated, content-first enterprise starter
 git clone <your-repository-url>
 cd <your-project>
 
-# 2. Install dependencies (postinstall runs nuxt prepare + db:init)
+# 2. Install dependencies (postinstall runs nuxt prepare + db:migrate)
 pnpm install
 
 # 3. Rename the template tokens to your project
@@ -51,12 +51,12 @@ pnpm exec playwright install chromium
 
 A few things worth knowing about that order:
 
-- `pnpm install` runs `nuxt prepare && pnpm run db:init` for you. `nuxt prepare`
-  has to go first — it creates the gitignored `.data/` directory that `db:init`
-  writes `auth.db` into. Running `pnpm run db:init` on its own in a fresh clone
-  fails with `Unable to open connection to local database .data/auth.db`.
+- `pnpm install` runs `nuxt prepare && pnpm run db:migrate` for you. The
+  migrate step applies `server/db/migrations/` to `.data/auth.db`, creating the
+  file on first run, and does nothing when the database is already current — so
+  re-running `pnpm install` after pulling a schema change keeps sign-in working.
 - Because step 2 runs before step 4, the database is created against the local
-  SQLite default. If you later point the app at Turso, re-run `db:init` with the
+  SQLite default. If you later point the app at Turso, run `db:migrate` with the
   `TURSO_*` variables set — see the [Deployment guide](/guides/deployment).
 - `pnpm install` does **not** download Playwright browsers, so step 6 is
   required before `pnpm run test:e2e` will run.

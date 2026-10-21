@@ -82,8 +82,7 @@ pnpm build:op    # op run --env-file=.env.1password -- (8GB heap) nuxt build
 For one-off scripts:
 
 ```bash
-op run --env-file=.env.1password -- pnpm exec tsx scripts/init-better-auth-db.ts
-op run --env-file=.env.1password -- pnpm exec drizzle-kit push
+op run --env-file=.env.1password -- pnpm run db:migrate
 ```
 
 First run prompts for biometric unlock; subsequent runs within the unlock window are silent.
