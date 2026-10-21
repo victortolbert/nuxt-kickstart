@@ -49,7 +49,7 @@ async function initDb() {
 }
 
 // Initialize on module load with automatic fallback
-export const dbReady = initDb().catch((err) => {
+void initDb().catch((err) => {
   // Check if this is a certificate or connection error
   const errorMsg = err instanceof Error ? err.message : String(err)
   const isCertError = errorMsg.includes('certificate') || errorMsg.includes('ECONNREFUSED') || errorMsg.includes('ETIMEDOUT')

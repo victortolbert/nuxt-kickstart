@@ -19,7 +19,7 @@ import { z } from 'zod'
 export interface SearchableCollection {
   /** The Nuxt Content collection name. */
   collection: string
-  /** The fields a query is matched against. Each is selected from the collection. */
+  /** The fields a query is matched against. Each is selected from the collection; so is any field a role names, which is matched too. */
   fields: string[]
   /**
    * Which field plays which part in a result. `title` defaults to `title` and
@@ -99,10 +99,15 @@ export function resolveRegistry(entries: unknown): SearchableCollection[] {
   return registry
 }
 
-/** Every field a registration needs selected: its match fields, its roles, and the visibility fields. */
-export function selectedFields(entry: SearchableCollection): string[] {
+/** The fields a query is matched against: the registered ones plus any field named in a role. */
+export function matchFields(entry: SearchableCollection): string[] {
   const roles = Object.values(entry.roles ?? {}).filter((field): field is string => !!field)
-  return [...new Set([...entry.fields, ...roles, ...VISIBILITY_FIELDS])]
+  return [...new Set([...entry.fields, ...roles])]
+}
+
+/** Every field a registration needs selected: its match fields and the visibility fields. */
+export function selectedFields(entry: SearchableCollection): string[] {
+  return [...new Set([...matchFields(entry), ...VISIBILITY_FIELDS])]
 }
 
 /** The lowercase terms of a query; empty for a blank one. */
@@ -136,13 +141,15 @@ export function matchScore(row: Record<string, unknown>, entry: SearchableCollec
   if (!terms.length)
     return 0
 
+  // A field named in a role is matched whether or not `fields` repeats it.
+  const matched = matchFields(entry)
   const titleField = entry.roles?.title ?? 'title'
   const aliasField = entry.roles?.aliases
-  const prominent = entry.fields
+  const prominent = matched
     .filter(field => field === titleField || field === aliasField)
     .map(field => textOf(row[field]).toLowerCase())
     .join(' ')
-  const rest = entry.fields
+  const rest = matched
     .filter(field => field !== titleField && field !== aliasField)
     .map(field => textOf(row[field]).toLowerCase())
     .join(' ')

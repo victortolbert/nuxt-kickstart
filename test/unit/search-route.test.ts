@@ -177,6 +177,16 @@ describe('/api/search and the registry', () => {
     expect(hit?.description).toBe('A responsibility matrix')
   })
 
+  it('matches on a field named only in its roles', async () => {
+    registry = [{ collection: 'glossary', fields: ['title'], roles: { aliases: 'aliases', body: 'definitions' } }]
+    store.glossary = [
+      { title: 'RACI', path: '/glossary/raci', visibility: 'public', definitions: ['A responsibility matrix'], aliases: ['Responsible, Accountable'] },
+    ]
+
+    expect(paths(await search(VISITOR, 'accountable'))).toEqual(['/glossary/raci'])
+    expect(paths(await search(VISITOR, 'matrix'))).toEqual(['/glossary/raci'])
+  })
+
   it('does not match on a field the collection did not register', async () => {
     registry = [{ collection: 'posts', fields: ['title'] }]
     store.posts = [{ title: 'Hello', path: '/posts/hello', visibility: 'public', description: 'about ledgers' }]

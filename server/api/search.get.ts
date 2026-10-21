@@ -39,7 +39,9 @@ const MAX_RESULTS = 50
 /** Longer than any honest query; bounds the work a request can ask for. */
 const MAX_QUERY_LENGTH = 200
 
-type Row = Record<string, unknown> & { path?: string }
+interface Row extends Record<string, unknown> {
+  path?: string
+}
 
 function requestedLocale(value: unknown): string {
   return typeof value === 'string' && (LOCALE_CODES as readonly string[]).includes(value) ? value : 'en'

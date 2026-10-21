@@ -4,6 +4,7 @@ import { join } from 'node:path'
 import { drizzle } from 'drizzle-orm/libsql'
 import { migrate } from 'drizzle-orm/libsql/migrator'
 import { readMigrationFiles } from 'drizzle-orm/migrator'
+import { z } from 'zod'
 
 /**
  * Bring a database onto the migration chain in `server/db/migrations/`.
@@ -36,24 +37,34 @@ export interface MigrateReport {
   applied: string[]
 }
 
-interface JournalEntry {
-  idx: number
-  when: number
-  tag: string
-}
+// Only the parts of drizzle-kit's metadata this module reads. Parsed, so a
+// hand-edited or truncated file fails here with its path, not deep inside
+// adoption with an undefined property.
+const journalSchema = z.object({
+  entries: z.array(z.object({ idx: z.number(), when: z.number(), tag: z.string() })),
+})
 
-interface Snapshot {
-  tables: Record<string, { columns: Record<string, unknown> }>
+const snapshotSchema = z.object({
+  tables: z.record(z.string(), z.object({ columns: z.record(z.string(), z.unknown()) })),
+})
+
+type JournalEntry = z.infer<typeof journalSchema>['entries'][number]
+type Snapshot = z.infer<typeof snapshotSchema>
+
+function readMeta<T>(file: string, schema: z.ZodType<T>): T {
+  const parsed = schema.safeParse(JSON.parse(readFileSync(file, 'utf8')))
+  if (!parsed.success)
+    throw new Error(`${file} is not drizzle-kit migration metadata: ${parsed.error.message}`)
+  return parsed.data
 }
 
 function readJournal(migrationsDir: string): JournalEntry[] {
-  const journal = JSON.parse(readFileSync(join(migrationsDir, 'meta/_journal.json'), 'utf8')) as { entries: JournalEntry[] }
-  return journal.entries
+  return readMeta(join(migrationsDir, 'meta/_journal.json'), journalSchema).entries
 }
 
 function readSnapshot(migrationsDir: string, entry: JournalEntry): Snapshot {
   const prefix = entry.tag.split('_')[0]
-  return JSON.parse(readFileSync(join(migrationsDir, 'meta', `${prefix}_snapshot.json`), 'utf8')) as Snapshot
+  return readMeta(join(migrationsDir, 'meta', `${prefix}_snapshot.json`), snapshotSchema)
 }
 
 /** Table name → column names, as the database has them now. */
@@ -92,14 +103,15 @@ async function adopt(client: Client, migrationsDir: string, shape: Map<string, S
   const entries = readJournal(migrationsDir)
   const files = readMigrationFiles({ migrationsFolder: migrationsDir })
 
-  let through = -1
+  // The index of the last migration the database already satisfies.
+  let adoptedThrough = -1
   for (const [i, entry] of entries.entries()) {
     if (!satisfies(shape, readSnapshot(migrationsDir, entry)))
       break
-    through = i
+    adoptedThrough = i
   }
 
-  if (through < 0) {
+  if (adoptedThrough < 0) {
     const missing = BASELINE_TABLES.filter(table => !shape.has(table))
     throw new Error(
       `Refusing to adopt this database: it has no migration journal and does not match the baseline `
@@ -110,13 +122,13 @@ async function adopt(client: Client, migrationsDir: string, shape: Map<string, S
 
   await client.batch([
     `CREATE TABLE IF NOT EXISTS ${JOURNAL_TABLE} (id SERIAL PRIMARY KEY, hash text NOT NULL, created_at numeric)`,
-    ...files.slice(0, through + 1).map(file => ({
+    ...files.slice(0, adoptedThrough + 1).map(file => ({
       sql: `INSERT INTO ${JOURNAL_TABLE} ("hash", "created_at") VALUES (?, ?)`,
       args: [file.hash, file.folderMillis],
     })),
   ], 'write')
 
-  return entries.slice(0, through + 1).map(entry => entry.tag)
+  return entries.slice(0, adoptedThrough + 1).map(entry => entry.tag)
 }
 
 async function appliedSince(client: Client, before: number): Promise<number[]> {

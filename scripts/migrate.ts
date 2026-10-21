@@ -52,7 +52,9 @@ main().then(
   // would hang whatever is chained after this command.
   () => process.exit(0),
   (error) => {
-    console.error('✗ Migration failed; the database was left as it was:', error)
+    // The pending migrations run as one batch, so none of them landed. An
+    // adoption recorded on this run is kept: it describes the database truly.
+    console.error('✗ Migration failed; no pending migration was applied:', error)
     process.exit(1)
   },
 )

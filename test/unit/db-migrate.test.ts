@@ -4,6 +4,8 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createClient } from '@libsql/client'
+import { generateSQLiteDrizzleJson, generateSQLiteMigration } from 'drizzle-kit/api'
+import { sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { afterEach, describe, expect, it } from 'vitest'
 import { migrateDatabase } from '../../server/db/migrate'
 
@@ -135,6 +137,36 @@ describe('db:migrate', () => {
 
     expect(report.applied).toEqual(['9000_notes'])
     expect(await tables(client)).toContain('note')
+  })
+
+  it('creates a layer\'s table from the migration generated off its schema file', async () => {
+    // What `db:generate` writes for a layer's schema file, applied the way a
+    // deploy applies it: the table appears in the database.
+    const empty = await generateSQLiteDrizzleJson({})
+    const withLayer = await generateSQLiteDrizzleJson({
+      note: sqliteTable('planner_note', { id: text('id').primaryKey(), body: text('body') }),
+    })
+    const statements = await generateSQLiteMigration(empty, withLayer)
+    const client = openDatabase()
+
+    await migrateDatabase(client, chainWith([{ tag: '9000_planner', sql: statements.join('\n--> statement-breakpoint\n') }]))
+
+    expect(await tables(client)).toContain('planner_note')
+    expect(await columns(client, 'planner_note')).toEqual(['id', 'body'])
+  })
+
+  it('leaves a deleted layer\'s table alone, and migrates around it', async () => {
+    // The layer is gone from the chain this run reads; its table is not.
+    const client = await initScriptDatabase()
+    await client.execute(`CREATE TABLE planner_note (id TEXT PRIMARY KEY, body TEXT)`)
+    await client.execute(`INSERT INTO planner_note (id, body) VALUES ('n1', 'kept')`)
+
+    const report = await migrateDatabase(client, MIGRATIONS)
+    await migrateDatabase(client, MIGRATIONS)
+
+    expect(report.recorded).toEqual(['0000_baseline'])
+    const { rows } = await client.execute('SELECT body FROM planner_note')
+    expect(rows.map(r => r.body)).toEqual(['kept'])
   })
 
   it('fails and leaves the database untouched when a migration fails', async () => {
