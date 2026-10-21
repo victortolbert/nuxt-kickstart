@@ -6,7 +6,7 @@ export const guides = defineCollection({
   type: 'page',
   // Both locales live in one collection; paths keep their locale prefix
   // (/en/guides/*, /es/guides/*) so pages can resolve the current locale
-  // with an English fallback. See app/utils/localized-collection.ts.
+  // with an English fallback. See shared/utils/localized-collection.ts.
   // Add a source entry here when adding a locale.
   source: [
     { include: 'en/guides/**/*.md' },

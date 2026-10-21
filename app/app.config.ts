@@ -60,4 +60,16 @@ export default defineAppConfig({
     branch: 'main',
     basePath: '',
   },
+  // The search registry (`#shared/utils/search-registry`): the template's own
+  // searchable collections. A layer registers its collections the same way in
+  // its own app config; Nuxt concatenates the arrays across layers, so nothing
+  // here changes when one is added or deleted.
+  search: {
+    collections: [
+      { collection: 'guides', fields: ['title', 'description', 'tags'], localized: true },
+      { collection: 'posts', fields: ['title', 'description', 'tags'] },
+      { collection: 'tech', fields: ['title', 'displayName', 'description', 'aliases'], roles: { aliases: 'aliases' } },
+      { collection: 'blocks', fields: ['title', 'description', 'jobsToBeDone'] },
+    ],
+  },
 } as Parameters<typeof defineAppConfig>[0])

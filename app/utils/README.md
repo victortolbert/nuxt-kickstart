@@ -9,7 +9,6 @@ Pure utility functions, auto-imported globally.
 | `tech-config.ts`          | Tech stack brand colors, icons, labels           |
 | `icon-sets.ts`            | Semantic icon registry: every name maps to all 5 collections (verified against @iconify-json); consumed via `resolveIcon()` |
 | `garden-status.ts`        | Source of truth for content lifecycle statuses (seed/sprout/evergreen/wilted): color, icon, CSS-var per status — used by badges, filters, charts |
-| `localized-collection.ts` | Locale-preferred content entries + URLs (pure)   |
 | `session-identity.ts`     | Awaitable Session Identity for route middleware  |
 | `navigate.ts`             | Navigation helpers                               |
 | `ui-locale.ts`            | Maps app locales to Nuxt UI locale messages      |

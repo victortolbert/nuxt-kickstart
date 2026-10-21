@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { localizedContentUrl, pickLocalizedEntries } from '../../app/utils/localized-collection'
+import { localizedContentUrl, pickLocalizedEntries } from '../../shared/utils/localized-collection'
 
 describe('localized collection (pure helpers)', () => {
   const entries = [
