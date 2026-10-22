@@ -39,3 +39,9 @@ skills:
     source: "https://github.com/nuxt/nuxt/tree/v4.5.2/docs"
     syncedAt: 2026-08-17
     generator: skilld
+  nuxt-og-image:
+    packageName: nuxt-og-image
+    version: 6.10.4
+    source: shipped
+    syncedAt: 2026-10-20
+    generator: skilld

@@ -228,6 +228,10 @@ export const US_ENGLISH_GLOBS = [
   'content/**/*.{md,yml}',
   'docs/**/*.md',
   '*.{md,ts,mjs}',
+  // A layer is authored here too: its code, its content, its English messages.
+  'layers/*/**/*.{ts,vue,css,md,yml}',
+  'layers/*/i18n/locales/en.json',
+  'modules/**/*.ts',
 ]
 
 /**

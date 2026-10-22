@@ -27,7 +27,7 @@
     "build:op": "op run --env-file=.env.1password -- NODE_OPTIONS='--max-old-space-size=8192' nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare && pnpm run db:init",
+    "postinstall": "nuxt prepare && pnpm run db:migrate",
     "prepare": "skilld update -b && simple-git-hooks",
     "clean": "rm -rf .nuxt .output dist .cache .data/content",
     "clean:content": "rm -rf .data/content",
@@ -46,7 +46,8 @@
     "typecheck": "nuxt typecheck",
     "changelog": "changelogithub --dry",
     "init": "pnpm exec tsx scripts/init.ts",
-    "db:init": "pnpm exec tsx scripts/init-better-auth-db.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx scripts/migrate.ts",
     "lint:md": "markdownlint .",
     "lint:md:fix": "markdownlint --fix ."
   },

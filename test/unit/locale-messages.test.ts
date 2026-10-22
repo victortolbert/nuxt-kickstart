@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
+import { layers } from '../helpers/layers'
 
 const LOCALES_DIR = resolve(__dirname, '../../i18n/locales')
 const SUPPORTED_LOCALES = ['en', 'es'] as const
@@ -134,5 +135,59 @@ describe('locale message files', () => {
         }
       }
     })
+  })
+})
+
+/** Every leaf key of a message tree, as a dotted path. */
+function leafKeys(tree: unknown, prefix = ''): string[] {
+  if (!tree || typeof tree !== 'object')
+    return [prefix]
+  return Object.entries(tree).flatMap(([key, value]) => leafKeys(value, prefix ? `${prefix}.${key}` : key))
+}
+
+function readMessages(file: string): unknown {
+  return JSON.parse(readFileSync(file, 'utf-8'))
+}
+
+/**
+ * A layer ships its own messages in `layers/<name>/i18n/locales/`, merged into
+ * the app's by @nuxtjs/i18n and deleted with the folder. They are held to the
+ * same parity as the base files, in both directions, so a string added in one
+ * locale is never missing from the other.
+ *
+ * A machine-translated file says so in the same place the guides do it — a
+ * flag the reader can see — here as `translation.machineTranslated: "true"`
+ * (vue-i18n messages are strings). English is the authoring locale and never
+ * carries it.
+ */
+describe('layer locale messages', () => {
+  const localized = layers().filter(layer => layer.locales)
+
+  it.each(localized.map(layer => [layer.name, layer.locales!] as const))('%s ships every supported locale', (_name, dir) => {
+    for (const locale of SUPPORTED_LOCALES)
+      expect(existsSync(resolve(dir, `${locale}.json`)), `${dir}/${locale}.json`).toBe(true)
+  })
+
+  it.each(localized.map(layer => [layer.name, layer.locales!] as const))('%s has the same keys in every locale', (_name, dir) => {
+    const english = leafKeys(readMessages(resolve(dir, 'en.json'))).filter(key => key !== 'translation.machineTranslated').sort()
+    for (const locale of SUPPORTED_LOCALES.filter(l => l !== 'en')) {
+      const keys = leafKeys(readMessages(resolve(dir, `${locale}.json`))).filter(key => key !== 'translation.machineTranslated').sort()
+      expect(keys, `${dir}/${locale}.json`).toEqual(english)
+    }
+  })
+
+  it.each(localized.map(layer => [layer.name, layer.locales!] as const))('%s marks machine translation with the string flag, never in English', (_name, dir) => {
+    for (const locale of SUPPORTED_LOCALES) {
+      const flag = (readMessages(resolve(dir, `${locale}.json`)) as { translation?: { machineTranslated?: unknown } }).translation?.machineTranslated
+      if (locale === 'en')
+        expect(flag, `${dir}/en.json`).toBeUndefined()
+      else if (flag !== undefined)
+        expect(flag, `${dir}/${locale}.json`).toBe('true')
+    }
+  })
+
+  it('reads a layer\'s keys the way the parity check needs', () => {
+    // A detector that matches nothing is indistinguishable from a broken one.
+    expect(leafKeys({ planner: { title: 'x', empty: { heading: 'y' } } })).toEqual(['planner.title', 'planner.empty.heading'])
   })
 })

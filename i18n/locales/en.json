@@ -108,7 +108,8 @@
     "openComponentCatalog": "Open Component Catalog",
     "switchToTheme": "Switch to {theme} theme",
     "active": "(Active)",
-    "openAppearance": "Open Appearance Settings"
+    "openAppearance": "Open Appearance Settings",
+    "content": "Content"
   },
   "theme": {
     "label": "Theme",

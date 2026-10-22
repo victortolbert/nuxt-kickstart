@@ -20,6 +20,8 @@ REST endpoints via Nitro's file-based routing.
 
 Root-level endpoints: `user.get.ts`, `navigation.get.ts` (backs
 `useNavigationConfig()`, filtered per session by the shared navigation rules),
+`search.get.ts` (site search over the search registry, filtered per session by
+the shared visibility rules),
 `protected.get.ts`, and `auth-test.get.ts` — the last is a diagnostic helper.
 
 > Authentication endpoints are **not** here — they are served by the Better Auth catch-all at `server/routes/api/auth/[...all].ts`.

@@ -10,7 +10,7 @@ setup, the checks your change must pass, and the conventions we follow.
 ## Local development
 
 ```bash
-pnpm install          # postinstall runs nuxt prepare + db:init
+pnpm install          # postinstall runs nuxt prepare + db:migrate
 pnpm dev              # http://localhost:3000  (pnpm dev:op for 1Password secrets)
 ```
 

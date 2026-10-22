@@ -144,22 +144,37 @@ TURSO_AUTH_TOKEN=your_token_here
 ### Create the tables — do not skip this
 
 Setting the two variables does **not** create any tables. `pnpm install`'s
-postinstall already ran `db:init`, but it ran before `TURSO_*` existed, so it
-created tables in the local `file:.data/auth.db` only. The remote database is
-still empty, and the first sign-in fails against it.
+postinstall already ran `db:migrate`, but it ran before `TURSO_*` existed, so it
+migrated the local `file:.data/auth.db` only. The remote database is still
+empty, and the first sign-in fails against it.
 
-Run the initializer once against the remote database, from your machine:
+Migrate the remote database before the first deploy, and before every deploy
+that ships a schema change:
 
 ```bash
 TURSO_DATABASE_URL=libsql://your-db-name.turso.io \
 TURSO_AUTH_TOKEN=your_token_here \
-pnpm run db:init
+pnpm run db:migrate
 ```
 
-`scripts/init-better-auth-db.ts` reads both variables and falls back to
-`file:.data/auth.db` when they are absent — which is exactly why they must be
-present in the same command. Column-adding migrations (`scripts/add-*-columns.ts`)
-are run the same way.
+`scripts/migrate.ts` reads both variables and falls back to `file:.data/auth.db`
+when they are absent, which is why they must be present in the same command.
+It applies only the migrations the database lacks, all or none, and exits
+non-zero on failure, so put it ahead of the deploy step and a failed migration
+stops the deploy. A database the old `db:init` script created is adopted onto
+the migration chain on its first run, with its rows kept. The Docker image runs
+the same migrator on start (see the README).
+
+On Vercel and Netlify the build's `pnpm install` runs `postinstall`, which
+migrates whatever `TURSO_*` the build environment holds. That covers a deploy
+only while the install actually runs its scripts against the production
+variables. A cached dependency layer, an `--ignore-scripts` install, or
+variables scoped to runtime only all skip it without saying so. If any of
+those apply, make the build command migrate explicitly:
+
+```bash
+pnpm run db:migrate && pnpm run build
+```
 
 **Automatic Fallback**: If Turso connection fails (certificate errors, corporate proxy), the app automatically falls back to local SQLite with a warning message.
 

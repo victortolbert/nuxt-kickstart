@@ -32,7 +32,7 @@ Kickstart (`nuxt-kickstart`) es un starter empresarial opinado y centrado en el 
 git clone <url-de-tu-repositorio>
 cd <tu-proyecto>
 
-# 2. Instala las dependencias (postinstall ejecuta nuxt prepare + db:init)
+# 2. Instala las dependencias (postinstall ejecuta nuxt prepare + db:migrate)
 pnpm install
 
 # 3. Renombra los tokens de la plantilla a tu proyecto

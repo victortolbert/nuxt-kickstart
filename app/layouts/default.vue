@@ -93,7 +93,9 @@
     </u-dashboard-sidebar>
 
     <u-dashboard-search
+      v-model:search-term="searchTerm"
       :groups="searchGroups"
+      :loading="contentSearchStatus === 'pending'"
       :placeholder="t('search.placeholder')"
       :fuse="{ resultLimit: 20 }"
       @select="onSearchSelect"
@@ -177,6 +179,7 @@
 <script setup lang="ts">
 import type { DropdownMenuItem, NavigationMenuItem } from '@nuxt/ui'
 import type { ThemeId } from '~~/shared/types/theme'
+import type { SearchResult } from '#shared/utils/search-registry'
 import { authClient } from '~/lib/auth-client'
 
 const colorMode = useColorMode()
@@ -289,51 +292,41 @@ defineShortcuts({
   },
 })
 
-// Fetch content from all collections for search (lazy to avoid blocking navigation)
-const { data: guides } = useLocalizedEntries('guides', { lazy: true })
-const { data: posts } = useLazyAsyncData('search-posts', () =>
-  queryCollection('posts').select('title', 'path', 'description').all())
-const { data: tech } = useLazyAsyncData('search-tech', () =>
-  queryCollection('tech').select('title', 'path', 'description').all())
+// Content results come from `/api/search`, which matches the search registry
+// on the server and returns only what this Viewer may see — the palette never
+// holds a collection the visibility rules have not filtered. Debounced, so a
+// typed word is one request rather than one per keystroke.
+const searchTerm = ref('')
+const debouncedTerm = refDebounced(searchTerm, 200)
+const { data: contentSearch, status: contentSearchStatus } = useFetch('/api/search', {
+  query: { q: debouncedTerm, locale },
+  server: false,
+  lazy: true,
+  default: () => ({ results: [] as SearchResult[] }),
+})
 
-// Content item type for search
-interface SearchableContentItem {
-  title?: string
-  name?: string
-  description?: string
-  role?: string
-  path?: string
-}
-
-// Helper to transform content items to search items
-function toSearchItems(items: SearchableContentItem[] | null | undefined, iconName: string) {
-  if (!items)
-    return []
-  return items
-    .filter(item => (item.title || item.name) && item.path)
-    .map(item => ({
-      label: (item.title || item.name)!,
-      suffix: item.description || item.role || '',
-      icon: resolveIcon(iconName),
-      to: item.path!,
-    }))
+/** The semantic icon per collection; anything a layer registers gets the generic one. */
+const COLLECTION_ICONS: Record<string, string> = {
+  guides: 'book2',
+  posts: 'fileText',
+  tech: 'cpu',
+  blocks: 'apps',
 }
 
 // Command palette groups: navigation destinations derive from the same YAML
-// config as the sidebar, then content collections are folded in so each page
-// appears once — with its description. Nav-curated items (which carry no
-// description of their own) are enriched from the content they point at.
+// config as the sidebar; content matches follow, already ranked and filtered
+// by the server, so that group skips the palette's own fuzzy filter.
 const searchGroups = computed(() => {
-  // path → description, from the fetched content collections
-  const descByPath = new Map<string, string>()
-  for (const list of [guides.value, posts.value, tech.value]) {
-    for (const item of (list ?? []) as SearchableContentItem[]) {
-      if (item.path && item.description)
-        descByPath.set(item.path, item.description)
-    }
-  }
+  const contentItems = (contentSearch.value?.results ?? []).map(result => ({
+    label: result.title,
+    suffix: result.description ?? '',
+    icon: resolveIcon(COLLECTION_ICONS[result.collection] ?? 'file'),
+    to: result.path,
+  }))
 
-  // Nav groups, with each item enriched by the description of the page it links to
+  // A nav item carries no description of its own; when the page it links to
+  // is among the matches, it borrows that one.
+  const descByPath = new Map(contentItems.filter(item => item.suffix).map(item => [item.to, item.suffix]))
   const navGroups = paletteGroups.value.map(group => ({
     id: group.id,
     label: group.label,
@@ -343,28 +336,14 @@ const searchGroups = computed(() => {
     })),
   }))
 
-  // Full content lists (described), keyed by collection id
-  const contentById: Record<string, { id: string, label: string, items: ReturnType<typeof toSearchItems> }> = {
-    guides: { id: 'guides', label: t('nav.guides'), items: toSearchItems(guides.value, 'book2') },
-    posts: { id: 'posts', label: t('nav.posts'), items: toSearchItems(posts.value, 'fileText') },
-    tech: { id: 'tech', label: t('nav.tech'), items: toSearchItems(tech.value, 'cpu') },
+  // A page the nav already lists is not repeated as a content match.
+  const navTargets = new Set(navGroups.flatMap(group => group.items.map(item => item.to)))
+  const contentGroup = {
+    id: 'content',
+    label: t('search.content'),
+    ignoreFilter: true,
+    items: contentItems.filter(item => !navTargets.has(item.to)),
   }
-
-  // Merge each content list into the matching nav group (by id), deduping by
-  // `to` so a curated nav item and its content entry never appear twice.
-  const merged = new Set<string>()
-  for (const group of navGroups) {
-    const content = contentById[group.id]
-    if (!content)
-      continue
-    const seen = new Set(group.items.map(i => i.to))
-    group.items.push(...content.items.filter(i => i.to && !seen.has(i.to)))
-    merged.add(group.id)
-  }
-
-  // Content collections with no matching nav group render as their own groups
-  const standaloneContent = Object.values(contentById)
-    .filter(c => !merged.has(c.id) && c.items.length > 0)
 
   return [
     ...navGroups,
@@ -399,7 +378,7 @@ const searchGroups = computed(() => {
         onSelect: () => setTheme(themeItem.id as ThemeId),
       })),
     },
-    ...standaloneContent,
+    ...(contentGroup.items.length ? [contentGroup] : []),
   ]
 })
 

@@ -1,9 +1,10 @@
 import type { ZodType } from 'zod'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it, vi } from 'vitest'
 import { parse as parseYaml } from 'yaml'
 import { contentDir, globToRegExp, walk } from '../helpers/content-tree'
+import { layers } from '../helpers/layers'
 
 // Nuxt Content does not validate frontmatter against the Zod schemas in
 // `schemas/` — not refinements, not enums, not anything. `defineCollection`
@@ -24,6 +25,8 @@ import { contentDir, globToRegExp, walk } from '../helpers/content-tree'
 
 vi.mock('@nuxt/content', () => ({
   defineCollection: (collection: unknown) => collection,
+  // A layer's `content.config.ts` calls this; the mock hands back the config.
+  defineContentConfig: (config: unknown) => config,
 }))
 
 const { collections } = await import('../../schemas')
@@ -55,14 +58,30 @@ function includeGlobs(name: string, source: RawCollection['source']): string[] {
   })
 }
 
-const matchers = Object.entries(raw).map(([name, collection]) => {
-  const res = includeGlobs(name, collection.source).map(globToRegExp)
-  return {
-    name,
-    schema: collection.schema,
-    matches: (file: string) => res.some(re => re.test(file)),
-  }
-})
+function matchersFor(collectionsByName: Record<string, RawCollection>) {
+  return Object.entries(collectionsByName).map(([name, collection]) => {
+    const res = includeGlobs(name, collection.source).map(globToRegExp)
+    return {
+      name,
+      schema: collection.schema,
+      matches: (file: string) => res.some(re => re.test(file)),
+    }
+  })
+}
+
+const matchers = matchersFor(raw)
+
+/**
+ * Each layer's collections, read from its `content.config.ts`, against the
+ * documents under the layer's own `content/` — where Nuxt Content resolves a
+ * layer collection's sources.
+ */
+const layerSets = await Promise.all(layers()
+  .filter(layer => layer.contentConfig)
+  .map(async (layer) => {
+    const config = (await import(layer.contentConfig!)).default as { collections?: Record<string, RawCollection> }
+    return { layer, matchers: matchersFor(config.collections ?? {}) }
+  }))
 
 /**
  * The data a document contributes to its collection row, read the way Nuxt
@@ -77,8 +96,8 @@ const matchers = Object.entries(raw).map(([name, collection]) => {
  * YAML that does not parse is returned as an error rather than thrown, so one
  * broken document does not hide every finding after it.
  */
-function documentData(file: string): { data: unknown, error?: string } {
-  const text = readFileSync(join(contentDir, file), 'utf-8')
+function documentData(file: string, dir = contentDir): { data: unknown, error?: string } {
+  const text = readFileSync(join(dir, file), 'utf-8')
   try {
     if (file.endsWith('.json'))
       return { data: JSON.parse(text) }
@@ -100,7 +119,13 @@ function documentData(file: string): { data: unknown, error?: string } {
 const documents = walk(contentDir)
   .flatMap(file => matchers
     .filter(({ matches }) => matches(file))
-    .map(({ name, schema }) => ({ file, collection: name, schema })))
+    .map(({ name, schema }) => ({ file, collection: name, schema, dir: contentDir, label: file })))
+
+const layerDocuments = layerSets.flatMap(({ layer, matchers: layerMatchers }) =>
+  (existsSync(layer.content) ? walk(layer.content) : [])
+    .flatMap(file => layerMatchers
+      .filter(({ matches }) => matches(file))
+      .map(({ name, schema }) => ({ file, collection: name, schema, dir: layer.content, label: `layers/${layer.name}/content/${file}` }))))
 
 describe('content schema validation', () => {
   // Without these the suite passes when the mock hands back nothing usable,
@@ -131,18 +156,18 @@ describe('content schema validation', () => {
   })
 
   it('every document under content/ satisfies its collection schema', () => {
-    const failures = documents
-      .map(({ file, collection, schema }) => {
-        const { data, error } = documentData(file)
+    const failures = [...documents, ...layerDocuments]
+      .map(({ file, collection, schema, dir, label }) => {
+        const { data, error } = documentData(file, dir)
         if (error)
-          return `${file} [${collection}] ${error}`
+          return `${label} [${collection}] ${error}`
         const result = schema.safeParse(data)
         if (result.success)
           return null
         const issues = result.error.issues
           .map(issue => `${issue.path.join('.') || '(root)'}: ${issue.message}`)
           .join('; ')
-        return `${file} [${collection}] ${issues}`
+        return `${label} [${collection}] ${issues}`
       })
       .filter((line): line is string => line !== null)
       .sort()

@@ -1,5 +1,5 @@
 import { queryCollection, useAsyncData, useI18n, useLazyAsyncData } from '#imports'
-import { localizedContentUrl, pickLocalizedEntries } from '~/utils/localized-collection'
+import { localizedContentUrl, pickLocalizedEntries } from '#shared/utils/localized-collection'
 
 /**
  * The Localized Collection module.

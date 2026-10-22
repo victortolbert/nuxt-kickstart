@@ -12,7 +12,7 @@ docs, and commits; sharpen them here when they drift.
   with locale-prefixed paths (`/en/guides/x`, `/es/guides/x`). Registry,
   fallback ordering (locale → English), dedupe, and URL resolution live in
   the Localized Collection module (`app/composables/use-localized-collection.ts`
-  over `app/utils/localized-collection.ts`). Currently: `guides`.
+  over `shared/utils/localized-collection.ts`). Currently: `guides`.
 - **Authoring Locale** — the locale whose files the content editor writes
   (`en`). Translations live alongside and fall back to it.
 - **Content Store** — the server-side module owning editable-collection
@@ -34,6 +34,24 @@ docs, and commits; sharpen them here when they drift.
   the template.
 - **Status** — content lifecycle: `seed` → `sprout` → `evergreen` → `wilted`.
   `wilted` is the archive verdict: off a visitor's listings and the sitemap.
+
+- **Search registry** — the collections site search covers, each with the
+  fields to match (`search.collections` in app config, merged across layers;
+  rules in `shared/utils/search-registry.ts`). `/api/search` answers from it
+  through the visibility rules. There is no other list.
+
+## Modules
+
+- **Layer** — an optional module as a Nuxt layer folder, `layers/<module>/`.
+  It brings its own tables, collections, search registrations, locale
+  messages, routes and Protected paths, and never edits base files. Deleting
+  the folder opts out; its tables are left, **inert**.
+- **Migration** — a committed step in the one chain under
+  `server/db/migrations/`, generated from the schema files (the base one plus
+  every layer's). The only way the schema changes (ADR-0010).
+- **Adoption** — the one-time recording, on its first `db:migrate`, of a
+  database the retired init script created as already at the migrations it
+  satisfies.
 
 ## Identity & access
 
