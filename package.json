@@ -1,7 +1,7 @@
 {
   "name": "@victortolbert/nuxt-kickstart",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "packageManager": "pnpm@11.28.6",
   "description": "An opinionated, content-first enterprise starter on Nuxt 4 + Nuxt Content v3 — passwordless auth, admin suite, email, theming, design tokens, i18n.",
